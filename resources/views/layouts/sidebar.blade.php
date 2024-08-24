@@ -35,17 +35,17 @@
     </a>
 </li>
 
-<li class="{{ request()->is('sub-category/*') ? 'mm-active' : '' }}" id="intro_thired">
+{{-- <li class="{{ request()->is('sub-category/*') ? 'mm-active' : '' }}" id="intro_thired">
     <a class="" href="{{ route('sub-category.index') }}" aria-expanded="false">
         <i class="material-icons">category</i>
         <span class="nav-text">Sub Category</span>
     </a>
-</li>
+</li> --}}
 
-<li class="{{ request()->is('blogs/*') ? 'mm-active' : '' }}" id="intro_thired">
-    <a class="" href="{{ route('blogs.index') }}" aria-expanded="false">
+<li class="{{ request()->is('products/*') ? 'mm-active' : '' }}" id="intro_thired">
+    <a class="" href="{{ route('products.index') }}" aria-expanded="false">
         <i class="material-icons">category</i>
-        <span class="nav-text">Blog</span>
+        <span class="nav-text">Product</span>
     </a>
 </li>
 

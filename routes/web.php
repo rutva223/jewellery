@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\BlogController;
+use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\LandingpageController;
@@ -63,14 +64,17 @@ Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryS
 Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
 // routes/web.php
 
-Route::resource('sub-category', SubCategoryController::class);
-Route::post('AllSubCategoryTableData', [SubCategoryController::class, 'AllSubCategoryTableData'])->name('AllSubCategoryTableData');
-Route::post('ChangeSubCategoryStatus', [SubCategoryController::class, 'ChangeSubCategoryStatus'])->name('ChangeSubCategoryStatus');
-Route::post('checkSubCategoryName', [SubCategoryController::class, 'checkSubCategoryName'])->name('checkSubCategoryName');
+// Route::resource('sub-category', SubCategoryController::class);
+// Route::post('AllSubCategoryTableData', [SubCategoryController::class, 'AllSubCategoryTableData'])->name('AllSubCategoryTableData');
+// Route::post('ChangeSubCategoryStatus', [SubCategoryController::class, 'ChangeSubCategoryStatus'])->name('ChangeSubCategoryStatus');
+// Route::post('checkSubCategoryName', [SubCategoryController::class, 'checkSubCategoryName'])->name('checkSubCategoryName');
 
-Route::resource('blogs', BlogController::class);
-Route::post('AllBlogTableData', [BlogController::class, 'AllBlogTableData'])->name('AllBlogTableData');
-Route::post('ChangeBlogStatus', [BlogController::class, 'ChangeBlogStatus'])->name('ChangeBlogStatus');
-Route::get('/get-sub-categories/{catId}', [BlogController::class, 'getSubCategories']);
+// Route::resource('blogs', BlogController::class);
+// Route::post('AllBlogTableData', [BlogController::class, 'AllBlogTableData'])->name('AllBlogTableData');
+// Route::post('ChangeBlogStatus', [BlogController::class, 'ChangeBlogStatus'])->name('ChangeBlogStatus');
+// Route::get('/get-sub-categories/{catId}', [BlogController::class, 'getSubCategories']);
 
+Route::resource('products', ProductsController::class);
+Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
+Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
 require __DIR__.'/auth.php';
