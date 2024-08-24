@@ -61,24 +61,9 @@
                     <i class="material-icons" aria-hidden="true">category</i>
                 </div>
                 <div class="chart-num">
-                    <a href="{{ route('sub-category.index') }}">
-                        <h3 class="mb-0">{{ $sub_categories ?? 0 }}</h3>
-                        <p class="mb-0">Total Sub Category</p>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="col-lg-4 col-md-4">
-        <div class="card counter">
-            <div class="card-body d-flex align-items-center">
-                <div class="card-box-icon" style="background: rgba(244 244 244)">
-                    <i class="material-icons" aria-hidden="true">category</i>
-                </div>
-                <div class="chart-num">
-                    <a href="{{ route('blogs.index') }}">
-                        <h3 class="mb-0">{{ $blogs ?? 0 }}</h3>
-                        <p class="mb-0">Total Blog</p>
+                    <a href="{{ route('products.index') }}">
+                        <h3 class="mb-0">{{ $products ?? 0 }}</h3>
+                        <p class="mb-0">Total Product</p>
                     </a>
                 </div>
             </div>

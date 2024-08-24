@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Blog;
 use App\Models\Category;
+use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -22,10 +23,9 @@ class AdminDashboardController extends Controller
             $admin->save();
 
             $categories = Category::where('status', 'Active')->where('is_deleted',0)->count();
-            $sub_categories = SubCategory::where('status', 'Active')->where('is_deleted',0)->count();
-            $blogs = Blog::where('status', 'Active')->where('is_deleted',0)->count();
+            $products = Product::where('status', 'Active')->where('is_deleted',0)->count();
 
-            return view('admin.dashboard', compact('categories', 'sub_categories', 'blogs'));
+            return view('admin.dashboard', compact('categories', 'products'));
         } else {
             return redirect()->route('login');
         }
