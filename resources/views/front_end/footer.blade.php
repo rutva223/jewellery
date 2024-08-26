@@ -90,24 +90,11 @@
                                 <h2 class="block-title">Catalog</h2>
                                 <div class="block-content">
                                     <ul>
-                                        <li>
-                                            <a href="shop-grid-left.html">Earrings</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Necklaces</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Bracelets</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Rings</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Jewelry Box</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Studs</a>
-                                        </li>
+                                        @foreach ($categories as $cat)
+                                            <li >
+                                                <a href="{{ route('catwiseproduct',$cat->name) }}">{{ $cat->name }}</a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                             </div>

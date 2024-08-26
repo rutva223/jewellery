@@ -23,7 +23,7 @@ class LandingpageController extends Controller
         $products = Product::where('is_deleted',0)->where('cat_id',$category->id)->get();
         $body = 'shop';
         $cat_name = $category->name;
-
-        return view('front_end.product',compact('products','body','cat_name'));
+        $categories = Category::where('is_deleted',0)->get();
+        return view('front_end.product',compact('categories','products','body','cat_name'));
     }
 }
