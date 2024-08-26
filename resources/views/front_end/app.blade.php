@@ -2,7 +2,7 @@
 <html lang="en">
 	@include('front_end.head_link')
 
-	<body class="home">
+	<body class="{{ $body }}">
 		<div id="page" class="hfeed page-wrapper">
             @include('front_end.header')
 			<div id="site-main" class="site-main">

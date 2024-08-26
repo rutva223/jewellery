@@ -1,4 +1,4 @@
-<header id="site-header" class="site-header header-v1 color-white">
+<header id="site-header" class="site-header header-v1 @if($body == 'home')color-white @endif">
     <div class="header-mobile">
         <div class="section-padding">
             <div class="section-container">

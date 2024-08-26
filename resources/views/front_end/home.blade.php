@@ -149,102 +149,24 @@
                                 <div class="slick-sliders content-category" data-dots="0" data-slidestoscroll="true"
                                     data-nav="1" data-columns4="2" data-columns3="3" data-columns2="3"
                                     data-columns1="5" data-columns1440="5" data-columns="5">
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-1') }}.jpg"
-                                                        alt="Bracelets">
+                                    @foreach($categories as $cat)
+                                        <div class="item item-product-cat slick-slide">
+                                            <div class="item-product-cat-content">
+                                                <a href="{{ route('catwiseproduct',$cat->name) }}">
+                                                    <div class="item-image animation-horizontal">
+                                                        <img width="258" height="258"
+                                                            src="{{ asset('front_end/media/product/'.strtolower($cat->name)) }}.jpg"
+                                                            alt="Bracelets">
+                                                    </div>
+                                                </a>
+                                                <div class="product-cat-content-info">
+                                                    <h2 class="item-title">
+                                                        <a href="{{ route('catwiseproduct',$cat->name) }}">{{ $cat->name }}</a>
+                                                    </h2>
                                                 </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Bracelets</a>
-                                                </h2>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-2') }}.jpg"
-                                                        alt="Charms">
-                                                </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Charms</a>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-3') }}.jpg"
-                                                        alt="Earrings">
-                                                </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Earrings</a>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-4') }}.jpg"
-                                                        alt="Necklaces">
-                                                </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Necklaces</a>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-5') }}.jpg"
-                                                        alt="Rings">
-                                                </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Rings</a>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="item item-product-cat slick-slide">
-                                        <div class="item-product-cat-content">
-                                            <a href="shop-grid-left.html">
-                                                <div class="item-image animation-horizontal">
-                                                    <img width="258" height="258"
-                                                        src="{{ asset('front_end/media/product/cat-1') }}.jpg"
-                                                        alt="Bracelets">
-                                                </div>
-                                            </a>
-                                            <div class="product-cat-content-info">
-                                                <h2 class="item-title">
-                                                    <a href="shop-grid-left.html">Bracelets</a>
-                                                </h2>
-                                            </div>
-                                        </div>
-                                    </div>
+                                    @endforeach
                                 </div>
                             </div>
                         </div>
