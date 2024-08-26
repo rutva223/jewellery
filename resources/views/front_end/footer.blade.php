@@ -445,10 +445,10 @@
 </div>
 
 <!-- Newsletter Popup -->
-<div class="popup-shadow"></div>
+{{-- <div class="popup-shadow"></div> --}}
 <div class="newsletter-popup">
 <a href="index.html#" class="newsletter-close"></a>
-<div class="newsletter-container">
+{{-- <div class="newsletter-container">
     <div class="newsletter-img">
         <img src="{{ asset('front_end/media/banner/newsletter-popup.jpg')}}" alt="">
     </div>
@@ -465,7 +465,7 @@
              <div class="newsletter-no">no thanks !</div>
         </form>
     </div>
-</div>
+</div> --}}
 </div>
 
 <!-- Page Loader -->
@@ -482,6 +482,11 @@
 <script src="{{ asset('front_end/libs/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('front_end/libs/slick/js/slick.min.js') }}"></script>
 <script src="{{ asset('front_end/libs/mmenu/js/jquery.mmenu.all.min.js') }}"></script>
+
+<script src="{{ asset('front_end/libs/slider/js/tmpl.js') }}"></script>
+<script src="{{ asset('front_end/libs/slider/js/jquery.dependClass-0.1.js') }}"></script>
+<script src="{{ asset('front_end/libs/slider/js/draggable-0.1.js') }}"></script>
+<script src="{{ asset('front_end/libs/slider/js/jquery.slider.js') }}"></script>
 <!-- Site Scripts -->
 <script src="{{ asset('front_end/assets/js/app.js') }}"></script>
 @stack('after-scripts')

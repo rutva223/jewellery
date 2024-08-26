@@ -8,6 +8,7 @@ use App\Http\Controllers\CommonController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SubCategoryController;
+use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -23,7 +24,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/', [LandingpageController::class, 'index']);
+Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 
 Route::get('/cacheclear', function () {
@@ -53,6 +54,7 @@ Route::post('otpResend', [CommonController::class, 'otpResend'])->name('otpResen
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
 Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
+Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
 Route::get('changes-password', [AdminDashboardController::class, 'ChangesPassword'])->name('changes-password');
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
@@ -77,4 +79,7 @@ Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'
 Route::resource('products', ProductsController::class);
 Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
 Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
+
+Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
+
 require __DIR__.'/auth.php';
