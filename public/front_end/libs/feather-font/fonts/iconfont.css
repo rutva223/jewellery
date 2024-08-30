@@ -1,7 +1,7 @@
 @font-face {
   font-display: swap;
   font-family: Feather;
-  src: url(../fonts/feather.ttf) format("truetype"), url(../fonts/feather.woff) format("woff"), url(../fonts/feather.svg) format("svg");
+  src: url(../fonts/feather.ttf%3Fsdxovp) format("truetype"), url(../fonts/feather.woff%3Fsdxovp) format("woff"), url(../fonts/feather.svg%3Fsdxovp) format("svg");
   font-weight: 400;
   font-style: normal
 }

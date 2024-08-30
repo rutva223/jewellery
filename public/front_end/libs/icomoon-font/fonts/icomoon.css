@@ -1,13 +1,13 @@
 @font-face {
   font-family: icomoon;
-  src: url(../fonts/icomoon.eot);
-  src: url(../fonts/icomoon.eot) format("embedded-opentype"), url(../fonts/icomoon.ttf) format("truetype"), url(../fonts/icomoon.woff) format("woff"), url(../fonts/icomoon.svg) format("svg");
+  src: url(../fonts/icomoon.eot%3Ffzv6fp);
+  src: url(../fonts/icomoon.eot%3Ffzv6fp) format("embedded-opentype"), url(../fonts/icomoon.ttf%3Ffzv6fp) format("truetype"), url(../fonts/icomoon.woff%3Ffzv6fp) format("woff"), url(../fonts/icomoon.svg%3Ffzv6fp) format("svg");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 
-[class*=" icon-"],
+[class*=" icon-"], 
 [class^=icon-] {
     font-family: icomoon;
     speak: none;

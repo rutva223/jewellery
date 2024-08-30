@@ -20,7 +20,7 @@
     <link rel="stylesheet" href="{{ asset('front_end/libs/mmenu/css/mmenu.min.css') }}" type="text/css">
 	<link rel="stylesheet" href="{{ asset('front_end/libs/slider/css/jslider.css') }}">
 	<link rel="stylesheet" href="{{ asset('panel_style/icons/fontawesome/css/fontawesome.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  
 
     <!-- Site Stylesheet -->
     <link rel="stylesheet" href="{{ asset('front_end/assets/css/app.css') }}" type="text/css">
