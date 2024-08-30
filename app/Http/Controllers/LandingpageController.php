@@ -20,10 +20,17 @@ class LandingpageController extends Controller
     public function CatWiseProduct($slug)
     {
         $category = Category::where('name',$slug)->where('is_deleted',0)->first();
-        $products = Product::where('is_deleted',0)->where('cat_id',$category->id)->get();
-        $body = 'shop';
-        $cat_name = $category->name;
-        $categories = Category::where('is_deleted',0)->get();
-        return view('front_end.product',compact('categories','products','body','cat_name'));
+        if($category)
+        {
+            $products = Product::where('is_deleted',0)->where('cat_id',$category->id)->get();
+            $body = 'shop';
+            $cat_name = $category->name;
+            $categories = Category::where('is_deleted',0)->get();
+            return view('front_end.product',compact('categories','products','body','cat_name'));
+        }
+        else
+        {
+            return redirect()->back()->with('error','Category not found');
+        }
     }
 }

@@ -233,4 +233,28 @@ class ProductsController extends Controller
 
         return $dom->saveHTML();
     }
+
+    public function getGridView(Request $request)
+    {
+        $query = Product::query();
+
+        // Apply price filter
+        $price_range = $request->price_range;
+        if ($price_range) {
+            [$min_price, $max_price] = explode(';', $price_range);
+            $query->whereBetween('price', [(float)$min_price, (float)$max_price]);
+        }
+
+        // Pagination
+        $perPage = 10; // Number of items per page
+        $page = $request->page ?: 1;
+        $products = $query->paginate($perPage, ['*'], 'page', $page);
+        $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
+        if ($request->view_type == 'layout-grid') {
+
+            return view('front_end.grid-view', compact('products','text_for_pagination'));
+        } else {
+            return view('front_end.list-view', compact('products'));
+        }
+    }
 }

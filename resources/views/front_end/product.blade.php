@@ -136,112 +136,20 @@
                                 </div>
                                 <ul class="layout-toggle nav nav-tabs">
                                     <li class="nav-item">
-                                        <a class="layout-grid nav-link active" data-toggle="tab" href="#layout-grid" role="tab"><span class="icon-column"><span class="layer first"><span></span><span></span><span></span></span><span class="layer middle"><span></span><span></span><span></span></span><span class="layer last"><span></span><span></span><span></span></span></span></a>
+                                        <a class="layout-grid nav-link active" data-toggle="tab" href="#layout-grid" type="layout-grid" role="tab"><span class="icon-column"><span class="layer first"><span></span><span></span><span></span></span><span class="layer middle"><span></span><span></span><span></span></span><span class="layer last"><span></span><span></span><span></span></span></span></a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="layout-list nav-link" data-toggle="tab" href="#layout-list" role="tab"><span class="icon-column"><span class="layer first"><span></span><span></span></span><span class="layer middle"><span></span><span></span></span><span class="layer last"><span></span><span></span></span></span></a>
+                                        <a class="layout-list nav-link" data-toggle="tab" href="#layout-list" role="tab" type="layout-list"><span class="icon-column"><span class="layer first"><span></span><span></span></span><span class="layer middle"><span></span><span></span></span><span class="layer last"><span></span><span></span></span></span></a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
 
                         <div class="tab-content">
-                            <div class="tab-pane fade show active" id="layout-grid" role="tabpanel">
-                                <div class="products-list grid">
-                                    <div class="row">
-                                        @foreach ($products as $product)
-                                            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6">
-                                                <div class="products-entry clearfix product-wapper">
-                                                    <div class="products-thumb">
-                                                        <div class="product-lable">
-                                                            <div class="hot">Hot</div>
-                                                        </div>
-                                                        <div class="product-thumb-hover">
-                                                            <a href="shop-details.html">
-                                                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="post-image" alt="">
-                                                                <img width="600" height="600" src="{{ asset('front_end/media/product/1-2.jpg') }}" class="hover-image back" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-button">
-                                                            <div class="btn-add-to-cart" data-title="Add to cart">
-                                                                <a rel="nofollow" href="shop-grid-left.html#" class="product-btn button">Add to cart</a>
-                                                            </div>
-                                                            <div class="btn-wishlist" data-title="Wishlist">
-                                                                <button class="product-btn">Add to wishlist</button>
-                                                            </div>
-                                                            <div class="btn-compare" data-title="Compare">
-                                                                <button class="product-btn">Compare</button>
-                                                            </div>
-                                                            <span class="product-quickview" data-title="Quick View">
-                                                                <a href="shop-grid-left.html#" class="quickview quickview-button">Quick View <i class="icon-search"></i></a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="products-content">
-                                                        <div class="contents text-center">
-                                                            <div class="rating">
-                                                                <div class="star star-0"></div><span class="count">(0 review)</span>
-                                                            </div>
-                                                            <h3 class="product-title"><a href="shop-details.html">{{ $product->product_name }}</a></h3>
-                                                            <span class="price">{{ $product->sell_price }}</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                </div>
+                            <div class="tab-pane fade show active" id="layout-view" role="tabpanel">
+                                {{-- Grid view content will be loaded here via AJAX --}}
                             </div>
-                            <div class="tab-pane fade" id="layout-list" role="tabpanel">
-                                <div class="products-list list">
-                                    @foreach ($products as $product)
-                                        <div class="products-entry clearfix product-wapper">
-                                            <div class="row">
-                                                <div class="col-md-4">
-                                                    <div class="products-thumb">
-                                                        <div class="product-lable">
-                                                            <div class="hot">Hot</div>
-                                                        </div>
-                                                        <div class="product-thumb-hover">
-                                                            <a href="shop-details.html">
-                                                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="post-image" alt="">
-                                                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="hover-image back" alt="">
-                                                            </a>
-                                                        </div>
-                                                        <span class="product-quickview" data-title="Quick View">
-                                                            <a href="shop-grid-left.html#" class="quickview quickview-button">Quick View <i class="icon-search"></i></a>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                                <div class="col-md-8">
-                                                    <div class="products-content">
-                                                        <h3 class="product-title"><a href="shop-details.html">{{ $product->product_name }}</a></h3>
-                                                        <span class="price">{{ $product->sell_price }}</span>
-                                                        <div class="rating">
-                                                            <div class="star star-5"></div>
-                                                            <div class="review-count">
-                                                                (1<span> review</span>)
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-button">
-                                                            <div class="btn-add-to-cart" data-title="Add to cart">
-                                                                <a rel="nofollow" href="shop-grid-left.html#" class="product-btn button">Add to cart</a>
-                                                            </div>
-                                                            <div class="btn-wishlist" data-title="Wishlist">
-                                                                <button class="product-btn">Add to wishlist</button>
-                                                            </div>
-                                                            <div class="btn-compare" data-title="Compare">
-                                                                <button class="product-btn">Compare</button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="product-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis…</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
+
                         </div>
 
                         <nav class="pagination">
@@ -259,3 +167,54 @@
         </div>
     </div>
 @endsection
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+@push('after-scripts')
+<script>
+  $(document).ready(function () {
+
+    $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+    // Function to load content via AJAX
+    function loadTabContent(tabId,view_type) {
+        $.ajax({
+            url: "{{ route('get-grid-view') }}", // The URL from which you will load content
+            type: 'post',
+            data : { view_type : view_type },
+            success: function (data) {
+                // Append the content inside the tab
+                $('#layout-view').html(data).addClass('loaded'); // Mark tab as loaded
+            },
+            error: function () {
+                console.log('Error loading content.');
+            }
+        });
+    }
+
+    // URLs for Grid and List views
+    loadTabContent('#layout-grid', 'layout-grid'); // Define your route or endpoint for grid view
+
+    // Automatically load content on page load
+
+    // Event listener for tab click (Optional: if you want to handle click events for switching active state)
+    $('.layout-toggle a').on('click', function (e) {
+            e.preventDefault();
+
+            // Activate the clicked tab
+            $('.layout-toggle a').removeClass('active');
+            $(this).addClass('active');
+
+            // Show the target tab content
+            let target = $(this).attr('href');
+            let type = $(this).attr('type');
+            loadTabContent(target,type)
+
+        });
+});
+
+
+</script>
+@endpush
