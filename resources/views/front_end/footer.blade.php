@@ -31,60 +31,6 @@
                                 </ul>
                             </div>
                         </div>
-                        <div class="col-lg-3 col-md-6 column-2">
-                            <div class="block block-menu">
-                                <h2 class="block-title">Customer Services</h2>
-                                <div class="block-content">
-                                    <ul>
-                                        <li>
-                                            <a href="shop-grid-left.html">Contact Us</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Track Your Order</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Product Care & Repair</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Book an Appointment</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Frequently Asked Questions</a>
-                                        </li>
-                                        <li>
-                                            <a href="shop-grid-left.html">Shipping & Returns</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-lg-3 col-md-6 column-3">
-                            <div class="block block-menu">
-                                <h2 class="block-title">About Us</h2>
-                                <div class="block-content">
-                                    <ul>
-                                        <li>
-                                            <a href="index.html#">About Us</a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html#">FAQ</a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html#">Our Producers</a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html#">Sitemap</a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html#">Terms & Conditions</a>
-                                        </li>
-                                        <li>
-                                            <a href="index.html#">Privacy Policy</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                         <div class="col-lg-3 col-md-6 column-4">
                             <div class="block block-menu">
                                 <h2 class="block-title">Catalog</h2>
@@ -464,6 +410,7 @@
 </div>
 
 <script src="{{ asset('front_end/libs/jquery/js/jquery.min.js') }}"></script>
+@stack('after-scripts')
 
 <script src="{{ asset('front_end/libs/popper/js/popper.min.js') }}"></script>
 <script src="{{ asset('front_end/libs/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -476,4 +423,3 @@
 <script src="{{ asset('front_end/libs/slider/js/jquery.slider.js') }}"></script>
 <!-- Site Scripts -->
 <script src="{{ asset('front_end/assets/js/app.js') }}"></script>
-@stack('after-scripts')

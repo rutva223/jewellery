@@ -77,6 +77,9 @@ Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'
 // Route::get('/get-sub-categories/{catId}', [BlogController::class, 'getSubCategories']);
 
 Route::resource('products', ProductsController::class);
+Route::Post('/get-grid-view', [ProductsController::class, 'getGridView'])->name('get-grid-view');
+Route::Post('/get-list-view', [ProductsController::class, 'getListView'])->name('get-list-view');
+
 Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
 Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
 
