@@ -1,7 +1,7 @@
 @font-face {
   font-family: wpbingofont;
-  src: url(../fonts/wpbingo.eot%3Ffzv6fp);
-  src: url(../fonts/wpbingo.eot%3Ffzv6fp) format("embedded-opentype"), url(../fonts/wpbingo.ttf%3Ffzv6fp) format("truetype"), url(../fonts/wpbingo.woff%3Ffzv6fp) format("woff"), url(../fonts/wpbingo.svg%3Ffzv6fp) format("svg");
+  src: url(../fonts/wpbingo.eot);
+  src: url(../fonts/wpbingo.eot) format("embedded-opentype"), url(../fonts/wpbingo.ttf) format("truetype"), url(../fonts/wpbingo.woff) format("woff"), url(../fonts/wpbingo.svg) format("svg");
   font-weight: 400;
   font-style: normal;
   font-display: swap

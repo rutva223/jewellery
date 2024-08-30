@@ -311,7 +311,7 @@
 
                                 <!-- Wishlist -->
                                 <div class="wishlist-box">
-                                    <a href="shop-wishlist.html"><i class="fa fa-heart"></i></a>
+                                    <a href="shop-wishlist.html"><i class="icon-heart"></i></a>
                                     <span class="count-wishlist">1</span>
                                 </div>
 
