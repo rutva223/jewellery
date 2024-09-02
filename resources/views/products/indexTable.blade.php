@@ -56,7 +56,7 @@
                                 @endif
                             </td>
                             <td>
-                                <a href="{{ route('products.edit', $data->id) }}" class="btn btn-primary btn-xs sharp me-1">
+                                <a href="{{ route('productss.edit', $data->id) }}" class="btn btn-primary btn-xs sharp me-1">
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="javascript:;" class="btn btn-primary btn-xs sharp me-1" title="Delete User"
