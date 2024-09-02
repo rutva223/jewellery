@@ -48,3 +48,30 @@
         </div>
     @endforeach
 </div>
+
+<nav class="pagination">
+    <ul class="page-numbers">
+        <!-- Previous Page Link -->
+        @if ($products->onFirstPage())
+            <li class="disabled"><span>&raquo;</span></li>
+        @else
+            <li><a class="prev page-numbers" href="{{ $products->previousPageUrl() }}">&raquo;</a></li>
+        @endif
+
+        <!-- Pagination Elements -->
+        @foreach ($products->getUrlRange(1, $products->lastPage()) as $page => $url)
+            @if ($page == $products->currentPage())
+                <li><span class="page-numbers current">{{ $page }}</span></li>
+            @else
+                <li><a class="page-numbers" href="{{ $url }}">{{ $page }}</a></li>
+            @endif
+        @endforeach
+
+        <!-- Next Page Link -->
+        @if ($products->hasMorePages())
+            <li><a class="next page-numbers" href="{{ $products->nextPageUrl() }}">&raquo;</a></li>
+        @else
+            <li class="disabled"><span>&raquo;</span></li>
+        @endif
+    </ul>
+</nav>

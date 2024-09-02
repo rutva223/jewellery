@@ -50,33 +50,22 @@ Route::middleware('auth')->group(function () {
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');
 Route::post('otpResend', [CommonController::class, 'otpResend'])->name('otpResend');
+Route::resource('category', CategoryController::class);
+Route::get('changes-password', [AdminDashboardController::class, 'ChangesPassword'])->name('changes-password');
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
 Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
 Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
-Route::get('changes-password', [AdminDashboardController::class, 'ChangesPassword'])->name('changes-password');
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
 Route::post('/verify-current-password', [AdminDashboardController::class, 'verifyCurrentPassword'])->name('verifyCurrentPassword');
 
-Route::resource('category', CategoryController::class);
 Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
 Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
 Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
-// routes/web.php
 
-// Route::resource('sub-category', SubCategoryController::class);
-// Route::post('AllSubCategoryTableData', [SubCategoryController::class, 'AllSubCategoryTableData'])->name('AllSubCategoryTableData');
-// Route::post('ChangeSubCategoryStatus', [SubCategoryController::class, 'ChangeSubCategoryStatus'])->name('ChangeSubCategoryStatus');
-// Route::post('checkSubCategoryName', [SubCategoryController::class, 'checkSubCategoryName'])->name('checkSubCategoryName');
-
-// Route::resource('blogs', BlogController::class);
-// Route::post('AllBlogTableData', [BlogController::class, 'AllBlogTableData'])->name('AllBlogTableData');
-// Route::post('ChangeBlogStatus', [BlogController::class, 'ChangeBlogStatus'])->name('ChangeBlogStatus');
-// Route::get('/get-sub-categories/{catId}', [BlogController::class, 'getSubCategories']);
-
-Route::resource('products', ProductsController::class);
+Route::resource('productss', ProductsController::class);
 Route::Post('/get-grid-view', [ProductsController::class, 'getGridView'])->name('get-grid-view');
 Route::Post('/get-list-view', [ProductsController::class, 'getListView'])->name('get-list-view');
 

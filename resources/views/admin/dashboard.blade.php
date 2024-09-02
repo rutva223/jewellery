@@ -61,7 +61,7 @@
                     <i class="material-icons" aria-hidden="true">category</i>
                 </div>
                 <div class="chart-num">
-                    <a href="{{ route('products.index') }}">
+                    <a href="{{ route('productss.index') }}">
                         <h3 class="mb-0">{{ $products ?? 0 }}</h3>
                         <p class="mb-0">Total Product</p>
                     </a>

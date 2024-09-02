@@ -68,7 +68,7 @@
             <nav style="--bs-breadcrumb-divider: '>';" aria-label="breadcrumb">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item first"><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                    <li class="breadcrumb-item"><a href="{{ route('products.index') }}">Blog List</a></li>
+                    <li class="breadcrumb-item"><a href="{{ route('productss.index') }}">Blog List</a></li>
                     <li class="breadcrumb-item active" aria-current="page">Blog Create</li>
                 </ol>
             </nav>
@@ -84,7 +84,7 @@
             </div>
             <div class="card-body">
                 <div class="row">
-                    <form action="{{ route('products.store') }}" method="post" enctype="multipart/form-data" name="blog_sub_form" id="blog_sub_form">
+                    <form action="{{ route('productss.store') }}" method="post" enctype="multipart/form-data" name="blog_sub_form" id="blog_sub_form">
                         @csrf
                         <div class="row">
                             <div class="col-4">
@@ -164,7 +164,7 @@
                         </div>
                         <br />
                         <button type="submit" class="btn btn-primary">Save</button>
-                        <a href="{{ route('products.index') }}" class="btn btn-secondary">Cancel</a>
+                        <a href="{{ route('productss.index') }}" class="btn btn-secondary">Cancel</a>
                     </form>
                 </div>
             </div>

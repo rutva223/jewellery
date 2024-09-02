@@ -246,15 +246,24 @@ class ProductsController extends Controller
         }
 
         // Pagination
-        $perPage = 10; // Number of items per page
-        $page = $request->page ?: 1;
+        $perPage = 6; // Number of items per page
+        $page = $request->page ? : 1;
         $products = $query->paginate($perPage, ['*'], 'page', $page);
         $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
-        if ($request->view_type == 'layout-grid') {
 
-            return view('front_end.grid-view', compact('products','text_for_pagination'));
-        } else {
-            return view('front_end.list-view', compact('products'));
+        if ($request->ajax()) {
+            if ($request->view_type == 'layout-grid') {
+                return response()->json([
+                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination'))->render(),
+                    'pagination' => view('front_end.pagination', compact('products'))->render()
+                ]);
+            } else {
+                return response()->json([
+                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
+                    'pagination' => view('front_end.pagination', compact('products'))->render()
+                ]);
+            }
         }
     }
+
 }

@@ -21,7 +21,6 @@
         @include('flash')
     </div>
 </div>
-
 <div class="row clearfix">
     <div class="col-md-12">
         <div class="card">
@@ -52,7 +51,7 @@
                                 </div>
                             </div>
                             <div class="col-sm-2 mt-2">
-                                <a href="{{ route('products.create') }}" class="btn btn-primary w-100">
+                                <a href="{{ route('productss.create') }}" class="btn btn-primary w-100">
                                     <i class="fa fa-plus"></i> Add Product
                                 </a>
                             </div>
@@ -228,13 +227,6 @@
         }
     });
 
-    var cutom_url = "{{ url('/') }}";
-    if (window.location.protocol == 'https:') {
-        cutom_url = cutom_url.replace("http://", "https://");
-    } else {
-        cutom_url = cutom_url.replace("https://", "http://");
-    }
-
     $(function() {
         $(document).on('click', '.pagination a', function(event) {
             event.preventDefault();
@@ -263,7 +255,7 @@
             if (result.isConfirmed) {
                 $.ajax({
                     type: 'DELETE',
-                    url: "{{ route('products.destroy', ':id') }}".replace(':id', id),
+                    url: "{{ route('productss.destroy', ':id') }}".replace(':id', id),
                     data: {
                         tablename: tablename,
                         id: id,

@@ -20,13 +20,27 @@ class LandingpageController extends Controller
     public function CatWiseProduct($slug)
     {
         $category = Category::where('name',$slug)->where('is_deleted',0)->first();
+        $page = 1;
+        $per_page_limit = config('global.per_api_limit') ?? 6;
+        $total_record =  0;
+        $start_index = ($page - 1) * $per_page_limit;
+        $end = $start_index + $per_page_limit;
+        if ($total_record <= $end) {
+            $text_for_pagination = "Showing " . ($start_index + 1) . " to {$total_record} of {$total_record} entries";
+        } else {
+            $text_for_pagination = "Showing " . ($start_index + 1) . " to {$end} of {$total_record} entries";
+        }
+
         if($category)
         {
-            $products = Product::where('is_deleted',0)->where('cat_id',$category->id)->get();
+            $products = Product::where('is_deleted', 0)
+                        ->where('cat_id', $category->id)
+                        ->paginate($per_page_limit);
+
             $body = 'shop';
             $cat_name = $category->name;
-            $categories = Category::where('is_deleted',0)->get();
-            return view('front_end.product',compact('categories','products','body','cat_name'));
+            $categories = Category::where('is_deleted', 0)->get();
+            return view('front_end.product',compact('categories','products','body','cat_name', 'text_for_pagination'));
         }
         else
         {
