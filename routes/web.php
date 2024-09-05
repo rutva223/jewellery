@@ -39,6 +39,9 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
+Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
+Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -58,6 +61,7 @@ Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailFo
 
 Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
 Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
+
 
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
 Route::post('/verify-current-password', [AdminDashboardController::class, 'verifyCurrentPassword'])->name('verifyCurrentPassword');
