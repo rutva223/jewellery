@@ -50,4 +50,17 @@ class LandingpageController extends Controller
             return redirect()->back()->with('error','Category not found');
         }
     }
+
+    public function TermsCondition() {
+        $body = 'Terms & Condition';
+        $categories = Category::where('is_deleted',0)->get();
+        return view('front_end.terms_condition', compact('body', 'categories'));
+    }
+
+    public function PrivacyPolicy()
+    {
+        $body = 'Privacy Policy';
+        $categories = Category::where('is_deleted',0)->get();
+        return view('front_end.privacy_policy', compact('body', 'categories'));
+    }
 }

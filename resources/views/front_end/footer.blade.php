@@ -47,6 +47,21 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-lg-3 col-md-6 column-3">
+                            <div class="block block-menu">
+                                <h2 class="block-title">About Us</h2>
+                                <div class="block-content">
+                                    <ul>
+                                        <li>
+                                            <a href="{{ route('terms_condition') }}" target="_blank">Terms & Conditions</a>
+                                        </li>
+                                        <li>
+                                            <a href="{{ route('privacy_policy') }}" target="_blank">Privacy Policy</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
