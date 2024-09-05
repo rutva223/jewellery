@@ -9,8 +9,10 @@
                         </div>
                         <div class="product-thumb-hover">
                             <a href="shop-details.html">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="post-image" alt="">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1-2.jpg') }}" class="hover-image back" alt="">
+                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}"
+                                    class="post-image" alt="">
+                                <img width="600" height="600" src="{{ asset('front_end/media/product/1-2.jpg') }}"
+                                    class="hover-image back" alt="">
                             </a>
                         </div>
                         <div class="product-button">
@@ -24,7 +26,8 @@
                                 <button class="product-btn">Compare</button>
                             </div>
                             <span class="product-quickview" data-title="Quick View">
-                                <a href="#" class="quickview quickview-button">Quick View <i class="icon-search"></i></a>
+                                <a href="#" class="quickview-button" data-id="{{ $product->id }}">Quick View <i
+                                        class="icon-search"></i></a>
                             </span>
                         </div>
                     </div>
@@ -39,6 +42,7 @@
                     </div>
                 </div>
             </div>
+
         @endforeach
     </div>
 </div>
@@ -69,6 +73,7 @@
         @endif
     </ul>
 </nav>
+<script src="{{ asset('front_end/libs/slick/js/slick.min.js') }}"></script>
 
 {{-- <div class="row">
     <!-- Display pagination text -->

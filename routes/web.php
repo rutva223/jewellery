@@ -7,6 +7,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Artisan;
@@ -75,3 +76,6 @@ Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductSta
 Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
 
 require __DIR__.'/auth.php';
+
+Route::get('product',[RazorpayController::class,'index']);
+Route::post('razorpay-payment',[RazorpayController::class,'store'])->name('razorpay.payment.store');

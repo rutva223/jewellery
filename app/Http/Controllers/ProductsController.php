@@ -247,7 +247,7 @@ class ProductsController extends Controller
 
         // Pagination
         $perPage = 6; // Number of items per page
-        $page = $request->page ? : 1;
+        $page = $request->page ?: 1;
         $products = $query->paginate($perPage, ['*'], 'page', $page);
         $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
 
@@ -265,5 +265,6 @@ class ProductsController extends Controller
             }
         }
     }
+
 
 }
