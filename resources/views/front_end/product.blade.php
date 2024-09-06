@@ -238,7 +238,7 @@
                                             review)</a>
                                     </div>
                                     <div class="description">
-                                        <p>{{ $product->description }}</p>
+                                        <p>{!! $product->description !!}</p>
                                     </div>
                                     <form class="cart" method="post" enctype="multipart/form-data">
                                         <div class="quantity-button">
