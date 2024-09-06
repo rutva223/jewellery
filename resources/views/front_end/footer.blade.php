@@ -17,7 +17,7 @@
                                         </li>
                                         <li>
                                             <span>Email:</span> <a
-                                                href="mailto:support@mojuri.com">support@mojuri.com</a>
+                                                href="mailto:pavitrajewellery100@gmail.com">pavitrajewellery100@gmail.com</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -39,8 +39,7 @@
                                     <ul>
                                         @foreach ($categories as $cat)
                                             <li>
-                                                <a
-                                                    href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
+                                                <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>

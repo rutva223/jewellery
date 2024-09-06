@@ -177,7 +177,7 @@
                                                     <div class="item-image animation-horizontal">
                                                         <img width="258" height="258"
                                                             src="{{ asset('front_end/media/product/'.strtolower($cat->name)) }}.jpg"
-                                                            alt="Bracelets">
+                                                            alt="{{ $cat->name }}">
                                                     </div>
                                                 </a>
                                                 <div class="product-cat-content-info">
