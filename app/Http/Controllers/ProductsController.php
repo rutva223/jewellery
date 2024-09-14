@@ -136,8 +136,9 @@ class ProductsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Product $product)
+    public function edit(string $id)
     {
+        $product = Product::find($id);
         $categories = Category::where('is_deleted', 0)->get()->pluck('name', 'id');
 
         return view('products.edit', compact('product', 'categories'));
@@ -234,7 +235,7 @@ class ProductsController extends Controller
         return $dom->saveHTML();
     }
 
-    public function getGridView(Request $request)
+    public function getGridView1(Request $request)
     {
         $query = Product::query();
 
@@ -265,5 +266,62 @@ class ProductsController extends Controller
             }
         }
     }
+    public function filterProducts(Request $request)
+{
+    $query = Product::query();
+
+    // Apply price filter
+    $price_range = $request->price_range;
+    if ($price_range) {
+        [$min_price, $max_price] = explode(';', $price_range);
+        $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
+    }
+
+    // Apply sorting
+    $sort = $request->sort;
+    if ($sort) {
+        switch ($sort) {
+            case 'popularity':
+                $query->orderBy('sell_price', 'desc');
+                break;
+            case 'rating':
+                $query->orderBy('sell_price', 'asc');
+                break;
+            case 'latest':
+                $query->orderBy('created_at', 'desc');
+                break;
+            case 'price_low_high':
+                $query->orderBy('sell_price', 'asc');
+                break;
+            case 'price_high_low':
+                $query->orderBy('sell_price', 'desc');
+                break;
+            default:
+                $query->orderBy('id', 'desc'); // Default sorting
+                break;
+        }
+    }
+
+    // Pagination
+    $perPage = 6; // Number of items per page
+    $page = $request->page ?: 1;
+    $products = $query->paginate($perPage, ['*'], 'page', $page);
+    $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
+
+    if ($request->ajax()) {
+        if ($request->view_type == 'layout-grid') {
+            return response()->json([
+                'html' => view('front_end.grid-view', compact('products', 'text_for_pagination'))->render(),
+                'pagination' => view('front_end.pagination', compact('products'))->render()
+            ]);
+        } else {
+            return response()->json([
+                'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
+                'pagination' => view('front_end.pagination', compact('products'))->render()
+            ]);
+        }
+    }
+}
+
 
 }

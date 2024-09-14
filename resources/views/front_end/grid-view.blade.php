@@ -8,11 +8,17 @@
                             <div class="hot">Hot</div>
                         </div>
                         <div class="product-thumb-hover">
-                            <a href="shop-details.html">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}"
-                                    class="post-image" alt="">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1-2.jpg') }}"
-                                    class="hover-image back" alt="">
+                            <a href="{{ route('product_detail', $product->id) }}">
+                                @if (is_array($product->images) && count($product->images) > 0)
+                                    <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
+                                    @if (isset($product->images[1]))
+                                        <img src="{{ $product->images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                    @else
+                                        <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
+                                @endif
                             </a>
                         </div>
                         <div class="product-button">
@@ -36,7 +42,7 @@
                             <div class="rating">
                                 <div class="star star-0"></div><span class="count">(0 review)</span>
                             </div>
-                            <h3 class="product-title"><a href="shop-details.html">{{ $product->product_name }}</a></h3>
+                            <h3 class="product-title"><a href="{{ route('product_detail', $product->id) }}">{{ $product->product_name }}</a></h3>
                             <span class="price">{{ $product->sell_price }}</span>
                         </div>
                     </div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Category;
 use Illuminate\Http\Testing\File;
 
 if (!function_exists('UploadImageFolder')) {
@@ -36,6 +37,15 @@ if (!function_exists('getMailData')) {
             'from_email' => $from_email,
             'from_name' => $fromName
         ];
+    }
+
+}
+if (!function_exists('AllCategories')) {
+
+    function AllCategories()
+    {
+        $categories = Category::where('is_deleted',0)->get();
+        return $categories;
     }
 
 }

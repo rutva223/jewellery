@@ -37,7 +37,7 @@
                                 <h2 class="block-title">Catalog</h2>
                                 <div class="block-content">
                                     <ul>
-                                        @foreach ($categories as $cat)
+                                        @foreach ($all_categories as $cat)
                                             <li>
                                                 <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
                                             </li>
@@ -423,5 +423,5 @@
 <script src="{{ asset('front_end/libs/slider/js/jquery.dependClass-0.1.js') }}"></script>
 <script src="{{ asset('front_end/libs/slider/js/draggable-0.1.js') }}"></script>
 <script src="{{ asset('front_end/libs/slider/js/jquery.slider.js') }}"></script>
-<!-- Site Scripts -->
+<script src="{{ asset('front_end/libs/elevatezoom/js/jquery.elevatezoom.js') }}"></script>
 <script src="{{ asset('front_end/assets/js/app.js') }}"></script>

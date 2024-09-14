@@ -31,6 +31,10 @@ class AdminDashboardController extends Controller
         }
     }
 
+     public function login()
+    {
+        return view('auth.login');
+    }
     public function ChangesPassword()
     {
         return view('layouts.changepassword');
