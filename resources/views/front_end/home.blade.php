@@ -1,6 +1,8 @@
 @extends('front_end.app')
 @section('content')
-
+@php
+        $all_categories = AllCategories();
+    @endphp
     <div id="content" class="site-content" role="main">
         <section class="section m-b-70">
             <!-- Block Sliders -->
@@ -170,7 +172,7 @@
                                 <div class="slick-sliders content-category" data-dots="0" data-slidestoscroll="true"
                                     data-nav="1" data-columns4="2" data-columns3="3" data-columns2="3"
                                     data-columns1="5" data-columns1440="5" data-columns="5">
-                                    @foreach($categories as $cat)
+                                    @foreach($all_categories as $cat)
                                         <div class="item item-product-cat slick-slide">
                                             <div class="item-product-cat-content">
                                                 <a href="{{ route('catwiseproduct',$cat->name) }}">

@@ -11,18 +11,16 @@ class LandingpageController extends Controller
 {
     public function index()
     {
-        $categories = Category::where('is_deleted',0)->get();
         $products = Product::where('is_deleted',0)->take(4)->get();
         $body = 'home';
-        return view('front_end.home',compact('categories','products','body'));
+        return view('front_end.home',compact('products','body'));
     }
 
     public function CatWiseProduct($slug)
     {
 
         $category = Category::where('name',$slug)->where('is_deleted',0)->first();
-        $all_products = Product::where('is_deleted', 0)
-                        ->where('cat_id', $category->id)->get();
+
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
         $total_record =  0;
@@ -42,8 +40,7 @@ class LandingpageController extends Controller
 
             $body = 'shop';
             $cat_name = $category->name;
-            $categories = Category::where('is_deleted', 0)->get();
-            return view('front_end.product',compact('categories','products','all_products','body','cat_name', 'text_for_pagination'));
+            return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination'));
         }
         else
         {
@@ -52,15 +49,21 @@ class LandingpageController extends Controller
     }
 
     public function TermsCondition() {
-        $body = 'Terms & Condition';
-        $categories = Category::where('is_deleted',0)->get();
-        return view('front_end.terms_condition', compact('body', 'categories'));
+        $body = 'shop';
+        return view('front_end.terms_condition', compact('body'));
     }
 
     public function PrivacyPolicy()
     {
-        $body = 'Privacy Policy';
-        $categories = Category::where('is_deleted',0)->get();
-        return view('front_end.privacy_policy', compact('body', 'categories'));
+        $body = 'shop';
+        return view('front_end.privacy_policy', compact('body'));
+    }
+
+    public function product_detail($id)
+    {
+        $body = 'shop';
+        $product = Product::find($id);
+
+        return view('front_end.product_detail', compact('product','body'));
     }
 }

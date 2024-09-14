@@ -29,10 +29,13 @@
                                         {{-- <li class="current">
                                             <a href="shop-grid-left.html">Bracelets <span class="count">9</span></a>
                                         </li> --}}
-                                        @foreach ($categories as $cat)
+                                        @php
+                                        $all_categories = AllCategories();
+                                    @endphp
+                                        @foreach ($all_categories as $cat)
                                             <li class="current">
                                                 <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}
-                                                    <span class="count">{{ $categories->count() }}</span></a>
+                                                    <span class="count">{{ $all_categories->count() }}</span></a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -134,14 +137,15 @@
                                 <div class="products-sort dropdown">
                                     <span class="sort-toggle dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="true">Default sorting</span>
-                                    <ul class="sort-list dropdown-menu" x-placement="bottom-start">
-                                        <li class="active"><a href="shop-grid-left.html#">Default sorting</a></li>
-                                        <li><a href="shop-grid-left.html#">Sort by popularity</a></li>
-                                        <li><a href="shop-grid-left.html#">Sort by average rating</a></li>
-                                        <li><a href="shop-grid-left.html#">Sort by latest</a></li>
-                                        <li><a href="shop-grid-left.html#">Sort by price: low to high</a></li>
-                                        <li><a href="shop-grid-left.html#">Sort by price: high to low</a></li>
-                                    </ul>
+                                        <ul class="sort-list dropdown-menu">
+                                            <li class="active"><a href="#" data-sort="default">Default sorting</a></li>
+                                            <li><a href="#" data-sort="popularity">Sort by popularity</a></li>
+                                            <li><a href="#" data-sort="rating">Sort by average rating</a></li>
+                                            <li><a href="#" data-sort="latest">Sort by latest</a></li>
+                                            <li><a href="#" data-sort="price_low_high">Sort by price: low to high</a></li>
+                                            <li><a href="#" data-sort="price_high_low">Sort by price: high to low</a></li>
+                                        </ul>
+
                                 </div>
                                 <ul class="layout-toggle nav nav-tabs">
                                     <li class="nav-item">
@@ -182,88 +186,7 @@
             </div>
         </div>
     </div>
-    @foreach ($all_products as $product)
-        <div class="quickview-popup quickview-popup_{{ $product->id }}">
-            <div class="quickview-container">
-                <a href="index.html#" class="quickview-close"></a>
-                <div class="quickview-notices-wrapper"></div>
-                <div class="product single-product product-type-simple">
-                    <div class="product-detail">
-                        <div class="row">
-                            <div class="img-quickview">
-                                <div class="product-images-slider">
-                                    <div id="quickview-slick-carousel">
-                                        <div class="images">
-                                            <div class="scroll-image">
-                                                <div class="slick-wrap">
-                                                    <div class="slick-sliders image-additional" data-dots="true"
-                                                        data-columns4="1" data-columns3="1" data-columns2="1"
-                                                        data-columns1="1" data-columns="1" data-nav="true">
-                                                        <div class="img-thumbnail slick-slide">
-                                                            <a href="#" class="image-scroll" title="">
-                                                                <img width="900" height="900"
-                                                                    src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                                    alt="">
-                                                            </a>
-                                                        </div>
-                                                        <div class="img-thumbnail slick-slide">
-                                                            <a href="#" class="image-scroll" title="">
-                                                                <img width="900" height="900"
-                                                                    src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                                    alt="">
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="quickview-single-info">
-                                <div class="product-content-detail entry-summary">
-                                    <h1 class="product-title entry-title">{{ $product->product_name }}</h1>
-                                    <div class="price-single">
-                                        <div class="price">
-                                            <del><span>{{ $product->sell_price }}</span></del>
-                                            <span>{{ $product->sell_price }}</span>
-                                        </div>
-                                    </div>
-                                    <div class="product-rating">
-                                        <div class="star-rating" role="img" aria-label="Rated 4.00 out of 5">
-                                            <span style="width:80%">Rated <strong class="rating">4.00</strong> out of 5
-                                                based on <span class="rating">1</span> customer rating</span>
-                                        </div>
-                                        <a href="index.html#" class="review-link">(<span class="count">1</span> customer
-                                            review)</a>
-                                    </div>
-                                    <div class="description">
-                                        <p>{!! $product->description !!}</p>
-                                    </div>
-                                    <form class="cart" method="post" enctype="multipart/form-data">
-                                        <div class="quantity-button">
-                                            <div class="quantity">
-                                                <button type="button" class="plus">+</button>
-                                                <input type="number" class="input-text qty text" step="1"
-                                                    min="1" max="" name="quantity" value="1"
-                                                    title="Qty" size="4" placeholder="" inputmode="numeric"
-                                                    autocomplete="off">
-                                                <button type="button" class="minus">-</button>
-                                            </div>
-                                            <button type="submit" class="single-add-to-cart-button button alt">Add to
-                                                cart</button>
-                                        </div>
-                                        <button class="button quick-buy">Buy It Now</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="clearfix"></div>
-            </div>
-        </div>
-    @endforeach
+
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 

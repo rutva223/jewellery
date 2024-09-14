@@ -24,10 +24,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-
-Route::get('/', [LandingpageController::class, 'index'])->name('home');
-
-
 Route::get('/cacheclear', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:clear');
@@ -39,12 +35,26 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
+    Route::resource('productss', ProductsController::class);
+    Route::resource('category', CategoryController::class);
+
+    Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
+    Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
+
+    Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
+    Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
+    Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
+});
 Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
 Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
+Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
+Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/admin/login', [AdminDashboardController::class, 'login'])->name('admin.login');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -54,32 +64,25 @@ Route::middleware('auth')->group(function () {
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');
 Route::post('otpResend', [CommonController::class, 'otpResend'])->name('otpResend');
-Route::resource('category', CategoryController::class);
 Route::get('changes-password', [AdminDashboardController::class, 'ChangesPassword'])->name('changes-password');
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
-Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
-Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
 
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
 Route::post('/verify-current-password', [AdminDashboardController::class, 'verifyCurrentPassword'])->name('verifyCurrentPassword');
 
-Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
-Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
-Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
 
-Route::resource('productss', ProductsController::class);
 Route::Post('/get-grid-view', [ProductsController::class, 'getGridView'])->name('get-grid-view');
 Route::Post('/get-list-view', [ProductsController::class, 'getListView'])->name('get-list-view');
 
-Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
-Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
+
 
 Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
 
 Route::get('product',[RazorpayController::class,'index']);
-Route::post('razorpay-payment',[RazorpayController::class,'store'])->name('razorpay.payment.store');
+Route::post('razorpay-payment', [RazorpayController::class, 'store'])->name('razorpay.payment.store');
+Route::get('/', [LandingpageController::class, 'index'])->name('home');

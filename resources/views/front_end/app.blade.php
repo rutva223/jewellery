@@ -1,5 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
+    @php
+        $all_categories = AllCategories();
+    @endphp
 	@include('front_end.head_link')
 
 	<body class="{{ $body }}">

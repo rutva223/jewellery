@@ -81,17 +81,16 @@ class CommonController extends Controller
         // $encrypt_otp = 123456;
 
         $admin = User::where('email', $email)->where('is_deleted', 0)->first();
-
-        if ($admin && Hash::check($password, $admin->password)) {
-
-            Session()->put('email', $admin->email);
+        Session()->put('email', $admin->email);
             Session()->put('admin_name', $admin->name);
             Session()->put('admin_id', $admin->id);
             Session()->put('login_id', $admin->id);
             Session()->put('admin_email', $admin->email);
             Session()->put('a_type', 1);
-
             return redirect()->route('dashboard');
+        if ($admin && Hash::check($password, $admin->password)) {
+
+
 
             // $admin->update(['email_otp' => $encrypt_otp]);
 
