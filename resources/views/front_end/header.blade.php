@@ -131,9 +131,9 @@
                                 <nav id="main-navigation">
                                     <ul id="menu-main-menu" class="menu">
                                         <li class="level-0 menu-item current-menu-item">
-                                            <a href="index.html">Logo</a>
+                                            <a href="{{ route('home') }}">Logo</a>
                                         </li>
-                                        <li class="level-0 menu-item menu-item-has-children">
+                                        {{-- <li class="level-0 menu-item menu-item-has-children">
                                             <a href="shop-grid-left.html"><span class="menu-item-text">Shop</span></a>
                                             <ul class="sub-menu">
                                                 <li class="level-1 menu-item menu-item-has-children">
@@ -186,13 +186,13 @@
 
 
                                             </ul>
-                                        </li>
-                                        @foreach ($all_categories as $cat)
-                                        <li class="level-0 menu-item">
-                                            <a href="{{ route('catwiseproduct',$cat->name) }}"><span
-                                                    class="menu-item-text">{{ $cat->name }}</span></a>
-                                        </li>
-                                    @endforeach
+                                        </li> --}}
+                                        @foreach ($categories as $cat)
+                                            <li class="level-0 menu-item">
+                                                <a href="{{ route('catwiseproduct',$cat->name) }}"><span
+                                                        class="menu-item-text">{{ $cat->name }}</span></a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </nav>
                             </div>
@@ -213,33 +213,28 @@
                                             <div class="active-login"></div>
                                             <div class="box-content">
                                                 <div class="form-login active">
-                                                    <form id="login_ajax" method="post" class="login">
+                                                    <form action="{{ route('fronted-user') }}" id="login_ajax" method="post" class="login">
+                                                        @csrf
                                                         <h2>Sign in</h2>
                                                         <p class="status"></p>
                                                         <div class="content">
-                                                            <div class="username">
-                                                                <input type="text" required="required"
-                                                                    class="input-text" name="username" id="username"
-                                                                    placeholder="Your name" />
+                                                            <div class="email">
+                                                                <input type="email" required="required"
+                                                                    class="input-text" name="email" id="email"
+                                                                    placeholder="Your Email" />
                                                             </div>
                                                             <div class="password">
                                                                 <input class="input-text" required="required"
                                                                     type="password" name="password" id="password"
                                                                     placeholder="Password" />
                                                             </div>
-                                                            <div class="rememberme-lost">
-                                                                <div class="rememberme">
-                                                                    <input name="rememberme" type="checkbox"
-                                                                        id="rememberme" value="forever" />
-                                                                    <label for="rememberme" class="inline">Remember
-                                                                        me</label>
-                                                                </div>
+                                                            {{-- <div class="rememberme-lost">
                                                                 <div class="lost_password">
-                                                                    <a
-                                                                        href="https://caketheme.com/html/mojuri/forgot-password.html">Lost
-                                                                        your password?</a>
+                                                                    <a href="{{ route('forgot-pass') }}">
+                                                                        Lost your password?
+                                                                    </a>
                                                                 </div>
-                                                            </div>
+                                                            </div> --}}
                                                             <div class="button-login">
                                                                 <input type="submit" class="button" name="login"
                                                                     value="Login" />
@@ -249,7 +244,8 @@
                                                     </form>
                                                 </div>
                                                 <div class="form-register">
-                                                    <form method="post" class="register">
+                                                    <form action="{{ route('register-user') }}" method="post" class="register">
+                                                        @csrf
                                                         <h2>REGISTER</h2>
                                                         <div class="content">
                                                             <div class="email">

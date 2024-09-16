@@ -30,8 +30,8 @@
                                             <a href="shop-grid-left.html">Bracelets <span class="count">9</span></a>
                                         </li> --}}
                                         @php
-                                        $all_categories = AllCategories();
-                                    @endphp
+                                            $all_categories = AllCategories();
+                                        @endphp
                                         @foreach ($all_categories as $cat)
                                             <li class="current">
                                                 <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}
@@ -176,9 +176,6 @@
                                     ])
                                 </div>
 
-                                {{-- <div id="pagination-container">
-                                    @include('front_end.pagination', ['products' => $products])
-                                </div> --}}
                             </div>
                         </div>
                     </div>

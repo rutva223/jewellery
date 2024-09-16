@@ -198,7 +198,7 @@
             </div>
         </section>
 
-        <section class="section background-img bg-img-1 m-b-70">
+        {{-- <section class="section background-img bg-img-1 m-b-70">
             <!-- Block Intro -->
             <div class="block block-intro">
                 <div class="row">
@@ -294,7 +294,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <section class="section section-padding m-b-70">
             <div class="section-container large">
@@ -636,7 +636,7 @@
             </div>
         </section>
 
-        <section class="section section-padding background-img bg-img-2 m-b-70 p-t-140 p-b-70 m-t-n-130">
+        {{-- <section class="section section-padding background-img bg-img-2 m-b-70 p-t-140 p-b-70 m-t-n-130">
             <div class="section-container">
                 <!-- Block Testimonial -->
                 <div class="block block-testimonial layout-2">
@@ -759,7 +759,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
 
         <section class="section section-padding m-b-80">
             <div class="section-container">
