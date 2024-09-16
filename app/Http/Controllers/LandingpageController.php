@@ -18,8 +18,14 @@ class LandingpageController extends Controller
 
     public function CatWiseProduct($slug)
     {
+        $category = Category::where('name', $slug)->where('is_deleted',0)->first();
 
+<<<<<<< Updated upstream
         $category = Category::where('name',$slug)->where('is_deleted',0)->first();
+=======
+        $all_products = Product::where('is_deleted', 0)
+                        ->where('cat_id', $category->id)->get();
+>>>>>>> Stashed changes
 
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
@@ -40,7 +46,12 @@ class LandingpageController extends Controller
 
             $body = 'shop';
             $cat_name = $category->name;
-            return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination'));
+            $categories = Category::where('is_deleted', 0)
+                ->withCount(['products' => function ($query) {
+                    $query->where('is_deleted', 0);
+                }])->get();
+
+            return view('front_end.product',compact('categories','products','all_products','body','cat_name', 'text_for_pagination'));
         }
         else
         {

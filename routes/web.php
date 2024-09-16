@@ -1,14 +1,13 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\FrontedUserController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RazorpayController;
-use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubscriberController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -35,20 +34,6 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
-
-
-Route::group(['prefix' => 'admin'], function () {
-    Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
-    Route::resource('productss', ProductsController::class);
-    Route::resource('category', CategoryController::class);
-
-    Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
-    Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
-
-    Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
-    Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
-    Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
-});
 Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
 Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
 Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
@@ -68,6 +53,8 @@ Route::get('changes-password', [AdminDashboardController::class, 'ChangesPasswor
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
+Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
+Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
 
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
