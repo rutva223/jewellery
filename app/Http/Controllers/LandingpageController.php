@@ -13,14 +13,17 @@ class LandingpageController extends Controller
     {
         $products = Product::where('is_deleted',0)->take(4)->get();
         $body = 'home';
-        return view('front_end.home',compact('products','body'));
+
+        $categories = Category::where('is_deleted',0)->get();
+        return view('front_end.home',compact('products','body', 'categories'));
     }
 
     public function CatWiseProduct($slug)
     {
         $category = Category::where('name', $slug)->where('is_deleted',0)->first();
 
-
+        $all_products = Product::where('is_deleted', 0)
+                        ->where('cat_id', $category->id)->get();
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
         $total_record =  0;
