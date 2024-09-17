@@ -213,7 +213,7 @@
                                             <div class="active-login"></div>
                                             <div class="box-content">
                                                 <div class="form-login active">
-                                                    <form action="{{ route('fronted-user') }}" id="login_ajax" method="post" class="login">
+                                                    <form action="{{ route('user-login') }}" id="login_ajax" method="post" class="login">
                                                         @csrf
                                                         <h2>Sign in</h2>
                                                         <p class="status"></p>
@@ -244,7 +244,7 @@
                                                     </form>
                                                 </div>
                                                 <div class="form-register">
-                                                    <form action="{{ route('register-user') }}" method="post" class="register">
+                                                    <form action="{{ route('user-register') }}" method="post" class="register">
                                                         @csrf
                                                         <h2>REGISTER</h2>
                                                         <div class="content">
