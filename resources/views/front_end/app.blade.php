@@ -7,7 +7,7 @@
 
 	<body class="{{ $body }}">
 		<div id="page" class="hfeed page-wrapper">
-            @include('front_end.header')
+            @include('front_end.header',compact('all_categories'))
 			<div id="site-main" class="site-main">
 				<div id="main-content" class="main-content">
 					<div id="primary" class="content-area">

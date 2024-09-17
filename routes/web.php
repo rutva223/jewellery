@@ -39,12 +39,19 @@ Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->
 Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
 Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
-Route::get('/admin/login', [AdminDashboardController::class, 'login'])->name('admin.login');
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
+    Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
+    Route::resource('productss', ProductsController::class);
+    Route::resource('category', CategoryController::class);
+
+    Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
+    Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
+
+    Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
+    Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
+    Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
 });
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');
@@ -53,7 +60,6 @@ Route::get('changes-password', [AdminDashboardController::class, 'ChangesPasswor
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
-Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
 Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
 
