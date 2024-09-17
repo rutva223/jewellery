@@ -20,12 +20,6 @@ class LandingpageController extends Controller
     {
         $category = Category::where('name', $slug)->where('is_deleted',0)->first();
 
-<<<<<<< Updated upstream
-        $category = Category::where('name',$slug)->where('is_deleted',0)->first();
-=======
-        $all_products = Product::where('is_deleted', 0)
-                        ->where('cat_id', $category->id)->get();
->>>>>>> Stashed changes
 
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
@@ -51,7 +45,7 @@ class LandingpageController extends Controller
                     $query->where('is_deleted', 0);
                 }])->get();
 
-            return view('front_end.product',compact('categories','products','all_products','body','cat_name', 'text_for_pagination'));
+            return view('front_end.product',compact('categories','products','body','cat_name', 'text_for_pagination'));
         }
         else
         {
