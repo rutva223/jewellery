@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Hash;
 
 class FrontedUserController extends Controller
 {
-    public function FrontedUser(Request $request)
+    public function FrontedUserLogin(Request $request)
     {
         try {
             $new_user = FrontedUser::where('email', $request->email)->first();

@@ -33,12 +33,13 @@ Route::get('/cacheclear', function () {
     // dd("Done");
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
-
+Route::get('/', [LandingpageController::class, 'index'])->name('home');
 Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
 Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
 Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
 Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
-
+Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->name('user-login');
+Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
@@ -78,4 +79,3 @@ require __DIR__ . '/auth.php';
 
 Route::get('product',[RazorpayController::class,'index']);
 Route::post('razorpay-payment', [RazorpayController::class, 'store'])->name('razorpay.payment.store');
-Route::get('/', [LandingpageController::class, 'index'])->name('home');
