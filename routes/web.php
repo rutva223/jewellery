@@ -37,7 +37,7 @@ Route::get('/', [LandingpageController::class, 'index'])->name('home');
 Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
 Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
 Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
-Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
+Route::get('cat-product/{slug?}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->name('user-login');
 Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 

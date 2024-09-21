@@ -137,27 +137,29 @@
                                 <div class="products-sort dropdown">
                                     <span class="sort-toggle dropdown-toggle" data-toggle="dropdown"
                                         aria-expanded="true">Default sorting</span>
-                                        <ul class="sort-list dropdown-menu">
-                                            <li class="active"><a href="#" data-sort="default">Default sorting</a></li>
-                                            <li><a href="#" data-sort="popularity">Sort by popularity</a></li>
-                                            <li><a href="#" data-sort="rating">Sort by average rating</a></li>
-                                            <li><a href="#" data-sort="latest">Sort by latest</a></li>
-                                            <li><a href="#" data-sort="price_low_high">Sort by price: low to high</a></li>
-                                            <li><a href="#" data-sort="price_high_low">Sort by price: high to low</a></li>
-                                        </ul>
+                                    <ul class="sort-list dropdown-menu">
+                                        <li class="active"><a href="#" data-sort="default">Default sorting</a></li>
+                                        <li><a href="#" data-sort="popularity">Sort by popularity</a></li>
+                                        <li><a href="#" data-sort="rating">Sort by average rating</a></li>
+                                        <li><a href="#" data-sort="latest">Sort by latest</a></li>
+                                        <li><a href="#" data-sort="price_low_high">Sort by price: low to high</a></li>
+                                        <li><a href="#" data-sort="price_high_low">Sort by price: high to low</a></li>
+                                    </ul>
 
                                 </div>
                                 <ul class="layout-toggle nav nav-tabs">
                                     <li class="nav-item">
                                         <a class="layout-grid nav-link active" data-toggle="tab" href="#layout-grid"
-                                            type="layout-grid" role="tab"><span class="icon-column"><span
+                                            type="layout-grid" role="tab" cat-id="{{ $cat_id }}"><span
+                                                class="icon-column"><span
                                                     class="layer first"><span></span><span></span><span></span></span><span
                                                     class="layer middle"><span></span><span></span><span></span></span><span
                                                     class="layer last"><span></span><span></span><span></span></span></span></a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="layout-list nav-link" data-toggle="tab" href="#layout-list"
-                                            role="tab" type="layout-list"><span class="icon-column"><span
+                                            role="tab" type="layout-list" cat-id="{{ $cat_id }}"><span
+                                                class="icon-column"><span
                                                     class="layer first"><span></span><span></span></span><span
                                                     class="layer middle"><span></span><span></span></span><span
                                                     class="layer last"><span></span><span></span></span></span></a>
@@ -183,44 +185,35 @@
             </div>
         </div>
     </div>
-
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+
+<!-- Ion Range Slider JS -->
+<script src="https://cdn.jsdelivr.net/npm/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 @push('after-scripts')
+<!-- Ion Range Slider CSS -->
+
     <script>
         $(document).ready(function() {
+
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-            $(document).on('click', '.quickview-button', function(e) {
-                e.preventDefault();
-
-                var productId = $(this).data('id');
-
-                // Show the quick view popup
-                $('.quickview-popup_' + productId).addClass('active');
-
-            });
-
-
-            // Handle Quick View close button click
-            $(document).on('click', '.quickview-close', function(e) {
-                e.preventDefault();
-                $('.quickview-popup').hide();
-            });
 
 
             // Function to load content via AJAX
-            function loadContent(page, view_type) {
+            function loadContent(page, view_type, cat_id, priceRange = null) {
                 $.ajax({
                     url: "{{ route('get-grid-view') }}",
                     type: 'post',
                     data: {
                         page: page,
-                        view_type: view_type
+                        view_type: view_type,
+                        cat_id: cat_id,
+                        price_range: priceRange // Send the price range to the server
                     },
                     success: function(response) {
                         $('#products-container').html(response.html);
@@ -231,16 +224,35 @@
                     }
                 });
             }
+            $("#price-filter").ionRangeSlider({
+                type: "double",
+                min: 0,
+                max: 100,
+                from: 0,
+                to: 100,
+                grid: true,
+                onFinish: function(data) {
+                    // Extract the min and max values from the slider
+                    var priceRange = data.from + ";" + data.to;
+                    var page = 1; // Reset to the first page
+                    var view_type = $('.layout-toggle .active').attr('type');
+                    var cat_id = $('.layout-toggle .active').attr('cat-id');
 
+                    // Call your function with the new price range
+                    loadContent(page, view_type, cat_id, priceRange);
+                }
+            });
+            var cat_id = "{{ $cat_id }}";
             // Load the initial content on page load
-            loadContent(1, 'layout-grid');
+            loadContent(1, 'layout-grid', cat_id);
 
             // Event listener for pagination click
             $(document).on('click', '.pagination a', function(e) {
                 e.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];
                 var view_type = $('.layout-toggle .active').attr('type');
-                loadContent(page, view_type);
+                var cat_id = $('.layout-toggle .active').attr('cat-id');
+                loadContent(page, view_type, cat_id);
             });
 
             // Event listener for layout toggle
@@ -250,7 +262,8 @@
                 $(this).addClass('active');
 
                 var type = $(this).attr('type');
-                loadContent(1, type); // Load the first page of the selected view type
+                var cat_id = $(this).attr('cat-id');
+                loadContent(1, type, cat_id); // Load the first page of the selected view type
             });
         });
     </script>
