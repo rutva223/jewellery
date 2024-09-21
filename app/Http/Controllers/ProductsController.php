@@ -235,15 +235,20 @@ class ProductsController extends Controller
         return $dom->saveHTML();
     }
 
-    public function getGridView1(Request $request)
+    public function getGridView(Request $request)
     {
+        $cat_id = $request->cat_id;
         $query = Product::query();
+
+        if($cat_id != null) {
+            $query->where('cat_id', $cat_id);
+        }
 
         // Apply price filter
         $price_range = $request->price_range;
         if ($price_range) {
             [$min_price, $max_price] = explode(';', $price_range);
-            $query->whereBetween('price', [(float)$min_price, (float)$max_price]);
+            $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
         }
 
         // Pagination

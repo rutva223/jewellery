@@ -18,12 +18,19 @@ class LandingpageController extends Controller
         return view('front_end.home',compact('products','body', 'categories'));
     }
 
-    public function CatWiseProduct($slug)
+    public function CatWiseProduct($slug = null)
     {
-        $category = Category::where('name', $slug)->where('is_deleted',0)->first();
+        if($slug)
+        {
+            $category = Category::where('name', $slug)->where('is_deleted',0)->first();
+        }
 
-        $all_products = Product::where('is_deleted', 0)
-                        ->where('cat_id', $category->id)->get();
+        $all_products = Product::where('is_deleted', 0);
+        if(isset($category))
+        {
+
+            $all_products = $all_products->where('cat_id', $category->id);
+        }
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
         $total_record =  0;
@@ -35,25 +42,15 @@ class LandingpageController extends Controller
             $text_for_pagination = "Showing " . ($start_index + 1) . " to {$end} of {$total_record} entries";
         }
 
-        if($category)
-        {
-            $products = Product::where('is_deleted', 0)
-                        ->where('cat_id', $category->id)
-                        ->paginate($per_page_limit);
+            $products = $all_products->paginate($per_page_limit);
 
             $body = 'shop';
-            $cat_name = $category->name;
-            $categories = Category::where('is_deleted', 0)
-                ->withCount(['products' => function ($query) {
-                    $query->where('is_deleted', 0);
-                }])->get();
+            $cat_name = !empty($category) ? $category->name : 'All Products';
+            $cat_id = !empty($category) ? $category->id : null;
 
-            return view('front_end.product',compact('categories','products','body','cat_name', 'text_for_pagination'));
-        }
-        else
-        {
-            return redirect()->back()->with('error','Category not found');
-        }
+
+        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id'));
+
     }
 
     public function TermsCondition() {
