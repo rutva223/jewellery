@@ -18,6 +18,12 @@ class FrontedUserController extends Controller
                 $new_user->last_login = Carbon::now();
                 $new_user->save();
 
+                session()->put('admin_name', $new_user->name);
+                session()->put('admin_id', $new_user->id);
+                session()->put('login_id', $new_user->id);
+                session()->put('admin_email', $new_user->email);
+                session()->put('a_type', 1);
+
                 return redirect()->back()->with('success', 'Login Successfully!');
             } else {
                 return redirect()->back()->with('error', 'This Email not Found!');
@@ -51,5 +57,10 @@ class FrontedUserController extends Controller
     public function ForgotPassword(Request $request)
     {
         dd($request->all());
+    }
+
+    public function FrontedUserLogout()
+    {
+        dd('logout user');
     }
 }

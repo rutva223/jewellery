@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
-use Egulias\EmailValidator\Parser\IDLeftPart;
-use Illuminate\Http\Request;
+use App\Models\Wishlist;
+use Illuminate\Support\Facades\Session;
 
 class LandingpageController extends Controller
 {
@@ -15,7 +15,12 @@ class LandingpageController extends Controller
         $body = 'home';
 
         $categories = Category::where('is_deleted',0)->get();
-        return view('front_end.home',compact('products','body', 'categories'));
+
+        $user_id = Session::has('login_id');
+        $wishlistItems = Wishlist::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
+
+        return view('front_end.home',compact('products','body', 'categories', 'wishlistItems'));
     }
 
     public function CatWiseProduct($slug = null)
@@ -42,15 +47,17 @@ class LandingpageController extends Controller
             $text_for_pagination = "Showing " . ($start_index + 1) . " to {$end} of {$total_record} entries";
         }
 
-            $products = $all_products->paginate($per_page_limit);
+        $products = $all_products->paginate($per_page_limit);
 
-            $body = 'shop';
-            $cat_name = !empty($category) ? $category->name : 'All Products';
-            $cat_id = !empty($category) ? $category->id : null;
+        $body = 'shop';
+        $cat_name = !empty($category) ? $category->name : 'All Products';
+        $cat_id = !empty($category) ? $category->id : null;
 
+        $user_id = Session::has('login_id');
+        $wishlistItems = Wishlist::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
 
-        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id'));
-
+        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems'));
     }
 
     public function TermsCondition() {

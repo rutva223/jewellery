@@ -39,7 +39,7 @@
                                     <ul>
                                         @foreach ($all_categories as $cat)
                                             <li>
-                                                <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
+                                                <a href="#">{{ $cat->name }}</a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -124,7 +124,7 @@
 </div>
 
 <!-- Wishlist -->
-<div class="wishlist-popup">
+{{-- <div class="wishlist-popup">
     <div class="wishlist-popup-inner">
         <div class="wishlist-popup-content">
             <div class="wishlist-popup-content-top">
@@ -208,7 +208,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <!-- Compare -->
 <div class="compare-popup">
@@ -374,33 +374,6 @@
             </div>
         </div>
     </div>
-</div>
-
-<!-- Quickview -->
-
-
-<!-- Newsletter Popup -->
-{{-- <div class="popup-shadow"></div> --}}
-<div class="newsletter-popup">
-    <a href="index.html#" class="newsletter-close"></a>
-    {{-- <div class="newsletter-container">
-    <div class="newsletter-img">
-        <img src="{{ asset('front_end/media/banner/newsletter-popup.jpg')}}" alt="">
-    </div>
-    <div class="newsletter-form">
-        <form action="index.html" method="post">
-            <div class="newsletter-title">
-                <div class="title">Get<br> free shipping</div>
-                <div class="sub-title">on your first order. Offer ends soon.</div>
-            </div>
-            <div class="newsletter-input clearfix">
-                <input type="email" name="your-email" size="40" class="form-control" placeholder="Enter Your Email ...">
-                <input type="submit" value="Subscribe" class="form-control">
-             </div>
-             <div class="newsletter-no">no thanks !</div>
-        </form>
-    </div>
-</div> --}}
 </div>
 
 <!-- Page Loader -->
