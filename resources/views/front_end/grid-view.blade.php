@@ -52,7 +52,8 @@
                                 <div class="star star-0"></div><span class="count">(0 review)</span>
                             </div>
                             <h3 class="product-title"><a href="{{ route('product_detail', $product->id) }}">{{ $product->product_name }}</a></h3>
-                            <span class="price">{{ $product->sell_price }}</span>
+                            <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
+                            <ins><span class="price">₹{{ $product->sell_price }}</span></ins>
                         </div>
                     </div>
                 </div>

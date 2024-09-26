@@ -26,7 +26,10 @@
                 <div class="col-md-8">
                     <div class="products-content">
                         <h3 class="product-title"><a href="shop-details.html">{{ $product->product_name }}</a></h3>
-                        <span class="price">{{ $product->sell_price }}</span>
+                        <span class="price">
+                            <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
+                            <ins><span class="price">₹{{ $product->sell_price }}</span></ins>
+                        </span>
                         <div class="rating">
                             <div class="star star-5"></div>
                             <div class="review-count">
