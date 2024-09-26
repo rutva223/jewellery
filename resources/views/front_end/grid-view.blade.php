@@ -5,7 +5,7 @@
                 <div class="products-entry clearfix product-wapper">
                     <div class="products-thumb">
                         <div class="product-lable">
-                            <div class="hot">Hot</div>
+                            <div class="hot">SAVE ₹{{ $product->discount }}</div>
                         </div>
                         <div class="product-thumb-hover">
                             <a href="{{ route('product_detail', $product->id) }}">

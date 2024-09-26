@@ -1,5 +1,54 @@
 @extends('front_end.app')
 @section('content')
+    <style>
+        .price-range-slider {
+            width: 100%;
+            float: left;
+            padding: 10px 20px;
+
+            .range-value {
+                margin: 0;
+
+                input {
+                    width: 100%;
+                    background: none;
+                    color: #000;
+                    font-size: 16px;
+                    font-weight: initial;
+                    box-shadow: none;
+                    border: none;
+                    margin: 20px 0 20px 0;
+                }
+            }
+
+            .range-bar {
+                border: none;
+                background: #000;
+                height: 3px;
+                width: 96%;
+                margin-left: 8px;
+
+                .ui-slider-range {
+                    background: #06b9c0;
+                }
+
+                .ui-slider-handle {
+                    border: none;
+                    border-radius: 25px;
+                    background: #fff;
+                    border: 2px solid #06b9c0;
+                    height: 17px;
+                    width: 17px;
+                    top: -0.52em;
+                    cursor: pointer;
+                }
+
+                .ui-slider-handle+span {
+                    background: #06b9c0;
+                }
+            }
+        }
+    </style>
     <div id="title" class="page-title">
         <div class="section-container">
             <div class="content-title-heading">
@@ -52,14 +101,37 @@
                                 <div id="slider-range" class="price-filter-wrap">
                                     <div class="filter-item price-filter">
                                         <div class="layout-slider">
-                                            <input id="price-filter" name="price" value="0;100" />
+                                            <input id="price-filter" name="price" readonly />
                                         </div>
                                         <div class="layout-slider-settings"></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
+                        <div class="product-widget product-price-widget">
+                            <div class="pro-itm has-children">
+                                <a href="javascript:;" class="acnav-label"> {{ __('price') }} </a>
+                                <div class="pro-itm-inner acnav-list">
+                                    <div class="price-select d-flex">   
+                                        <div class="select-col">
+                                            <p>
+                                                {{ __('min price') }} : <span class="min_price_select"
+                                                    price="0">₹ {{ 0 }}</span>
+                                            </p>
+                                        </div>
+                                        <div class="select-col">
+                                            <p>{{ __('max price') }} : <span class="max_price_select"
+                                                    price="100">₹100 </span> </p>
+                                        </div>
+                                    </div>
+                                    <div id="range-slider">
+                                        <div id="slider-range" class="slider-range" min_price="0"
+                                            max_price="100" price_step="1"
+                                            currency="₹"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <!-- Block Products -->
                         <div class="block block-products">
                             <div class="block-title">
@@ -187,14 +259,32 @@
     </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
 
 <!-- Ion Range Slider JS -->
 <script src="https://cdn.jsdelivr.net/npm/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 @push('after-scripts')
-<!-- Ion Range Slider CSS -->
+    <!-- Ion Range Slider CSS -->
 
     <script>
+        $(function() {
+            $("#slider-range").slider({
+                range: true, // Enable range selection
+                min: 0, // Minimum value
+                max: 100, // Maximum value
+                values: [0, 100], // Initial values
+                slide: function(event, ui) {
+                    // Show the selected range values while sliding
+                    $("#price-filter").val(ui.values[0] + " - " + ui.values[1]);
+                }
+            });
+            // Set the initial range display
+            $("#price-filter").val($("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider(
+                "values", 1));
+        });
+
         $(document).ready(function() {
 
             $.ajaxSetup({
@@ -224,24 +314,7 @@
                     }
                 });
             }
-            $("#price-filter").ionRangeSlider({
-                type: "double",
-                min: 0,
-                max: 100,
-                from: 0,
-                to: 100,
-                grid: true,
-                onFinish: function(data) {
-                    // Extract the min and max values from the slider
-                    var priceRange = data.from + ";" + data.to;
-                    var page = 1; // Reset to the first page
-                    var view_type = $('.layout-toggle .active').attr('type');
-                    var cat_id = $('.layout-toggle .active').attr('cat-id');
 
-                    // Call your function with the new price range
-                    loadContent(page, view_type, cat_id, priceRange);
-                }
-            });
             var cat_id = "{{ $cat_id }}";
             // Load the initial content on page load
             loadContent(1, 'layout-grid', cat_id);
