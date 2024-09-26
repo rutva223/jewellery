@@ -72,7 +72,6 @@ Route::get('changes-password', [AdminDashboardController::class, 'ChangesPasswor
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
-Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 
 
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');

@@ -175,7 +175,7 @@
                                     @foreach($all_categories as $cat)
                                         <div class="item item-product-cat slick-slide">
                                             <div class="item-product-cat-content">
-                                                <a href="#">
+                                                <a href="{{ route('catwiseproduct', $cat->name) }}">
                                                     <div class="item-image animation-horizontal">
                                                         <img width="258" height="258"
                                                             src="{{ asset('front_end/media/product/'.strtolower($cat->name)) }}.jpg"
