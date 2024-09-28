@@ -8,20 +8,28 @@
                             <div class="hot">Hot</div>
                         </div>
                         <div class="product-thumb-hover">
-                            <a href="shop-details.html">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="post-image" alt="">
-                                <img width="600" height="600" src="{{ asset('front_end/media/product/1.jpg') }}" class="hover-image back" alt="">
+                            <a href="{{ route('product_detail', $product->id) }}">
+                                @if (is_array($product->images) && count($product->images) > 0)
+                                    <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
+                                    @if (isset($product->images[1]))
+                                        <img src="{{ $product->images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                    @else
+                                        <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                    @endif
+                                @else
+                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
+                                @endif
                             </a>
                         </div>
-                        <span class="product-quickview" data-title="Quick View">
-                            <a href="#" class="quickview quickview-button">Quick View <i class="icon-search"></i></a>
-                        </span>
                     </div>
                 </div>
                 <div class="col-md-8">
                     <div class="products-content">
                         <h3 class="product-title"><a href="shop-details.html">{{ $product->product_name }}</a></h3>
-                        <span class="price">{{ $product->sell_price }}</span>
+                        <span class="price">
+                            <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
+                            <ins><span class="price">₹{{ $product->sell_price }}</span></ins>
+                        </span>
                         <div class="rating">
                             <div class="star star-5"></div>
                             <div class="review-count">

@@ -1,4 +1,4 @@
-@extends('front_end.app')
+\@extends('front_end.app')
 @section('content')
 @php
         $all_categories = AllCategories();
@@ -327,8 +327,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="product-button">
-                                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                                            <a rel="nofollow" href="#"
+                                                        <div class="btn-add-to-cart" data-title="Add to cart">
+                                                            <a rel="nofollow" href="index.html#"
                                                                 class="product-btn button">Add to cart</a>
                                                         </div>
                                                         <div class="btn-wishlist" data-title="Wishlist">
@@ -376,8 +376,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="product-button">
-                                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                                            <a rel="nofollow" href="#"
+                                                        <div class="btn-add-to-cart" data-title="Add to cart">
+                                                            <a rel="nofollow" href="index.html#"
                                                                 class="product-btn button">Add to cart</a>
                                                         </div>
                                                         <div class="btn-wishlist" data-title="Wishlist">
@@ -427,8 +427,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="product-button">
-                                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                                            <a rel="nofollow" href="#"
+                                                        <div class="btn-add-to-cart" data-title="Add to cart">
+                                                            <a rel="nofollow" href="index.html#"
                                                                 class="product-btn button">Add to cart</a>
                                                         </div>
                                                         <div class="btn-wishlist" data-title="Wishlist">
@@ -475,8 +475,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="product-button">
-                                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                                            <a rel="nofollow" href="#" 
+                                                        <div class="btn-add-to-cart" data-title="Add to cart">
+                                                            <a rel="nofollow" href="index.html#"
                                                                 class="product-btn button">Add to cart</a>
                                                         </div>
                                                         <div class="btn-wishlist" data-title="Wishlist">
@@ -526,8 +526,8 @@
                                                         </a>
                                                     </div>
                                                     <div class="product-button">
-                                                        <div class="btn-add-to-cart"  data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                                            <a rel="nofollow" href="#"
+                                                        <div class="btn-add-to-cart" data-title="Add to cart">
+                                                            <a rel="nofollow" href="index.html#"
                                                                 class="product-btn button">Add to cart</a>
                                                         </div>
                                                         <div class="btn-wishlist" data-title="Wishlist">

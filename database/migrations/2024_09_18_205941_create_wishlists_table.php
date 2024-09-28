@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('subscribers')) {
-            Schema::create('subscribers', function (Blueprint $table) {
-                $table->id();
-                $table->string('email')->nullable();
-                $table->timestamps();
-            });
-        }
+        Schema::create('wishlists', function (Blueprint $table) {
+            $table->id();
+            $table->string('user_id')->nullable();
+            $table->string('product_id')->nullable();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('subscribers');
+        Schema::dropIfExists('wishlists');
     }
 };

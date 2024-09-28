@@ -15,7 +15,7 @@ $total =[];
                     </div>
                     <div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-6 header-center">
                         <div class="site-logo">
-                            <a href="index.html">
+                            <a href="{{ route('home') }}">
                                 <img width="400" height="79" src="{{ asset('front_end/media/logo-white.png') }}"
                                     alt="Mojuri – Jewelry Store HTML Template" />
                             </a>
@@ -25,7 +25,7 @@ $total =[];
                         <div class="mojuri-topcart dropdown">
                             <div class="dropdown mini-cart top-cart">
                                 <div class="remove-cart-shadow"></div>
-                                <a class="dropdown-toggle cart-icon" href="index.html#" role="button"
+                                <a class="dropdown-toggle cart-icon" href="{{ route('home') }}" role="button"
                                     data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <div class="icons-cart"><i class="icon-large-paper-bag"></i><span
                                             class="cart-count">2</span></div>
@@ -111,7 +111,7 @@ $total =[];
 
             <!-- Wishlist -->
             <div class="wishlist-box">
-                <a href="shop-wishlist.html"><i class="fa fa-heart"></i></a>
+                <a href="{{ route('view-wishlist') }}"><i class="fa fa-heart"></i></a>
             </div>
         </div>
     </div>
@@ -136,68 +136,14 @@ $total =[];
                                 <nav id="main-navigation">
                                     <ul id="menu-main-menu" class="menu">
                                         <li class="level-0 menu-item current-menu-item">
-                                            <a href="index.html">Logo</a>
+                                            <a href="{{ route('home') }}">Logo</a>
                                         </li>
-                                        <li class="level-0 menu-item menu-item-has-children">
-                                            <a href="shop-grid-left.html"><span class="menu-item-text">Shop</span></a>
-                                            <ul class="sub-menu">
-                                                <li class="level-1 menu-item menu-item-has-children">
-                                                    <a href="shop-grid-left.html"><span class="menu-item-text">Shop -
-                                                            Products</span></a>
-                                                    <ul class="sub-menu">
-                                                        <li>
-                                                            <a href="shop-grid-left.html"><span
-                                                                    class="menu-item-text">Shop Grid - Left
-                                                                    Sidebar</span></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-list-left.html"><span
-                                                                    class="menu-item-text">Shop List - Left
-                                                                    Sidebar</span></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-grid-right.html"><span
-                                                                    class="menu-item-text">Shop Grid - Right
-                                                                    Sidebar</span></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-list-right.html"><span
-                                                                    class="menu-item-text">Shop List - Right
-                                                                    Sidebar</span></a>
-                                                        </li>
-                                                        <li>
-                                                            <a href="shop-grid-fullwidth.html"><span
-                                                                    class="menu-item-text">Shop Grid - No
-                                                                    Sidebar</span></a>
-                                                        </li>
-                                                    </ul>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-details.html"><span class="menu-item-text">Shop
-                                                            Details</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-cart.html"><span class="menu-item-text">Shop -
-                                                            Cart</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-checkout.html"><span class="menu-item-text">Shop -
-                                                            Checkout</span></a>
-                                                </li>
-                                                <li>
-                                                    <a href="shop-wishlist.html"><span class="menu-item-text">Shop -
-                                                            Wishlist</span></a>
-                                                </li>
-
-
-                                            </ul>
-                                        </li>
-                                        @foreach ($all_categories as $cat)
-                                        <li class="level-0 menu-item">
-                                            <a href="{{ route('catwiseproduct',$cat->name) }}"><span
-                                                    class="menu-item-text">{{ $cat->name }}</span></a>
-                                        </li>
-                                    @endforeach
+                                        @foreach (AllCategories() as $cat)
+                                            <li class="level-0 menu-item">
+                                                <a href="#"><span
+                                                        class="menu-item-text">{{ $cat->name }}</span></a>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </nav>
                             </div>
@@ -212,78 +158,96 @@ $total =[];
 
                                 <!-- Login -->
                                 <div class="login-header icon">
-                                    <a class="active-login" href="index.html#"><i class="icon-user"></i></a>
-                                    <div class="form-login-register">
-                                        <div class="box-form-login">
+                                    @if (!Session::has('login_id'))
+                                        <a class="active-login" href="index.html#"><i class="icon-user"></i></a>
+                                        <div class="form-login-register">
+                                            <div class="box-form-login">
                                             <div class="active-login"></div>
-                                            <div class="box-content">
-                                                <div class="form-login active">
-                                                    <form id="login_ajax" method="post" class="login">
-                                                        <h2>Sign in</h2>
-                                                        <p class="status"></p>
-                                                        <div class="content">
-                                                            <div class="username">
-                                                                <input type="text" required="required"
-                                                                    class="input-text" name="username" id="username"
-                                                                    placeholder="Your name" />
-                                                            </div>
-                                                            <div class="password">
-                                                                <input class="input-text" required="required"
-                                                                    type="password" name="password" id="password"
-                                                                    placeholder="Password" />
-                                                            </div>
-                                                            <div class="rememberme-lost">
-                                                                <div class="rememberme">
-                                                                    <input name="rememberme" type="checkbox"
-                                                                        id="rememberme" value="forever" />
-                                                                    <label for="rememberme" class="inline">Remember
-                                                                        me</label>
+                                                <div class="box-content">
+                                                    <div class="form-login active">
+                                                        <form action="{{ route('user-login') }}" id="login_ajax" method="post" class="login">
+                                                            @csrf
+                                                            <h2>Sign in</h2>
+                                                            <p class="status"></p>
+                                                            <div class="content">
+                                                                <div class="email">
+                                                                    <input type="email" required="required"
+                                                                        class="input-text" name="email" id="email"
+                                                                        placeholder="Your Email" />
                                                                 </div>
-                                                                <div class="lost_password">
-                                                                    <a
-                                                                        href="https://caketheme.com/html/mojuri/forgot-password.html">Lost
-                                                                        your password?</a>
+                                                                <div class="password">
+                                                                    <input class="input-text" required="required"
+                                                                        type="password" name="password" id="password"
+                                                                        placeholder="Password" />
                                                                 </div>
+                                                                {{-- <div class="rememberme-lost">
+                                                                    <div class="lost_password">
+                                                                        <a href="{{ route('forgot-pass') }}">
+                                                                            Lost your password?
+                                                                        </a>
+                                                                    </div>
+                                                                </div> --}}
+                                                                <div class="button-login">
+                                                                    <input type="submit" class="button" name="login"
+                                                                        value="Login" />
+                                                                </div>
+                                                                <div class="button-next-reregister">Create An Account</div>
                                                             </div>
-                                                            <div class="button-login">
-                                                                <input type="submit" class="button" name="login"
-                                                                    value="Login" />
+                                                        </form>
+                                                    </div>
+                                                    <div class="form-register">
+                                                        <form action="{{ route('user-register') }}" method="post" class="register">
+                                                            @csrf
+                                                            <h2>REGISTER</h2>
+                                                            <div class="content">
+                                                                <div class="email">
+                                                                    <input type="email" class="input-text"
+                                                                        placeholder="Email" name="email" id="reg_email"
+                                                                        value="" />
+                                                                </div>
+                                                                <div class="password">
+                                                                    <input type="password" class="input-text"
+                                                                        placeholder="Password" name="password"
+                                                                        id="reg_password" />
+                                                                </div>
+                                                                <div class="button-register">
+                                                                    <input type="submit" class="button" name="register"
+                                                                        value="Register" />
+                                                                </div>
+                                                                <div class="button-next-login">Already has an account</div>
                                                             </div>
-                                                            <div class="button-next-reregister">Create An Account</div>
-                                                        </div>
-                                                    </form>
-                                                </div>
-                                                <div class="form-register">
-                                                    <form method="post" class="register">
-                                                        <h2>REGISTER</h2>
-                                                        <div class="content">
-                                                            <div class="email">
-                                                                <input type="email" class="input-text"
-                                                                    placeholder="Email" name="email" id="reg_email"
-                                                                    value="" />
-                                                            </div>
-                                                            <div class="password">
-                                                                <input type="password" class="input-text"
-                                                                    placeholder="Password" name="password"
-                                                                    id="reg_password" />
-                                                            </div>
-                                                            <div class="button-register">
-                                                                <input type="submit" class="button" name="register"
-                                                                    value="Register" />
-                                                            </div>
-                                                            <div class="button-next-login">Already has an account</div>
-                                                        </div>
-                                                    </form>
+                                                        </form>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
-                                    </div>
+                                    @else
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-center header-center">
+                                            <div class="site-navigation">
+                                                <nav id="main-navigation">
+                                                    <ul id="menu-main-menu" class="menu">
+                                                        <li class="level-0 menu-item menu-item-has-children">
+                                                            <a class="active-login" href="index.html#"><i class="icon-user"></i></a>
+                                                            <ul class="sub-menu">
+                                                                <li>
+                                                                    <a href="shop-details.html"><span class="menu-item-text">My Profile</span></a>
+                                                                </li>
+                                                                <li>
+                                                                    <a href="shop-cart.html"><span class="menu-item-text">Logout</span></a>
+                                                                </li>
+                                                            </ul>
+                                                        </li>
+                                                    </ul>
+                                                </nav>
+                                            </div>
+                                        </div>
+                                    @endif
                                 </div>
 
                                 <!-- Wishlist -->
                                 <div class="wishlist-box">
-                                    <a href="shop-wishlist.html"><i class="icon-heart"></i></a>
-                                    <span class="count-wishlist">1</span>
+                                    <a href="{{ route('view-wishlist') }}"><i class="icon-heart"></i></a>
+                                    <span class="count-wishlist">{{ $wishlistCount }}</span>
                                 </div>
 
                                 <!-- Cart -->

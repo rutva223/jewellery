@@ -1,15 +1,15 @@
 <?php
 
 use App\Http\Controllers\AdminDashboardController;
-use App\Http\Controllers\BlogController;
 use App\Http\Controllers\ProductsController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonController;
+use App\Http\Controllers\FrontedUserController;
 use App\Http\Controllers\LandingpageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RazorpayController;
-use App\Http\Controllers\SubCategoryController;
 use App\Http\Controllers\SubscriberController;
+use App\Http\Controllers\WishlistController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
@@ -35,9 +35,25 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
+Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
+Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
+Route::get('/logout', [FrontedUserController::class, 'FrontedUserLogout'])->name('logout');
+
+Route::post('/add-wishlist', [WishlistController::class, 'addToWishlist'])->name('add-wishlist');
+Route::any('/view-wishlist', [WishlistController::class, 'ViewWishlist'])->name('view-wishlist');
+Route::post('/delete-wishlist', [WishlistController::class, 'remove'])->name('remove-wishlist');
+Route::get('/wishlist-count', [WishlistController::class, 'CountWishlist'])->name('count-wishlist');
+
+Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
+Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
+Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
+Route::get('cat-product/{slug?}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
+Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->name('user-login');
+Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 
 Route::group(['prefix' => 'admin'], function () {
+    Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
     Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
     Route::resource('productss', ProductsController::class);
     Route::resource('category', CategoryController::class);
@@ -48,18 +64,6 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
     Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
     Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
-});
-Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
-Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
-Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
-Route::get('/{slug}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
-
-Route::get('/admin/login', [AdminDashboardController::class, 'login'])->name('admin.login');
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');
@@ -78,8 +82,7 @@ Route::Post('/get-grid-view', [ProductsController::class, 'getGridView'])->name(
 Route::Post('/get-list-view', [ProductsController::class, 'getListView'])->name('get-list-view');
 
 
-
-Route::post('/subscribe', [SubscriberController::class, 'subscribe'])->name('subscribe');
+Route::post('/subscribe', [SubscriberController::class, 'store'])->name('subscribe');
 
 require __DIR__ . '/auth.php';
 
@@ -89,3 +92,4 @@ Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::post('/add-to-cart', [CommonController::class, 'addToCart']);
 Route::post('/cart/delete', [CommonController::class, 'deletetocart'])->name('delete.to.cart');
+

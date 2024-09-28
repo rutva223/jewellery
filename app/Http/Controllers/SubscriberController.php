@@ -28,7 +28,16 @@ class SubscriberController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $exists_mail = Subscriber::where('email', $request->email)->exists();
+        if($exists_mail) {
+            return redirect()->back()->with('error', 'Email already exists.');
+        }
+
+        $create = new Subscriber();
+        $create->email = $request->email;
+        $create->save();
+
+        return redirect()->back()->with('success', 'Email subscribed successfully!');
     }
 
     /**

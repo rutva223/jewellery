@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
@@ -235,16 +236,25 @@ class ProductsController extends Controller
         return $dom->saveHTML();
     }
 
-    public function getGridView1(Request $request)
+    public function getGridView(Request $request)
     {
+        $cat_id = $request->cat_id;
         $query = Product::query();
+
+        if($cat_id != null) {
+            $query->where('cat_id', $cat_id);
+        }
 
         // Apply price filter
         $price_range = $request->price_range;
         if ($price_range) {
             [$min_price, $max_price] = explode(';', $price_range);
-            $query->whereBetween('price', [(float)$min_price, (float)$max_price]);
+            $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
         }
+
+        $user_id = Session::has('login_id');
+        $wishlistItems = Wishlist::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
 
         // Pagination
         $perPage = 6; // Number of items per page
@@ -255,7 +265,7 @@ class ProductsController extends Controller
         if ($request->ajax()) {
             if ($request->view_type == 'layout-grid') {
                 return response()->json([
-                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination'))->render(),
+                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
                     'pagination' => view('front_end.pagination', compact('products'))->render()
                 ]);
             } else {
@@ -302,6 +312,10 @@ class ProductsController extends Controller
         }
     }
 
+    $user_id = Session::has('login_id');
+    $wishlistItems = Wishlist::where('user_id', $user_id)
+                ->pluck('product_id')->toArray();
+
     // Pagination
     $perPage = 6; // Number of items per page
     $page = $request->page ?: 1;
@@ -311,7 +325,7 @@ class ProductsController extends Controller
     if ($request->ajax()) {
         if ($request->view_type == 'layout-grid') {
             return response()->json([
-                'html' => view('front_end.grid-view', compact('products', 'text_for_pagination'))->render(),
+                'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
                 'pagination' => view('front_end.pagination', compact('products'))->render()
             ]);
         } else {
