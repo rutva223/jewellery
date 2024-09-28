@@ -43,14 +43,12 @@
 
                         <!-- Block Product Filter -->
                         <div class="block block-product-filter">
-                            <div class="block-title">
-                                <h2>Price</h2>
-                            </div>
+                            <div class="block-title"><h2>Price</h2></div>
                             <div class="block-content">
                                 <div id="slider-range" class="price-filter-wrap">
                                     <div class="filter-item price-filter">
                                         <div class="layout-slider">
-                                            <input id="price-filter" name="price" readonly />
+                                            <input id="price-filter" name="price" value="0;100" />
                                         </div>
                                         <div class="layout-slider-settings"></div>
                                     </div>
