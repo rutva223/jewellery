@@ -41,19 +41,19 @@
                                 @endif
                             </div>
                             <span class="product-quickview" data-title="Quick View">
-                                <a href="#" class="quickview-button" data-id="{{ $product->id }}">Quick View <i
-                                        class="icon-search"></i></a>
+                                <a href="{{ route('catwiseproduct', $product->id) }}" class="quickview-button" data-id="{{ $product->id }}">Quick View
+                                    <i class="icon-search"></i>
+                                </a>
                             </span>
                         </div>
                     </div>
                     <div class="products-content">
                         <div class="contents text-center">
-                            <div class="rating">
-                                <div class="star star-0"></div><span class="count">(0 review)</span>
-                            </div>
                             <h3 class="product-title"><a href="{{ route('product_detail', $product->id) }}">{{ $product->product_name }}</a></h3>
-                            <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
-                            <ins><span class="price">₹{{ $product->sell_price }}</span></ins>
+                            <div class="price">
+                                <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
+                                <span class="price">₹{{ $product->sell_price }}</span>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -103,7 +103,7 @@
                 url: '{{ route("add-wishlist") }}',
                 method: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}',  // CSRF token for security
+                    _token: '{{ csrf_token() }}',
                     product_id: productId
                 },
                 success: function(response) {

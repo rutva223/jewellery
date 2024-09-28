@@ -1,54 +1,5 @@
 @extends('front_end.app')
 @section('content')
-    <style>
-        .price-range-slider {
-            width: 100%;
-            float: left;
-            padding: 10px 20px;
-
-            .range-value {
-                margin: 0;
-
-                input {
-                    width: 100%;
-                    background: none;
-                    color: #000;
-                    font-size: 16px;
-                    font-weight: initial;
-                    box-shadow: none;
-                    border: none;
-                    margin: 20px 0 20px 0;
-                }
-            }
-
-            .range-bar {
-                border: none;
-                background: #000;
-                height: 3px;
-                width: 96%;
-                margin-left: 8px;
-
-                .ui-slider-range {
-                    background: #06b9c0;
-                }
-
-                .ui-slider-handle {
-                    border: none;
-                    border-radius: 25px;
-                    background: #fff;
-                    border: 2px solid #06b9c0;
-                    height: 17px;
-                    width: 17px;
-                    top: -0.52em;
-                    cursor: pointer;
-                }
-
-                .ui-slider-handle+span {
-                    background: #06b9c0;
-                }
-            }
-        }
-    </style>
     <div id="title" class="page-title">
         <div class="section-container">
             <div class="content-title-heading">
@@ -75,16 +26,14 @@
                             <div class="block-content">
                                 <div class="product-cats-list">
                                     <ul>
-                                        {{-- <li class="current">
-                                            <a href="shop-grid-left.html">Bracelets <span class="count">9</span></a>
-                                        </li> --}}
                                         @php
                                             $all_categories = AllCategories();
                                         @endphp
                                         @foreach ($all_categories as $cat)
                                             <li class="current">
                                                 <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}
-                                                    <span class="count">{{ $all_categories->count() }}</span></a>
+                                                    <span class="count">{{ $cat->products->count() }}</span>
+                                                </a>
                                             </li>
                                         @endforeach
                                     </ul>
@@ -108,30 +57,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="product-widget product-price-widget">
-                            <div class="pro-itm has-children">
-                                <a href="javascript:;" class="acnav-label"> {{ __('price') }} </a>
-                                <div class="pro-itm-inner acnav-list">
-                                    <div class="price-select d-flex">   
-                                        <div class="select-col">
-                                            <p>
-                                                {{ __('min price') }} : <span class="min_price_select"
-                                                    price="0">₹ {{ 0 }}</span>
-                                            </p>
-                                        </div>
-                                        <div class="select-col">
-                                            <p>{{ __('max price') }} : <span class="max_price_select"
-                                                    price="100">₹100 </span> </p>
-                                        </div>
-                                    </div>
-                                    <div id="range-slider">
-                                        <div id="slider-range" class="slider-range" min_price="0"
-                                            max_price="100" price_step="1"
-                                            currency="₹"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
                         <!-- Block Products -->
                         <div class="block block-products">
                             <div class="block-title">
@@ -200,11 +126,6 @@
 
                     <div class="col-xl-9 col-lg-9 col-md-12 col-12">
                         <div class="products-topbar clearfix">
-                            {{-- <div class="products-topbar-left">
-                                <div class="products-count">
-                                    Showing all 21 results
-                                </div>
-                            </div> --}}
                             <div class="products-topbar-right">
                                 <div class="products-sort dropdown">
                                     <span class="sort-toggle dropdown-toggle" data-toggle="dropdown"
@@ -258,56 +179,35 @@
         </div>
     </div>
 @endsection
+
+<!-- jQuery -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 
-
-<!-- Ion Range Slider JS -->
-<script src="https://cdn.jsdelivr.net/npm/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 @push('after-scripts')
-    <!-- Ion Range Slider CSS -->
-
     <script>
-        $(function() {
-            $("#slider-range").slider({
-                range: true, // Enable range selection
-                min: 0, // Minimum value
-                max: 100, // Maximum value
-                values: [0, 100], // Initial values
-                slide: function(event, ui) {
-                    // Show the selected range values while sliding
-                    $("#price-filter").val(ui.values[0] + " - " + ui.values[1]);
-                }
-            });
-            // Set the initial range display
-            $("#price-filter").val($("#slider-range").slider("values", 0) + " - " + $("#slider-range").slider(
-                "values", 1));
-        });
-
         $(document).ready(function() {
-
+            // Set up CSRF for AJAX requests
             $.ajaxSetup({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
 
+            var cat_id = "{{ $cat_id }}";
 
-            // Function to load content via AJAX
-            function loadContent(page, view_type, cat_id, priceRange = null) {
+            // Function to load content via AJAX, including price filter values
+            function loadContent(page, view_type, cat_id) {
                 $.ajax({
-                    url: "{{ route('get-grid-view') }}",
+                    url: "{{ route('get-grid-view') }}", // Adjust to your route
                     type: 'post',
                     data: {
                         page: page,
                         view_type: view_type,
                         cat_id: cat_id,
-                        price_range: priceRange // Send the price range to the server
                     },
                     success: function(response) {
-                        $('#products-container').html(response.html);
-                        $('#pagination-container').html(response.pagination);
+                        $('#products-container').html(response.html); // Populate products
+                        $('#pagination-container').html(response.pagination); // Update pagination
                     },
                     error: function() {
                         console.log('Error loading content.');
@@ -315,8 +215,7 @@
                 });
             }
 
-            var cat_id = "{{ $cat_id }}";
-            // Load the initial content on page load
+            // Initial content load on page load
             loadContent(1, 'layout-grid', cat_id);
 
             // Event listener for pagination click
@@ -324,19 +223,17 @@
                 e.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];
                 var view_type = $('.layout-toggle .active').attr('type');
-                var cat_id = $('.layout-toggle .active').attr('cat-id');
-                loadContent(page, view_type, cat_id);
+                loadContent(page, view_type, cat_id); // Ensure filtered prices persist
             });
 
-            // Event listener for layout toggle
+            // Event listener for layout toggle (grid/list view)
             $('.layout-toggle a').on('click', function(e) {
                 e.preventDefault();
                 $('.layout-toggle a').removeClass('active');
                 $(this).addClass('active');
 
                 var type = $(this).attr('type');
-                var cat_id = $(this).attr('cat-id');
-                loadContent(1, type, cat_id); // Load the first page of the selected view type
+                loadContent(1, type, cat_id); // Ensure filtered prices persist
             });
         });
     </script>
