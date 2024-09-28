@@ -25,15 +25,12 @@ class LandingpageController extends Controller
 
     public function CatWiseProduct($slug = null)
     {
-        if($slug)
-        {
+        if($slug) {
             $category = Category::where('name', $slug)->where('is_deleted',0)->first();
         }
 
         $all_products = Product::where('is_deleted', 0);
-        if(isset($category))
-        {
-
+        if(isset($category)) {
             $all_products = $all_products->where('cat_id', $category->id);
         }
         $page = 1;
@@ -76,6 +73,10 @@ class LandingpageController extends Controller
         $body = 'shop';
         $product = Product::find($id);
 
-        return view('front_end.product_detail', compact('product','body'));
+        $user_id = Session::has('login_id');
+        $wishlistItems = Wishlist::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
+
+        return view('front_end.product_detail', compact('product','body', 'wishlistItems'));
     }
 }

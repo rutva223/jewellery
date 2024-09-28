@@ -1,6 +1,6 @@
 \@extends('front_end.app')
 @section('content')
-@php
+    @php
         $all_categories = AllCategories();
     @endphp
     <div id="content" class="site-content" role="main">
@@ -768,8 +768,6 @@
                     <div class="block-widget-wrap">
                         <div class="newsletter-title-wrap">
                             <h2 class="newsletter-title">Latest From MoJuri!</h2>
-                            <div class="newsletter-text">Sign-up to receive 10% off your next purchase. Plus hear about new
-                                arrivals and offers.</div>
                         </div>
                         <form action="index.html" method="post" class="newsletter-form">
                             <input type="email" name="your-email" value="" size="40"

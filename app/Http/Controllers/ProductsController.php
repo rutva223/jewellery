@@ -238,10 +238,11 @@ class ProductsController extends Controller
 
     public function getGridView(Request $request)
     {
+        dump($request->all());
         $cat_id = $request->cat_id;
         $query = Product::query();
 
-        if($cat_id != null) {
+        if ($cat_id != null) {
             $query->where('cat_id', $cat_id);
         }
 
@@ -254,7 +255,7 @@ class ProductsController extends Controller
 
         $user_id = Session::has('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
-                    ->pluck('product_id')->toArray();
+            ->pluck('product_id')->toArray();
 
         // Pagination
         $perPage = 6; // Number of items per page
@@ -276,66 +277,66 @@ class ProductsController extends Controller
             }
         }
     }
+
     public function filterProducts(Request $request)
-{
-    $query = Product::query();
+    {
+        dump($request->all());
+        $query = Product::query();
 
-    // Apply price filter
-    $price_range = $request->price_range;
-    if ($price_range) {
-        [$min_price, $max_price] = explode(';', $price_range);
-        $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
-    }
+        // Apply price filter
+        $price_range = $request->price_range;
+        if ($price_range) {
+            [$min_price, $max_price] = explode(';', $price_range);
+            $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
+        }
 
-    // Apply sorting
-    $sort = $request->sort;
-    if ($sort) {
-        switch ($sort) {
-            case 'popularity':
-                $query->orderBy('sell_price', 'desc');
-                break;
-            case 'rating':
-                $query->orderBy('sell_price', 'asc');
-                break;
-            case 'latest':
-                $query->orderBy('created_at', 'desc');
-                break;
-            case 'price_low_high':
-                $query->orderBy('sell_price', 'asc');
-                break;
-            case 'price_high_low':
-                $query->orderBy('sell_price', 'desc');
-                break;
-            default:
-                $query->orderBy('id', 'desc'); // Default sorting
-                break;
+        // Apply sorting
+        $sort = $request->sort;
+        if ($sort) {
+            switch ($sort) {
+                case 'popularity':
+                    $query->orderBy('sell_price', 'desc');
+                    break;
+                case 'rating':
+                    $query->orderBy('sell_price', 'asc');
+                    break;
+                case 'latest':
+                    $query->orderBy('created_at', 'desc');
+                    break;
+                case 'price_low_high':
+                    $query->orderBy('sell_price', 'asc');
+                    break;
+                case 'price_high_low':
+                    $query->orderBy('sell_price', 'desc');
+                    break;
+                default:
+                    $query->orderBy('id', 'desc'); // Default sorting
+                    break;
+            }
+        }
+
+        $user_id = Session::has('login_id');
+        $wishlistItems = Wishlist::where('user_id', $user_id)
+            ->pluck('product_id')->toArray();
+
+        // Pagination
+        $perPage = 6; // Number of items per page
+        $page = $request->page ?: 1;
+        $products = $query->paginate($perPage, ['*'], 'page', $page);
+        $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
+
+        if ($request->ajax()) {
+            if ($request->view_type == 'layout-grid') {
+                return response()->json([
+                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
+                    'pagination' => view('front_end.pagination', compact('products'))->render()
+                ]);
+            } else {
+                return response()->json([
+                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
+                    'pagination' => view('front_end.pagination', compact('products'))->render()
+                ]);
+            }
         }
     }
-
-    $user_id = Session::has('login_id');
-    $wishlistItems = Wishlist::where('user_id', $user_id)
-                ->pluck('product_id')->toArray();
-
-    // Pagination
-    $perPage = 6; // Number of items per page
-    $page = $request->page ?: 1;
-    $products = $query->paginate($perPage, ['*'], 'page', $page);
-    $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
-
-    if ($request->ajax()) {
-        if ($request->view_type == 'layout-grid') {
-            return response()->json([
-                'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
-                'pagination' => view('front_end.pagination', compact('products'))->render()
-            ]);
-        } else {
-            return response()->json([
-                'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
-                'pagination' => view('front_end.pagination', compact('products'))->render()
-            ]);
-        }
-    }
-}
-
-
 }

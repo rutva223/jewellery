@@ -52,6 +52,9 @@
                                         </div>
                                     </div>
                                     <div class="col-md-10">
+                                        <div class="product-lable">
+                                            <div class="hot">SAVE ₹{{ $product->discount }}</div>
+                                        </div>
                                         <div class="scroll-image main-image">
                                             <div class="image-additional slick-carousel" data-asnavfor=".image-thumbnail"
                                                 data-fade="true" data-columns4="1" data-columns3="1" data-columns2="1"
@@ -78,17 +81,11 @@
                             <div class="product-info col-lg-5 col-md-12 col-12 ">
                                 <h1 class="title">{{ $product->product_name }}</h1>
                                 <span class="price">
-                                    <del aria-hidden="true"><span>{{ $product->product_price }}</span></del>
-                                    <ins><span>{{ $product->sell_price }}</span></ins>
+                                    <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
+                                    <ins><span>₹{{ $product->sell_price }}</span></ins>
                                 </span>
-                                <div class="rating">
-                                    <div class="star star-5"></div>
-                                    <div class="review-count">
-                                        (3<span> reviews</span>)
-                                    </div>
-                                </div>
                                 <div class="description">
-                                    <p>{!! $product->description !!}</p>
+                                    {!! $product->description !!}
                                 </div>
                                 <div class="buttons">
                                     <div class="add-to-cart-wrap">
@@ -107,21 +104,25 @@
                                         <button class="product-btn">Buy It Now</button>
                                     </div>
                                     <div class="btn-wishlist" data-title="Wishlist">
-                                        <button class="product-btn">Add to wishlist</button>
+                                        @if (Session::has('login_id'))
+                                            @if (in_array($product->id, $wishlistItems))
+                                                <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">Add to wishlist
+                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
+                                                </button>
+                                            @else
+                                                <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">Add to wishlist
+                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
+                                                </button>
+                                            @endif
+                                        @else
+                                            <button class="product-btn">Add to wishlist</button>
+                                        @endif
                                     </div>
                                 </div>
                                 <div class="product-meta">
                                     <span class="posted-in">Category: <a
                                             href="{{ route('catwiseproduct', $product->category->name) }}"
                                             rel="tag">{{ $product->category->name }}</a></span>
-                                </div>
-                                <div class="social-share">
-                                    <a href="shop-details.html#" title="Facebook" class="share-facebook"
-                                        target="_blank"><i class="fa fa-facebook"></i>Facebook</a>
-                                    <a href="shop-details.html#" title="Twitter" class="share-twitter"><i
-                                            class="fa fa-twitter"></i>Twitter</a>
-                                    <a href="shop-details.html#" title="Pinterest" class="share-pinterest"><i
-                                            class="fa fa-pinterest"></i>Pinterest</a>
                                 </div>
                             </div>
                         </div>
@@ -136,14 +137,6 @@
                                 <li class="nav-item">
                                     <a class="nav-link active" data-toggle="tab" href="shop-details.html#description"
                                         role="tab">Description</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="shop-details.html#additional-information"
-                                        role="tab">Additional information</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" data-toggle="tab" href="shop-details.html#reviews"
-                                        role="tab">Reviews (1)</a>
                                 </li>
                             </ul>
                             <div class="tab-content">
@@ -162,93 +155,6 @@
                                         quisquam est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit,
                                         sed quia non numquam eius modi tempora incidunt ut labore et dolore magnam aliquam
                                         quaerat voluptatem.</p>
-                                </div>
-                                <div class="tab-pane fade" id="additional-information" role="tabpanel">
-                                    <table class="product-attributes">
-                                        <tbody>
-                                            <tr class="attribute-item">
-                                                <th class="attribute-label">Color</th>
-                                                <td class="attribute-value">Antique, Chestnut, Grullo</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <div class="tab-pane fade" id="reviews" role="tabpanel">
-                                    <div id="reviews" class="product-reviews">
-                                        <div id="comments">
-                                            <h2 class="reviews-title">1 review for <span>Bora Armchair</span></h2>
-                                            <ol class="comment-list">
-                                                <li class="review">
-                                                    <div class="content-comment-container">
-                                                        <div class="comment-container">
-                                                            <img src="media/user.jpg" class="avatar" height="60"
-                                                                width="60" alt="">
-                                                            <div class="comment-text">
-                                                                <div class="rating small">
-                                                                    <div class="star star-5"></div>
-                                                                </div>
-                                                                <div class="review-author">Peter Capidal</div>
-                                                                <div class="review-time">January 12, 2023</div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="description">
-                                                            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                                                                fringilla augue nec est tristique auctor. Donec non est at
-                                                                libero vulputate rutrum. Morbi ornare lectus quis justo
-                                                                gravida semper. Nulla tellus mi, vulputate adipiscing cursus
-                                                                eu, suscipit id nulla.</p>
-                                                        </div>
-                                                    </div>
-                                                </li>
-                                            </ol>
-                                        </div>
-                                        <div id="review-form">
-                                            <div id="respond" class="comment-respond">
-                                                <span id="reply-title" class="comment-reply-title">Add a review</span>
-                                                <form action="shop-details.html" method="post" id="comment-form"
-                                                    class="comment-form">
-                                                    <p class="comment-notes">
-                                                        <span id="email-notes">Your email address will not be
-                                                            published.</span> Required fields are marked <span
-                                                            class="required">*</span>
-                                                    </p>
-                                                    <div class="comment-form-rating">
-                                                        <label for="rating">Your rating</label>
-                                                        <p class="stars">
-                                                            <span>
-                                                                <a class="star-1" href="shop-details.html#">1</a><a
-                                                                    class="star-2" href="shop-details.html#">2</a><a
-                                                                    class="star-3" href="shop-details.html#">3</a><a
-                                                                    class="star-4" href="shop-details.html#">4</a><a
-                                                                    class="star-5" href="shop-details.html#">5</a>
-                                                            </span>
-                                                        </p>
-                                                    </div>
-                                                    <p class="comment-form-comment">
-                                                        <textarea id="comment" name="comment" placeholder="Your Reviews *" cols="45" rows="8"
-                                                            aria-required="true" required=""></textarea>
-                                                    </p>
-                                                    <div class="content-info-reviews">
-                                                        <p class="comment-form-author">
-                                                            <input id="author" name="author" placeholder="Name *"
-                                                                type="text" value="" size="30"
-                                                                aria-required="true" required="">
-                                                        </p>
-                                                        <p class="comment-form-email">
-                                                            <input id="email" name="email" placeholder="Email *"
-                                                                type="email" value="" size="30"
-                                                                aria-required="true" required="">
-                                                        </p>
-                                                        <p class="form-submit">
-                                                            <input name="submit" type="submit" id="submit"
-                                                                class="submit" value="Submit">
-                                                        </p>
-                                                    </div>
-                                                </form><!-- #respond -->
-                                            </div>
-                                        </div>
-                                        <div class="clear"></div>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -273,35 +179,22 @@
                                                     <div class="products-entry clearfix product-wapper">
                                                         <div class="products-thumb">
                                                             <div class="product-lable">
-                                                                <div class="hot">Hot</div>
+                                                                <div class="hot">SAVE ₹{{ $value->discount }}</div>
                                                             </div>
                                                             @php
-                                                                // Decode the JSON string into an array of full URLs
-                                                                $images = $value->images; // This uses the accessor to get the full URLs
+                                                                $images = $value->images;
                                                             @endphp
-
-
                                                             <div class="product-thumb-hover">
                                                                 <a href="{{ route('product_detail', $product->id) }}">
                                                                     @if (is_array($images) && count($images) > 0)
-                                                                        <img src="{{ $images[0] }}"
-                                                                            width="600" height="600"
-                                                                            alt="Product Image" class="post-image">
+                                                                        <img src="{{ $images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
                                                                         @if (isset($images[1]))
-                                                                            <img src="{{ $images[1] }}"
-                                                                                width="600" height="600"
-                                                                                alt="Product Image"
-                                                                                class="hover-image back">
+                                                                            <img src="{{ $images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
                                                                         @else
-                                                                            <img src="{{ $images[0] }}"
-                                                                                width="600" height="600"
-                                                                                alt="Product Image"
-                                                                                class="hover-image back">
+                                                                            <img src="{{ $images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
                                                                         @endif
                                                                     @else
-                                                                        <img src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                                            width="600" height="600"
-                                                                            alt="Default Image">
+                                                                        <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
                                                                     @endif
                                                                 </a>
                                                             </div>
@@ -311,17 +204,34 @@
                                                                         class="product-btn button">Add to cart</a>
                                                                 </div>
                                                                 <div class="btn-wishlist" data-title="Wishlist">
-                                                                    <button class="product-btn">Add to wishlist</button>
+                                                                    @if (Session::has('login_id'))
+                                                                        @if (in_array($value->id, $wishlistItems))
+                                                                        <button class="product-btn wishlist-btn" data-product-id="{{ $value->id }}">
+                                                                            <i class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                        </button>
+                                                                    @else
+                                                                        <button class="product-btn wishlist-btn" data-product-id="{{ $value->id }}">
+                                                                            <i class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                        </button>
+                                                                    @endif
+                                                                    @else
+                                                                        <button class="product-btn">Add to wishlist</button>
+                                                                    @endif
                                                                 </div>
+                                                                <span class="product-quickview" data-title="Quick View">
+                                                                    <a href="{{ route('catwiseproduct', $product->id) }}" class="quickview-button" data-id="{{ $product->id }}">Quick View
+                                                                        <i class="icon-search"></i>
+                                                                    </a>
+                                                                </span>
                                                             </div>
                                                         </div>
                                                         <div class="products-content">
                                                             <div class="contents text-center">
                                                                 <h3 class="product-title"><a href="{{ route('product_detail', $value->id) }}">{{ $value->product_name }}</a></h3>
-                                                                <div class="rating">
-                                                                    <div class="star star-5"></div>
-                                                                </div>
-                                                                <span class="price">{{ $value->sell_price }}</span>
+                                                            </div>
+                                                            <div class="price">
+                                                                <del aria-hidden="true"><span>₹{{ $value->product_price }}</span></del>
+                                                                <ins><span>₹{{ $value->sell_price }}</span></ins>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -338,3 +248,52 @@
         </div>
     </div>
 @endsection
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script>
+    $(document).ready(function() {
+        $('.wishlist-btn').on('click', function() {
+            let productId = $(this).data('product-id');
+            let heartIcon = $(this).find('i');
+
+            $.ajax({
+                url: '{{ route("add-wishlist") }}',
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',  // CSRF token for security
+                    product_id: productId
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        // Toggle heart icon on success
+                        if (heartIcon.hasClass('empty-heart')) {
+                            heartIcon.removeClass('empty-heart').addClass('filled-heart');
+                        } else {
+                            heartIcon.removeClass('filled-heart').addClass('empty-heart');
+                        }
+                    updateWishlistCount();
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function() {
+                    alert('An error occurred. Please try again.');
+                }
+            });
+        });
+
+        function updateWishlistCount() {
+            $.ajax({
+                url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
+                type: 'GET',
+                success: function(data) {
+                    $('.count-wishlist').text(data.count);  // Update the wishlist count in the header
+                },
+                error: function() {
+                    alert('Failed to update wishlist count.');
+                }
+            });
+        }
+    });
+</script>
