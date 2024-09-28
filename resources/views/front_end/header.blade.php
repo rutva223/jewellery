@@ -140,9 +140,8 @@ $total =[];
                                         </li>
                                         @foreach (AllCategories() as $cat)
                                             <li class="level-0 menu-item">
-                                                <a href="{{ route('catwiseproduct', $cat->name) }}">
-                                                    <span class="menu-item-text">{{ $cat->name }}</span>
-                                                </a>
+                                                <a href="{{ route('catwiseproduct', $cat->name) }}"><span
+                                                        class="menu-item-text">{{ $cat->name }}</span></a>
                                             </li>
                                         @endforeach
                                     </ul>
