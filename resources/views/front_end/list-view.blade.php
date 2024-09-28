@@ -37,7 +37,7 @@
                             </div>
                         </div>
                         <div class="product-button">
-                            <div class="btn-add-to-cart" data-title="Add to cart">
+                            <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
                                 <a rel="nofollow" href="#" class="product-btn button">Add to cart</a>
                             </div>
                             <div class="btn-wishlist" data-title="Wishlist">

@@ -99,8 +99,8 @@
                                                 size="4" placeholder="" inputmode="numeric" autocomplete="off">
                                             <button type="button" class="minus">-</button>
                                         </div>
-                                        <div class="btn-add-to-cart">
-                                            <a href="shop-details.html#" tabindex="0">Add to cart</a>
+                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}">
+                                            <a href="#" tabindex="0">Add to cart</a>
                                         </div>
                                     </div>
                                     <div class="btn-quick-buy" data-title="Wishlist">
@@ -306,8 +306,8 @@
                                                                 </a>
                                                             </div>
                                                             <div class="product-button">
-                                                                <div class="btn-add-to-cart" data-title="Add to cart">
-                                                                    <a rel="nofollow" href="shop-details.html#"
+                                                                <div class="btn-add-to-cart" data-title="Add to cart" data-product-id="{{ $product->id }}">
+                                                                    <a rel="nofollow" href="#"  
                                                                         class="product-btn button">Add to cart</a>
                                                                 </div>
                                                                 <div class="btn-wishlist" data-title="Wishlist">

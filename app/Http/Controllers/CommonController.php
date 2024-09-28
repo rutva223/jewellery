@@ -10,6 +10,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
+use App\Models\Cart;
+use App\Models\Product;
+
 
 class CommonController extends Controller
 {
@@ -132,5 +135,47 @@ class CommonController extends Controller
 
             return response()->json(['status' => true, 'otp_sent' => true, 'message' => 'OTP resent successfully']);
         }
+    }
+
+    public function addToCart(Request $request){
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+        ]);
+        $product = Product::find($request->product_id);
+        $cart = Cart::where('product_id',$product->id)->first();
+        $quantity = !empty($request->quantity) ? $request->quantity : 1;
+        if(!empty($cart)){
+            $quantity_plus = $cart->quantity + $quantity;
+            $cart->user_id = 1;
+            $cart->quantity = $quantity_plus;
+            $cart->price = $product->sell_price;
+            $cart->total = $product->sell_price * $quantity_plus;
+            $cart->image = json_encode($product->images);
+            $cart->product_name = $product->product_name;
+            $cart->save();
+
+        }else{
+            Cart::create([
+                'user_id' => 1, 
+                'product_id' => $request->product_id,
+                'quantity' => $quantity, 
+                'price' => $product->sell_price, 
+                'total' => $product->sell_price * $quantity, 
+                'image' =>  json_encode($product->images),
+                'product_name' =>  $product->product_name,
+
+            ]);
+        }
+
+
+        return response()->json(['success' => 'Product added to cart!']);
+    }
+
+    public function deletetocart(Request $request){
+        $cart = Cart::where('product_id',$request->product_id)->first();
+        if(!empty($cart)){
+            $cart->delete();
+        }
+
     }
 }

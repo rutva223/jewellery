@@ -1,3 +1,8 @@
+@php
+$carts = App\Models\Cart::get();
+$cart_count = $carts->count();
+$total =[];
+@endphp
 <header id="site-header" class="site-header header-v1 @if ($body == 'home') color-white @endif">
     <div class="header-mobile">
         <div class="section-padding">
@@ -252,7 +257,7 @@
                                         <a class="dropdown-toggle cart-icon" href="index.html#" role="button"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                             <div class="icons-cart"><i class="icon-large-paper-bag"></i><span
-                                                    class="cart-count">2</span></div>
+                                                    class="cart-count">{{$cart_count}}</span></div>
                                         </a>
                                         <div class="dropdown-menu cart-popup">
                                             <div class="cart-empty-wrap">
@@ -266,34 +271,32 @@
                                             </div>
                                             <div class="cart-list-wrap">
                                                 <ul class="cart-list ">
+                                                @foreach($carts as $cart)
+                                                    @php
+                                                        $image = json_decode($cart->image, true);
+                                                        $imageUrl = $image[0];
+                                                        $total[] = $cart->total;
+                                                    @endphp
                                                     <li class="mini-cart-item">
-                                                        <a href="index.html#" class="remove"
-                                                            title="Remove this item"><i class="icon_close"></i></a>
+                                                        <a href="#" class="remove cart-remove"
+                                                            title="Remove this item" data-product-id="{{$cart->product_id}}"><i class="fa fa-trash"></i></a>
                                                         <a href="shop-details.html" class="product-image"><img
                                                                 width="600" height="600"
-                                                                src="{{ asset('front_end/media/product/3.jpg') }}"
+                                                                src="{{ asset('product_image/' . $imageUrl) }}
+"
                                                                 alt=""></a>
-                                                        <a href="shop-details.html" class="product-name">Twin
-                                                            Hoops</a>
-                                                        <div class="quantity">Qty: 1</div>
-                                                        <div class="price">$150.00</div>
+                                                        <a href="shop-details.html" class="product-name">{{$cart->product_name}}</a>
+                                                        <div class="quantity">Qty: {{$cart->quantity}}</div>
+                                                        <div class="price">{{$cart->total}}</div>
                                                     </li>
-                                                    <li class="mini-cart-item">
-                                                        <a href="index.html#" class="remove"
-                                                            title="Remove this item"><i class="icon_close"></i></a>
-                                                        <a href="shop-details.html" class="product-image"><img
-                                                                width="600" height="600"
-                                                                src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                                alt=""></a>
-                                                        <a href="shop-details.html" class="product-name">Medium Flat
-                                                            Hoops</a>
-                                                        <div class="quantity">Qty: 1</div>
-                                                        <div class="price">$100.00</div>
-                                                    </li>
+                                                @endforeach
+                                                @php
+                                                  $sum_of_total = array_sum($total);
+                                                @endphp
                                                 </ul>
                                                 <div class="total-cart">
                                                     <div class="title-total">Total: </div>
-                                                    <div class="total-price"><span>$250.00</span></div>
+                                                    <div class="total-price"><span>${{$sum_of_total}}</span></div>
                                                 </div>
                                                 <div class="free-ship">
                                                     <div class="title-ship">Buy <strong>$400</strong> more to enjoy
