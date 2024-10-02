@@ -38,7 +38,7 @@ Route::get('/cacheclear', function () {
 Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
-Route::get('/logout', [FrontedUserController::class, 'FrontedUserLogout'])->name('logout');
+Route::post('/user-logout', [FrontedUserController::class, 'FrontedUserLogout'])->name('user-logout');
 
 Route::post('/add-wishlist', [WishlistController::class, 'addToWishlist'])->name('add-wishlist');
 Route::any('/view-wishlist', [WishlistController::class, 'ViewWishlist'])->name('view-wishlist');
@@ -90,6 +90,6 @@ Route::get('product',[RazorpayController::class,'index']);
 Route::post('razorpay-payment', [RazorpayController::class, 'store'])->name('razorpay.payment.store');
 Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
-Route::post('/add-to-cart', [CommonController::class, 'addToCart']);
+Route::post('/add-to-cart', [CommonController::class, 'addToCart'])->name('addToCart');
 Route::post('/cart/delete', [CommonController::class, 'deletetocart'])->name('delete.to.cart');
 

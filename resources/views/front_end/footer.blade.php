@@ -298,6 +298,8 @@
 </div>
 
 <script src="{{ asset('front_end/libs/jquery/js/jquery.min.js') }}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @stack('after-scripts')
 
 <script src="{{ asset('front_end/libs/popper/js/popper.min.js') }}"></script>
@@ -311,3 +313,99 @@
 <script src="{{ asset('front_end/libs/slider/js/jquery.slider.js') }}"></script>
 <script src="{{ asset('front_end/libs/elevatezoom/js/jquery.elevatezoom.js') }}"></script>
 <script src="{{ asset('front_end/assets/js/app.js') }}"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).ready(function() {
+    $('#login_ajax').on('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Clear previous status messages
+        $('.error-login').text('');
+
+        // Collect form data
+        var formData = $(this).serialize();
+
+        // AJAX request
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                // Assuming the response is a JSON object
+                if (response.success) {
+                    // Show success message using Toastr
+                    toastr.success(response.message);
+                    // Optionally, redirect to another page after a delay
+                    setTimeout(function() {
+                        window.location.href = response.redirect; // redirect if provided
+                    }, 2000);
+                } else {
+                    // Show validation errors
+                    $('.error-login').text(response.message).css('color', 'red');
+                }
+            },
+            error: function(xhr) {
+                // Handle validation errors
+                if (xhr.status === 422) { // Unprocessable Entity
+                    var errors = xhr.responseJSON.errors;
+                    var errorMsg = '';
+                    $.each(errors, function(key, value) {
+                        errorMsg += value[0] + '<br>'; // Concatenate error messages
+                    });
+                    $('.error-login').html(errorMsg).css('color', 'red');
+                } else {
+                    // Show a general error message
+                    $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
+                }
+            }
+        });
+    });
+});
+$(document).ready(function() {
+    $('#register_ajax').on('submit', function(e) {
+        e.preventDefault(); // Prevent default form submission
+
+        // Clear previous status messages
+        $('.error-register').text('');
+
+        // Collect form data
+        var formData = $(this).serialize();
+
+        // AJAX request
+        $.ajax({
+            url: $(this).attr('action'), // Get action URL from the form
+            type: 'POST',
+            data: formData,
+            success: function(response) {
+                if (response.success) {
+                    // Show success message using Toastr
+                    toastr.success(response.message);
+                    // Optionally, redirect to another page after a delay
+                    setTimeout(function() {
+                        window.location.href = response.redirect; // redirect if provided
+                    }, 2000);
+                } else {
+                    // Show validation errors
+                    $('.error-register').text(response.message).css('color', 'red');
+                }
+            },
+            error: function(xhr) {
+                // Handle validation errors
+                if (xhr.status === 422) { // Unprocessable Entity
+                    var errors = xhr.responseJSON.errors;
+                    var errorMsg = '';
+                    $.each(errors, function(key, value) {
+                        errorMsg += value[0] + '<br>'; // Concatenate error messages
+                    });
+                    $('.error-register').html(errorMsg).css('color', 'red');
+                } else {
+                    // Show a general error message
+                    $('.error-register').text('An error occurred. Please try again.').css('color', 'red');
+                }
+            }
+        });
+    });
+});
+
+</script>
