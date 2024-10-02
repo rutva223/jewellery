@@ -31,7 +31,7 @@
             let productId = $(this).data('product-id');
             var quantity = $('.qty').val(); // Get the updated
             $.ajax({
-                url: '/add-to-cart',
+                url: "{{ route('addToCart') }}",
                 type: 'POST',
                 data: {
                     product_id: productId,
@@ -54,7 +54,7 @@
 
 <script>
     $(document).ready(function() {
-        $('.wishlist-btn').on('click', function() {
+        $('.btn-wishlist').on('click', function() {
             let productId = $(this).data('product-id');
             let heartIcon = $(this).find('i');
 
@@ -66,7 +66,9 @@
                     product_id: productId
                 },
                 success: function(response) {
-                    if (response.status === 'success') {
+
+                    if (response.success) {
+                        toastr.success(response.message);
                         // Toggle heart icon on success
                         if (heartIcon.hasClass('empty-heart')) {
                             heartIcon.removeClass('empty-heart').addClass('filled-heart');
@@ -75,10 +77,10 @@
                         }
                         updateWishlistCount();
                     } else {
-                        alert(response.message);
                     }
                 },
                 error: function() {
+
                     alert('An error occurred. Please try again.');
                 }
             });

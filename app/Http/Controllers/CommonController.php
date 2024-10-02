@@ -156,18 +156,16 @@ class CommonController extends Controller
 
         }else{
             Cart::create([
-                'user_id' => 1, 
+                'user_id' => 1,
                 'product_id' => $request->product_id,
-                'quantity' => $quantity, 
-                'price' => $product->sell_price, 
-                'total' => $product->sell_price * $quantity, 
+                'quantity' => $quantity,
+                'price' => $product->sell_price,
+                'total' => $product->sell_price * $quantity,
                 'image' =>  json_encode($product->images),
                 'product_name' =>  $product->product_name,
 
             ]);
         }
-
-
         return response()->json(['success' => 'Product added to cart!']);
     }
 

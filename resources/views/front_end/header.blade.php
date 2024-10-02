@@ -168,51 +168,35 @@ $total =[];
                                                         <form action="{{ route('user-login') }}" id="login_ajax" method="post" class="login">
                                                             @csrf
                                                             <h2>Sign in</h2>
-                                                            <p class="status"></p>
+                                                            <p class="error-login text-center"></p>
                                                             <div class="content">
                                                                 <div class="email">
-                                                                    <input type="email" required="required"
-                                                                        class="input-text" name="email" id="email"
-                                                                        placeholder="Your Email" />
+                                                                    <input type="email" required="required" class="input-text" name="email" id="email" placeholder="Your Email" />
                                                                 </div>
                                                                 <div class="password">
-                                                                    <input class="input-text" required="required"
-                                                                        type="password" name="password" id="password"
-                                                                        placeholder="Password" />
+                                                                    <input class="input-text" required="required" type="password" name="password" id="password" placeholder="Password" />
                                                                 </div>
-                                                                {{-- <div class="rememberme-lost">
-                                                                    <div class="lost_password">
-                                                                        <a href="{{ route('forgot-pass') }}">
-                                                                            Lost your password?
-                                                                        </a>
-                                                                    </div>
-                                                                </div> --}}
                                                                 <div class="button-login">
-                                                                    <input type="submit" class="button" name="login"
-                                                                        value="Login" />
+                                                                    <input type="submit" class="button" name="login" value="Login" />
                                                                 </div>
                                                                 <div class="button-next-reregister">Create An Account</div>
                                                             </div>
                                                         </form>
                                                     </div>
                                                     <div class="form-register">
-                                                        <form action="{{ route('user-register') }}" method="post" class="register">
+                                                        <form action="{{ route('user-register') }}" id="register_ajax" method="post" class="register">
                                                             @csrf
                                                             <h2>REGISTER</h2>
+                                                            <p class="error-register text-center"></p>
                                                             <div class="content">
                                                                 <div class="email">
-                                                                    <input type="email" class="input-text"
-                                                                        placeholder="Email" name="email" id="reg_email"
-                                                                        value="" />
+                                                                    <input type="email" class="input-text" placeholder="Email" name="email" id="reg_email" required />
                                                                 </div>
                                                                 <div class="password">
-                                                                    <input type="password" class="input-text"
-                                                                        placeholder="Password" name="password"
-                                                                        id="reg_password" />
+                                                                    <input type="password" class="input-text" placeholder="Password" name="password" id="reg_password" required />
                                                                 </div>
                                                                 <div class="button-register">
-                                                                    <input type="submit" class="button" name="register"
-                                                                        value="Register" />
+                                                                    <input type="submit" class="button" name="register" value="Register" />
                                                                 </div>
                                                                 <div class="button-next-login">Already has an account</div>
                                                             </div>
@@ -233,7 +217,13 @@ $total =[];
                                                                     <a href="shop-details.html"><span class="menu-item-text">My Profile</span></a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="shop-cart.html"><span class="menu-item-text">Logout</span></a>
+                                                                    <form id="logout-form" action="{{ route('user-logout') }}" method="POST" style="display: none;">
+                                                                        @csrf
+                                                                    </form>
+
+                                                                    <a href="#" onclick="event.preventDefault(); document.getElementById('logout-form').submit();">
+                                                                        <span class="menu-item-text">Logout</span>
+                                                                    </a>
                                                                 </li>
                                                             </ul>
                                                         </li>
@@ -246,8 +236,12 @@ $total =[];
 
                                 <!-- Wishlist -->
                                 <div class="wishlist-box">
-                                    <a href="{{ route('view-wishlist') }}"><i class="icon-heart"></i></a>
-                                    <span class="count-wishlist">{{ $wishlistCount }}</span>
+                                    @if (Session::has('login_id'))
+                                        <a href="{{ route('view-wishlist') }}"><i class="icon-heart"></i></a>
+                                        <span class="count-wishlist">{{ $wishlistCount }}</span>
+                                    @else
+                                        <a href="#"><i class="icon-heart active-login"></i></a>
+                                    @endif
                                 </div>
 
                                 <!-- Cart -->

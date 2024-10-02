@@ -35,8 +35,10 @@ class WishlistController extends Controller
             'user_id' => $userId,
             'product_id' => $productId,
         ]);
-
-        return response()->json(['status' => 'success', 'message' => 'Item added to wishlist']);    
+        return response()->json([
+            'success' => true,
+            'message' => 'Item added to wishlist!',
+        ]);
     }
 
     public function ViewWishlist(Request $request)

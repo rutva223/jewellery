@@ -3,6 +3,7 @@
     @php
         $all_categories = AllCategories();
     @endphp
+
     <div id="content" class="site-content" role="main">
         <section class="section m-b-70">
             <!-- Block Sliders -->
@@ -184,94 +185,9 @@
                                                 </a>
                                                 <div class="product-cat-content-info">
                                                     <h2 class="item-title">
-                                                        <a href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
+                                                        <a
+                                                            href="{{ route('catwiseproduct', $cat->name) }}">{{ $cat->name }}</a>
                                                     </h2>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    @endforeach
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="section section-padding m-b-70">
-            <div class="section-container large">
-                <!-- Block Products -->
-                <div class="block block-products slider">
-                    <div class="block-widget-wrap">
-                        <div class="block-title">
-                            <h2>Trending Products</h2>
-                        </div>
-                        <div class="block-content">
-                            <div class="content-product-list slick-wrap">
-                                <div class="slick-sliders products-list grid" data-slidestoscroll="true"
-                                    data-dots="false" data-nav="1" data-columns4="1" data-columns3="2"
-                                    data-columns2="2" data-columns1="3" data-columns1440="4" data-columns="4">
-                                    @foreach ($products as $pro)
-                                        <div class="item-product slick-slide">
-                                            <div class="items">
-                                                <div class="products-entry clearfix product-wapper">
-                                                    <div class="products-thumb">
-                                                        <div class="product-lable">
-                                                            <div class="hot">SAVE ₹{{ $pro->discount }}</div>
-                                                        </div>
-                                                        <div class="product-thumb-hover">
-                                                            <a href="{{ route('product_detail', $pro->id) }}">
-                                                                @if (is_array($pro->images) && count($pro->images) > 0)
-                                                                    <img src="{{ $pro->images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
-                                                                    @if (isset($pro->images[1]))
-                                                                        <img src="{{ $pro->images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
-                                                                    @else
-                                                                        <img src="{{ $pro->images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
-                                                                    @endif
-                                                                @else
-                                                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
-                                                                @endif
-                                                            </a>
-                                                        </div>
-                                                        <div class="product-button">
-                                                            <div class="btn-add-to-cart" data-title="Add to cart">
-                                                                <a rel="nofollow" href="index.html#"
-                                                                    class="product-btn button">Add to cart</a>
-                                                            </div>
-                                                            <div class="btn-wishlist" data-title="Wishlist">
-                                                                @if (Session::has('login_id'))
-                                                                    @if (in_array($pro->id, $wishlistItems))
-                                                                    <button class="product-btn wishlist-btn" data-product-id="{{ $pro->id }}">
-                                                                        <i class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                                                    </button>
-                                                                @else
-                                                                    <button class="product-btn wishlist-btn" data-product-id="{{ $pro->id }}">
-                                                                        <i class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                                                    </button>
-                                                                @endif
-                                                                @else
-                                                                    <button class="product-btn">Add to wishlist</button>
-                                                                @endif
-                                                            </div>
-                                                            <span class="product-quickview" data-title="Quick View">
-                                                                <a href="index.html#" class="quickview quickview-button">Quick
-                                                                    View <i class="icon-search"></i></a>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="products-content">
-                                                        <div class="contents">
-                                                            {{-- <div class="rating">
-                                                                <div class="star star-0"></div><span class="count">(0
-                                                                    review)</span>
-                                                            </div> --}}
-                                                            <h3 class="product-title"><a href="{{ route('product_detail', $pro->id) }}">{{ $pro->product_name }}</a></h3>
-                                                            <span class="price">
-                                                                <del aria-hidden="true"><span>₹{{ $pro->product_price }}</span></del>
-                                                                <ins><span>₹{{ $pro->sell_price }}</span></ins>
-                                                            </span>
-                                                        </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -349,6 +265,114 @@
                 </div>
             </div>
         </section>
+        <section class="section section-padding m-b-70">
+            <div class="section-container large">
+                <!-- Block Products -->
+                <div class="block block-products slider">
+                    <div class="block-widget-wrap">
+                        <div class="block-title">
+                            <h2>Trending Products</h2>
+                        </div>
+                        <div class="block-content">
+                            <div class="content-product-list slick-wrap">
+                                <div class="slick-sliders products-list grid" data-slidestoscroll="true"
+                                    data-dots="false" data-nav="1" data-columns4="1" data-columns3="2"
+                                    data-columns2="2" data-columns1="3" data-columns1440="4" data-columns="4">
+                                    @foreach ($products as $pro)
+                                        <div class="item-product slick-slide">
+                                            <div class="items">
+                                                <div class="products-entry clearfix product-wapper">
+                                                    <div class="products-thumb">
+                                                        <div class="product-lable">
+                                                            <div class="hot">SAVE ₹{{ $pro->discount }}</div>
+                                                        </div>
+                                                        <div class="product-thumb-hover">
+                                                            <a href="{{ route('product_detail', $pro->id) }}">
+                                                                @if (is_array($pro->images) && count($pro->images) > 0)
+                                                                    <img src="{{ $pro->images[0] }}" width="600"
+                                                                        height="600" alt="Product Image"
+                                                                        class="post-image">
+                                                                    @if (isset($pro->images[1]))
+                                                                        <img src="{{ $pro->images[1] }}" width="600"
+                                                                            height="600" alt="Product Image"
+                                                                            class="hover-image back">
+                                                                    @else
+                                                                        <img src="{{ $pro->images[0] }}" width="600"
+                                                                            height="600" alt="Product Image"
+                                                                            class="hover-image back">
+                                                                    @endif
+                                                                @else
+                                                                    <img src="{{ asset('front_end/media/product/1.jpg') }}"
+                                                                        width="600" height="600"
+                                                                        alt="Default Image">
+                                                                @endif
+                                                            </a>
+                                                        </div>
+                                                        <div class="product-button">
+                                                            <div class="btn-add-to-cart" data-title="Add to cart">
+                                                                <a rel="nofollow" href="index.html#"
+                                                                    class="product-btn button">Add to cart</a>
+                                                            </div>
+                                                            @if (Session::has('login_id'))
+                                                                @if (in_array($pro->id, $wishlistItems))
+                                                                    <div class="btn-wishlist" data-title="Wishlist"  data-product-id="{{ $pro->id }}">
+                                                                        <button class="product-btn wishlist-btn">
+                                                                            <i
+                                                                                class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="btn-wishlist 123" data-title="Wishlist" >
+                                                                        <button class="product-btn wishlist-btn">
+                                                                            <i
+                                                                                class=" fa fa-heart-o"></i>
+                                                                        </button>
+                                                                    </div>
+                                                                @endif
+                                                            @else
+                                                                <div class=" active-login" data-title="Wishlist">
+                                                                    <button class="product-btn wishlist-btn">
+                                                                        <i class= 'fa fa-heart'></i>
+                                                                    </button>
+                                                                </div>
+                                                            @endif
+
+                                                            <span class="product-quickview" data-title="Quick View">
+                                                                <a href="index.html#"
+                                                                    class="quickview quickview-button">Quick
+                                                                    View <i class="icon-search"></i></a>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="products-content">
+                                                        <div class="contents">
+                                                            {{-- <div class="rating">
+                                                                <div class="star star-0"></div><span class="count">(0
+                                                                    review)</span>
+                                                            </div> --}}
+                                                            <h3 class="product-title"><a
+                                                                    href="{{ route('product_detail', $pro->id) }}">{{ $pro->product_name }}</a>
+                                                            </h3>
+                                                            <span class="price">
+                                                                <del
+                                                                    aria-hidden="true"><span>₹{{ $pro->product_price }}</span></del>
+                                                                <ins><span>₹{{ $pro->sell_price }}</span></ins>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
 
         <section class="section section-padding m-b-80">
             <div class="section-container">
@@ -430,5 +454,4 @@
 
 
 @push('after-script')
-
 @endpush
