@@ -33,6 +33,8 @@ class LandingpageController extends Controller
         if(isset($category)) {
             $all_products = $all_products->where('cat_id', $category->id);
         }
+        $max_price = (int) $all_products->max('sell_price');
+
         $page = 1;
         $per_page_limit = config('global.per_api_limit') ?? 6;
         $total_record =  0;
@@ -54,7 +56,7 @@ class LandingpageController extends Controller
         $wishlistItems = Wishlist::where('user_id', $user_id)
                     ->pluck('product_id')->toArray();
 
-        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems'));
+        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems', 'max_price'));
     }
 
     public function TermsCondition() {

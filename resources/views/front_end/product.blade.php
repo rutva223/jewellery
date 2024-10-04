@@ -43,12 +43,15 @@
 
                         <!-- Block Product Filter -->
                         <div class="block block-product-filter">
-                            <div class="block-title"><h2>Price</h2></div>
+                            <div class="block-title">
+                                <h2>Price</h2>
+                            </div>
                             <div class="block-content">
                                 <div id="slider-range" class="price-filter-wrap">
                                     <div class="filter-item price-filter">
                                         <div class="layout-slider">
-                                            <input id="price-filter" name="price" value="0;100" />
+                                            <input id="price-filter" name="price" value="0;{{$max_price}}" />
+                                            <input type="hidden" value="{{ $max_price }}" id="max-price">
                                         </div>
                                         <div class="layout-slider-settings"></div>
                                     </div>
@@ -126,17 +129,13 @@
                         <div class="products-topbar clearfix">
                             <div class="products-topbar-right">
                                 <div class="products-sort dropdown">
-                                    <span class="sort-toggle dropdown-toggle" data-toggle="dropdown"
-                                        aria-expanded="true">Default sorting</span>
+                                    <span class="sort-toggle dropdown-toggle" data-toggle="dropdown" aria-expanded="true" id="sorting-message">Default sorting</span>
                                     <ul class="sort-list dropdown-menu">
                                         <li class="active"><a href="#" data-sort="default">Default sorting</a></li>
-                                        <li><a href="#" data-sort="popularity">Sort by popularity</a></li>
-                                        <li><a href="#" data-sort="rating">Sort by average rating</a></li>
                                         <li><a href="#" data-sort="latest">Sort by latest</a></li>
                                         <li><a href="#" data-sort="price_low_high">Sort by price: low to high</a></li>
                                         <li><a href="#" data-sort="price_high_low">Sort by price: high to low</a></li>
                                     </ul>
-
                                 </div>
                                 <ul class="layout-toggle nav nav-tabs">
                                     <li class="nav-item">
@@ -194,7 +193,7 @@
             var cat_id = "{{ $cat_id }}";
 
             // Function to load content via AJAX, including price filter values
-            function loadContent(page, view_type, cat_id) {
+            function loadContent(page, view_type, cat_id, price = 0, sort = 'default') {
                 $.ajax({
                     url: "{{ route('get-grid-view') }}", // Adjust to your route
                     type: 'post',
@@ -202,6 +201,8 @@
                         page: page,
                         view_type: view_type,
                         cat_id: cat_id,
+                        price: price,
+                        sort: sort
                     },
                     success: function(response) {
                         $('#products-container').html(response.html); // Populate products
@@ -221,7 +222,8 @@
                 e.preventDefault();
                 var page = $(this).attr('href').split('page=')[1];
                 var view_type = $('.layout-toggle .active').attr('type');
-                loadContent(page, view_type, cat_id); // Ensure filtered prices persist
+                var sort = $('.sort-list .active a').data('sort');
+                loadContent(page, view_type, cat_id, 0, sort); // Ensure filtered prices persist
             });
 
             // Event listener for layout toggle (grid/list view)
@@ -229,9 +231,32 @@
                 e.preventDefault();
                 $('.layout-toggle a').removeClass('active');
                 $(this).addClass('active');
+                var view_type = $('.layout-toggle .active').attr('type');
+                var sort = $('.sort-list .active a').data('sort'); // Get current sort type
+                loadContent(1, view_type, cat_id, 0, sort);
+            });
 
-                var type = $(this).attr('type');
-                loadContent(1, type, cat_id); // Ensure filtered prices persist
+            // Event listener for sorting
+            $('.sort-list a').on('click', function(e) {
+                e.preventDefault();
+                $('.sort-list a').parent().removeClass('active');
+                $(this).parent().addClass('active');
+
+                var sort = $(this).data('sort'); // Get selected sort type
+                var view_type = $('.layout-toggle .active').attr('type');
+                loadContent(1, view_type, cat_id, 0, sort); // Reload content with selected sorting
+
+                // Update sorting toggle text
+                var sortText = $(this).text(); // Get the text of the selected sort option
+                $('#sorting-message').text(sortText); // Reload content with selected sorting
+            });
+
+            $('#slider-range').on('click', function() {
+                var price = $('#price-filter').val();
+                var view_type = $('.layout-toggle .active').attr('type');
+                var sort = $('.sort-list .active a').data('sort'); // Get current sort type
+
+                loadContent(1, view_type, cat_id, price, sort);
             });
         });
     </script>
