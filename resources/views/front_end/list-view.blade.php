@@ -10,14 +10,18 @@
                         <div class="product-thumb-hover">
                             <a href="{{ route('product_detail', $product->id) }}">
                                 @if (is_array($product->images) && count($product->images) > 0)
-                                    <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
+                                    <img src="{{ $product->images[0] }}" width="600" height="600"
+                                        alt="Product Image" class="post-image">
                                     @if (isset($product->images[1]))
-                                        <img src="{{ $product->images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                        <img src="{{ $product->images[1] }}" width="600" height="600"
+                                            alt="Product Image" class="hover-image back">
                                     @else
-                                        <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                        <img src="{{ $product->images[0] }}" width="600" height="600"
+                                            alt="Product Image" class="hover-image back">
                                     @endif
                                 @else
-                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
+                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600"
+                                        height="600" alt="Default Image">
                                 @endif
                             </a>
                         </div>
@@ -40,15 +44,37 @@
                             <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
                                 <a rel="nofollow" href="#" class="product-btn button">Add to cart</a>
                             </div>
-                            <div class="btn-wishlist" data-title="Wishlist">
-                                <button class="product-btn">Add to wishlist</button>
-                            </div>
+                            @if (Session::has('login_id'))
+                                @if (in_array($pro->id, $wishlistItems))
+                                    <div class="btn-wishlist" data-title="Wishlist"
+                                        data-product-id="{{ $pro->id }}">
+                                        <button class="product-btn wishlist-btn">
+                                            <i
+                                                class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                        </button>
+                                    </div>
+                                @else
+                                    <div class="btn-wishlist 123" data-title="Wishlist"
+                                        data-product-id="{{ $pro->id }}">
+                                        <button class="product-btn wishlist-btn">
+                                            <i class=" fa fa-heart-o"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                            @else
+                                <div class=" active-login" data-title="Wishlist">
+                                    <button class="product-btn wishlist-btn">
+                                        <i class= 'fa fa-heart'></i>
+                                    </button>
+                                </div>
+                            @endif
                             <div class="btn-compare" data-title="Compare">
                                 <button class="product-btn">Compare</button>
                             </div>
                         </div>
                         <div class="product-description">
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis…
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
+                            labore et dolore magna aliqua. Ut enim ad minim veniam, quis…
                         </div>
                     </div>
                 </div>

@@ -10,46 +10,73 @@
                         <div class="product-thumb-hover">
                             <a href="{{ route('product_detail', $product->id) }}">
                                 @if (is_array($product->images) && count($product->images) > 0)
-                                    <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
+                                    <img src="{{ $product->images[0] }}" width="600" height="600"
+                                        alt="Product Image" class="post-image">
                                     @if (isset($product->images[1]))
-                                        <img src="{{ $product->images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                        <img src="{{ $product->images[1] }}" width="600" height="600"
+                                            alt="Product Image" class="hover-image back">
                                     @else
-                                        <img src="{{ $product->images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                        <img src="{{ $product->images[0] }}" width="600" height="600"
+                                            alt="Product Image" class="hover-image back">
                                     @endif
                                 @else
-                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
+                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600"
+                                        height="600" alt="Default Image">
                                 @endif
                             </a>
                         </div>
                         <div class="product-button">
-                            <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                <a rel="nofollow"   class="product-btn button">Add to cart</a>
-                            </div>
-                            <div class="btn-wishlist" data-title="Wishlist">
-                                @if (Session::has('login_id'))
-                                    @if (in_array($product->id, $wishlistItems))
-                                    <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">
-                                        <i class="fa fa-heart filled-heart" aria-hidden="true"></i>
-                                    </button>
+
+                            @if (Session::has('login_id'))
+                                <div class="btn-add-to-cart"
+                                    data-product-id="{{ $product->id }}"
+                                    data-title="Add to cart">
+                                    <a rel="nofollow" href="#" class="product-btn button">Add to
+                                        cart</a>
+                                </div>
+                            @else
+                                <div class="btn-add-to-cart  active-login" data-title="Add to cart">
+                                    <a rel="nofollow" class="product-btn button" href="#">Add to
+                                        cart</a>
+                                </div>
+                            @endif
+                            @if (Session::has('login_id'))
+                                @if (in_array($product->id, $wishlistItems))
+                                    <div class="btn-wishlist" data-title="Wishlist"
+                                        data-product-id="{{ $product->id }}">
+                                        <button class="product-btn wishlist-btn">
+                                            <i
+                                                class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                        </button>
+                                    </div>
                                 @else
-                                    <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">
-                                        <i class="fa fa-heart empty-heart" aria-hidden="true"></i>
+                                    <div class="btn-wishlist 123" data-title="Wishlist"
+                                        data-product-id="{{ $product->id }}">
+                                        <button class="product-btn wishlist-btn">
+                                            <i class=" fa fa-heart-o"></i>
+                                        </button>
+                                    </div>
+                                @endif
+                            @else
+                                <div class=" active-login" data-title="Wishlist">
+                                    <button class="product-btn wishlist-btn">
+                                        <i class= 'fa fa-heart'></i>
                                     </button>
-                                @endif
-                                @else
-                                    <button class="product-btn" id="loginModalTrigger">Add to wishlist</button>
-                                @endif
-                            </div>
+                                </div>
+                            @endif
+
                             <span class="product-quickview" data-title="Quick View">
-                                <a href="{{ route('catwiseproduct', $product->id) }}" class="quickview-button" data-id="{{ $product->id }}">Quick View
-                                    <i class="icon-search"></i>
-                                </a>
+                                <a href="index.html#"
+                                    class="quickview quickview-button">Quick
+                                    View <i class="icon-search"></i></a>
                             </span>
                         </div>
                     </div>
                     <div class="products-content">
                         <div class="contents text-center">
-                            <h3 class="product-title"><a href="{{ route('product_detail', $product->id) }}">{{ $product->product_name }}</a></h3>
+                            <h3 class="product-title"><a
+                                    href="{{ route('product_detail', $product->id) }}">{{ $product->product_name }}</a>
+                            </h3>
                             <div class="price">
                                 <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
                                 <span class="price">₹{{ $product->sell_price }}</span>
@@ -58,7 +85,6 @@
                     </div>
                 </div>
             </div>
-
         @endforeach
     </div>
 </div>
@@ -92,38 +118,36 @@
 <script src="{{ asset('front_end/libs/slick/js/slick.min.js') }}"></script>
 
 @push('after-script')
+    <script>
+        $(document).ready(function() {
+            $('.wishlist-btn').on('click', function() {
+                let productId = $(this).data('product-id');
+                let heartIcon = $(this).find('i');
 
-<script>
-    $(document).ready(function() {
-        $('.wishlist-btn').on('click', function() {
-            let productId = $(this).data('product-id');
-            let heartIcon = $(this).find('i');
-
-            $.ajax({
-                url: '{{ route("add-wishlist") }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}',
-                    product_id: productId
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        // Toggle heart icon on success
-                        if (heartIcon.hasClass('empty-heart')) {
-                            heartIcon.removeClass('empty-heart').addClass('filled-heart');
+                $.ajax({
+                    url: '{{ route('add-wishlist') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        product_id: productId
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Toggle heart icon on success
+                            if (heartIcon.hasClass('empty-heart')) {
+                                heartIcon.removeClass('empty-heart').addClass('filled-heart');
+                            } else {
+                                heartIcon.removeClass('filled-heart').addClass('empty-heart');
+                            }
                         } else {
-                            heartIcon.removeClass('filled-heart').addClass('empty-heart');
+                            alert(response.message);
                         }
-                    } else {
-                        alert(response.message);
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
                     }
-                },
-                error: function() {
-                    alert('An error occurred. Please try again.');
-                }
+                });
             });
         });
-    });
-</script>
-
+    </script>
 @endpush

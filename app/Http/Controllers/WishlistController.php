@@ -13,7 +13,6 @@ class WishlistController extends Controller
     {
         // Get the product ID from the request
         $productId = $request->input('product_id');
-
         // Get the logged-in user's ID (assuming you're storing it in the session)
         $userId = Session::get('login_id');
 

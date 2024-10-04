@@ -31,8 +31,8 @@
                                                 data-focusonselect="true" data-columns4="5" data-columns3="4"
                                                 data-columns2="4" data-columns1="4" data-columns="4" data-nav="true"
                                                 data-vertical="&quot;true&quot;" data-verticalswiping="&quot;true&quot;">
-                                                @if(is_array($product->images) && count($product->images) > 0)
-                                                    @foreach($product->images as $image)
+                                                @if (is_array($product->images) && count($product->images) > 0)
+                                                    @foreach ($product->images as $image)
                                                         <div class="img-item slick-slide">
                                                             <span class="img-thumbnail-scroll">
                                                                 <img width="600" height="600" src="{{ $image }}"
@@ -43,7 +43,8 @@
                                                 @else
                                                     <div class="img-item slick-slide">
                                                         <span class="img-thumbnail-scroll">
-                                                            <img width="600" height="600" src="{{ asset('front_end/media/product/1-2.jpg') }}"
+                                                            <img width="600" height="600"
+                                                                src="{{ asset('front_end/media/product/1-2.jpg') }}"
                                                                 alt="">
                                                         </span>
                                                     </div>
@@ -59,16 +60,18 @@
                                             <div class="image-additional slick-carousel" data-asnavfor=".image-thumbnail"
                                                 data-fade="true" data-columns4="1" data-columns3="1" data-columns2="1"
                                                 data-columns1="1" data-columns="1" data-nav="true">
-                                                @if(is_array($product->images) && count($product->images) > 0)
-                                                    @foreach($product->images as $image)
+                                                @if (is_array($product->images) && count($product->images) > 0)
+                                                    @foreach ($product->images as $image)
                                                         <div class="img-item slick-slide">
                                                             <img width="900" height="900" src="{{ $image }}"
-                                                                alt="{{ $product->product_name }}" title="{{ $product->product_name }}">
+                                                                alt="{{ $product->product_name }}"
+                                                                title="{{ $product->product_name }}">
                                                         </div>
                                                     @endforeach
                                                 @else
                                                     <div class="img-item slick-slide">
-                                                        <img width="900" height="900" src="{{ asset('front_end/media/product/1.jpg') }}"
+                                                        <img width="900" height="900"
+                                                            src="{{ asset('front_end/media/product/1.jpg') }}"
                                                             alt="Default Product Image" title="Default Product Image">
                                                     </div>
                                                 @endif
@@ -92,32 +95,53 @@
                                         <div class="quantity">
                                             <button type="button" class="plus">+</button>
                                             <input type="number" class="qty" step="1" min="0"
-                                                max="" name="quantity" value="1" title="Qty"
-                                                size="4" placeholder="" inputmode="numeric" autocomplete="off">
+                                                max="" name="quantity" value="1" title="Qty" size="4"
+                                                placeholder="" inputmode="numeric" autocomplete="off">
                                             <button type="button" class="minus">-</button>
                                         </div>
-                                        <div class="btn-add-to-cart" data-product-id="{{ $product->id }}">
-                                            <a href="#" tabindex="0">Add to cart</a>
-                                        </div>
-                                    </div>
-                                    <div class="btn-quick-buy" data-title="Wishlist">
-                                        <button class="product-btn">Buy It Now</button>
-                                    </div>
-                                    <div class="btn-wishlist" data-title="Wishlist">
+
                                         @if (Session::has('login_id'))
-                                            @if (in_array($product->id, $wishlistItems))
-                                                <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">Add to wishlist
-                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
-                                                </button>
-                                            @else
-                                                <button class="product-btn wishlist-btn" data-product-id="{{ $product->id }}">Add to wishlist
-                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
-                                                </button>
-                                            @endif
+                                            <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
+                                                data-title="Add to cart">
+                                                <a rel="nofollow" tabindex="0" href="#">Add to
+                                                    cart</a>
+                                            </div>
                                         @else
-                                            <button class="product-btn">Add to wishlist</button>
+                                            <div class=" active-login" data-title="Add to cart">
+                                                <a rel="nofollow" tabindex="0" href="#">Add to
+                                                    cart</a>
+                                            </div>
                                         @endif
                                     </div>
+                                    <div class="btn-quick-buy" data-title="Wishlist">
+
+                                        <a href="{{ route('checkout') }}" class="button alt product-btn" name="checkout_place_order" value="Place order">  <button class="product-btn">Buy It Now</button></a>
+
+                                    </div>
+                                    @if (Session::has('login_id'))
+                                        @if (in_array($product->id, $wishlistItems))
+                                            <div class="btn-wishlist" data-title="Wishlist">
+                                                <button class="product-btn wishlist-btn"
+                                                    data-product-id="{{ $product->id }}">Add to wishlist
+                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
+                                                </button>
+                                            </div>
+                                        @else
+                                        <div class="btn-wishlist" data-title="Wishlist">
+
+                                            <button class="product-btn wishlist-btn"
+                                                data-product-id="{{ $product->id }}">Add to wishlist
+                                                {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
+                                            </button>
+                                        </div>
+                                        @endif
+                                    @else
+                                    <div class=" active-login btn-wishlist" data-title="Wishlist">
+
+                                        <button class="product-btn">Add to wishlist</button>
+                                    </div>
+                                    @endif
+
                                 </div>
                                 <div class="product-meta">
                                     <span class="posted-in">Category: <a
@@ -187,39 +211,55 @@
                                                             <div class="product-thumb-hover">
                                                                 <a href="{{ route('product_detail', $product->id) }}">
                                                                     @if (is_array($images) && count($images) > 0)
-                                                                        <img src="{{ $images[0] }}" width="600" height="600" alt="Product Image" class="post-image">
+                                                                        <img src="{{ $images[0] }}" width="600"
+                                                                            height="600" alt="Product Image"
+                                                                            class="post-image">
                                                                         @if (isset($images[1]))
-                                                                            <img src="{{ $images[1] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                                                            <img src="{{ $images[1] }}" width="600"
+                                                                                height="600" alt="Product Image"
+                                                                                class="hover-image back">
                                                                         @else
-                                                                            <img src="{{ $images[0] }}" width="600" height="600" alt="Product Image" class="hover-image back">
+                                                                            <img src="{{ $images[0] }}" width="600"
+                                                                                height="600" alt="Product Image"
+                                                                                class="hover-image back">
                                                                         @endif
                                                                     @else
-                                                                        <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600" height="600" alt="Default Image">
+                                                                        <img src="{{ asset('front_end/media/product/1.jpg') }}"
+                                                                            width="600" height="600"
+                                                                            alt="Default Image">
                                                                     @endif
                                                                 </a>
                                                             </div>
                                                             <div class="product-button">
-                                                                <div class="btn-add-to-cart" data-title="Add to cart" data-product-id="{{ $product->id }}">
-                                                                    <a rel="nofollow" href="#"  
+                                                                <div class="btn-add-to-cart" data-title="Add to cart"
+                                                                    data-product-id="{{ $product->id }}">
+                                                                    <a rel="nofollow" href="#"
                                                                         class="product-btn button">Add to cart</a>
                                                                 </div>
                                                                 <div class="btn-wishlist" data-title="Wishlist">
                                                                     @if (Session::has('login_id'))
                                                                         @if (in_array($value->id, $wishlistItems))
-                                                                        <button class="product-btn wishlist-btn" data-product-id="{{ $value->id }}">
-                                                                            <i class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                                                        </button>
+                                                                            <button class="product-btn wishlist-btn"
+                                                                                data-product-id="{{ $value->id }}">
+                                                                                <i
+                                                                                    class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                            </button>
+                                                                        @else
+                                                                            <button class="product-btn wishlist-btn"
+                                                                                data-product-id="{{ $value->id }}">
+                                                                                <i
+                                                                                    class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                            </button>
+                                                                        @endif
                                                                     @else
-                                                                        <button class="product-btn wishlist-btn" data-product-id="{{ $value->id }}">
-                                                                            <i class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                                                        </button>
-                                                                    @endif
-                                                                    @else
-                                                                        <button class="product-btn">Add to wishlist</button>
+                                                                        <button class="product-btn">Add to
+                                                                            wishlist</button>
                                                                     @endif
                                                                 </div>
                                                                 <span class="product-quickview" data-title="Quick View">
-                                                                    <a href="{{ route('catwiseproduct', $product->id) }}" class="quickview-button" data-id="{{ $product->id }}">Quick View
+                                                                    <a href="{{ route('catwiseproduct', $product->id) }}"
+                                                                        class="quickview-button"
+                                                                        data-id="{{ $product->id }}">Quick View
                                                                         <i class="icon-search"></i>
                                                                     </a>
                                                                 </span>
@@ -227,10 +267,13 @@
                                                         </div>
                                                         <div class="products-content">
                                                             <div class="contents text-center">
-                                                                <h3 class="product-title"><a href="{{ route('product_detail', $value->id) }}">{{ $value->product_name }}</a></h3>
+                                                                <h3 class="product-title"><a
+                                                                        href="{{ route('product_detail', $value->id) }}">{{ $value->product_name }}</a>
+                                                                </h3>
                                                             </div>
                                                             <div class="price">
-                                                                <del aria-hidden="true"><span>₹{{ $value->product_price }}</span></del>
+                                                                <del
+                                                                    aria-hidden="true"><span>₹{{ $value->product_price }}</span></del>
                                                                 <ins><span>₹{{ $value->sell_price }}</span></ins>
                                                             </div>
                                                         </div>
@@ -258,10 +301,10 @@
             let heartIcon = $(this).find('i');
 
             $.ajax({
-                url: '{{ route("add-wishlist") }}',
+                url: '{{ route('add-wishlist') }}',
                 method: 'POST',
                 data: {
-                    _token: '{{ csrf_token() }}',  // CSRF token for security
+                    _token: '{{ csrf_token() }}', // CSRF token for security
                     product_id: productId
                 },
                 success: function(response) {
@@ -272,7 +315,7 @@
                         } else {
                             heartIcon.removeClass('filled-heart').addClass('empty-heart');
                         }
-                    updateWishlistCount();
+                        updateWishlistCount();
                     } else {
                         alert(response.message);
                     }
@@ -288,7 +331,8 @@
                 url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
                 type: 'GET',
                 success: function(data) {
-                    $('.count-wishlist').text(data.count);  // Update the wishlist count in the header
+                    $('.count-wishlist').text(data
+                    .count); // Update the wishlist count in the header
                 },
                 error: function() {
                     alert('Failed to update wishlist count.');
