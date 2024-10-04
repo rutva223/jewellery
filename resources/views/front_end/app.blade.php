@@ -55,9 +55,8 @@
 <script>
     $(document).ready(function() {
         $('.btn-wishlist').on('click', function() {
-            let productId = $(this).data('product-id');
-            let heartIcon = $(this).find('i');
-
+            var heartIcon = $(this).find('i');
+            var productId = $(this).data('product-id');
             $.ajax({
                 url: '{{ route('add-wishlist') }}',
                 method: 'POST',

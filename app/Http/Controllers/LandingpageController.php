@@ -81,4 +81,10 @@ class LandingpageController extends Controller
 
         return view('front_end.product_detail', compact('product','body', 'wishlistItems'));
     }
+
+    public function checkout()
+    {
+        $body = 'checkout';
+        return view('front_end.checkout', compact('body'));
+    }
 }

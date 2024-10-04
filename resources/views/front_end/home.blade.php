@@ -173,13 +173,13 @@
                                 <div class="slick-sliders content-category" data-dots="0" data-slidestoscroll="true"
                                     data-nav="1" data-columns4="2" data-columns3="3" data-columns2="3"
                                     data-columns1="5" data-columns1440="5" data-columns="5">
-                                    @foreach($all_categories as $cat)
+                                    @foreach ($all_categories as $cat)
                                         <div class="item item-product-cat slick-slide">
                                             <div class="item-product-cat-content">
                                                 <a href="{{ route('catwiseproduct', $cat->name) }}">
                                                     <div class="item-image animation-horizontal">
                                                         <img width="258" height="258"
-                                                            src="{{ asset('front_end/media/product/'.strtolower($cat->name)) }}.jpg"
+                                                            src="{{ asset('front_end/media/product/' . strtolower($cat->name)) }}.jpg"
                                                             alt="{{ $cat->name }}">
                                                     </div>
                                                 </a>
@@ -309,23 +309,34 @@
                                                             </a>
                                                         </div>
                                                         <div class="product-button">
-                                                            <div class="btn-add-to-cart" data-title="Add to cart">
-                                                                <a rel="nofollow" href="index.html#"
-                                                                    class="product-btn button">Add to cart</a>
-                                                            </div>
+
+                                                            @if (Session::has('login_id'))
+                                                                <div class="btn-add-to-cart"
+                                                                    data-product-id="{{ $pro->id }}"
+                                                                    data-title="Add to cart">
+                                                                    <a rel="nofollow" href="#" class="product-btn button">Add to
+                                                                        cart</a>
+                                                                </div>
+                                                            @else
+                                                                <div class=" active-login" data-title="Add to cart">
+                                                                    <a rel="nofollow" class="product-btn button" href="#">Add to
+                                                                        cart</a>
+                                                                </div>
+                                                            @endif
                                                             @if (Session::has('login_id'))
                                                                 @if (in_array($pro->id, $wishlistItems))
-                                                                    <div class="btn-wishlist" data-title="Wishlist"  data-product-id="{{ $pro->id }}">
+                                                                    <div class="btn-wishlist" data-title="Wishlist"
+                                                                        data-product-id="{{ $pro->id }}">
                                                                         <button class="product-btn wishlist-btn">
                                                                             <i
                                                                                 class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
                                                                         </button>
                                                                     </div>
                                                                 @else
-                                                                    <div class="btn-wishlist 123" data-title="Wishlist" >
+                                                                    <div class="btn-wishlist 123" data-title="Wishlist"
+                                                                        data-product-id="{{ $pro->id }}">
                                                                         <button class="product-btn wishlist-btn">
-                                                                            <i
-                                                                                class=" fa fa-heart-o"></i>
+                                                                            <i class=" fa fa-heart-o"></i>
                                                                         </button>
                                                                     </div>
                                                                 @endif
