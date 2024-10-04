@@ -238,7 +238,7 @@ class ProductsController extends Controller
 
     public function getGridView(Request $request)
     {
-        dump($request->all());
+        // dd($request->all()); 
         $cat_id = $request->cat_id;
         $query = Product::query();
 
@@ -247,10 +247,30 @@ class ProductsController extends Controller
         }
 
         // Apply price filter
-        $price_range = $request->price_range;
-        if ($price_range) {
-            [$min_price, $max_price] = explode(';', $price_range);
-            $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
+
+        if($request->price != null) {
+            $price_range = $request->price;
+            if ($price_range) {
+                [$min_price, $max_price] = explode(';', $price_range);
+                $query->whereBetween('sell_price', [(float)$min_price, (float)$max_price]);
+            }
+        }
+
+        if ($request->sort) {
+            switch ($request->sort) {
+                case 'latest':
+                    $query->orderBy('created_at', 'desc'); // Sort by latest added products
+                    break;
+                case 'price_low_high':
+                    $query->orderBy('sell_price', 'asc'); // Sort by price: low to high
+                    break;
+                case 'price_high_low':
+                    $query->orderBy('sell_price', 'desc'); // Sort by price: high to low
+                    break;
+                default:
+                    // Default sorting, if needed
+                    break;
+            }
         }
 
         $user_id = Session::has('login_id');

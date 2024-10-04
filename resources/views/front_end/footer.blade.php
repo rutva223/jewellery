@@ -300,7 +300,6 @@
 <script src="{{ asset('front_end/libs/jquery/js/jquery.min.js') }}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-@stack('after-scripts')
 
 <script src="{{ asset('front_end/libs/popper/js/popper.min.js') }}"></script>
 <script src="{{ asset('front_end/libs/bootstrap/js/bootstrap.min.js') }}"></script>
@@ -315,6 +314,9 @@
 <script src="{{ asset('front_end/assets/js/app.js') }}"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+@stack('after-scripts')
+
 <script>
     $(document).ready(function() {
     $('#login_ajax').on('submit', function(e) {
