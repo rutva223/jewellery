@@ -130,6 +130,8 @@
                                             </div>
                                         </div>
                                     </div>
+
+
                                 </div>
                             </div>
                             <div class="section-column right">
@@ -354,8 +356,11 @@
                                                                 </div>
                                                             @else
                                                                 <div class="btn-add-to-cart active-login" data-title="Add to cart">
+
+                                                                    
                                                                     <a rel="nofollow" class="product-btn button"
                                                                         href="#">Add to
+
                                                                         cart</a>
                                                                 </div>
                                                             @endif
@@ -363,13 +368,11 @@
                                                                 @if (in_array($pro->id, $wishlistItems))
                                                                     <div class="btn-wishlist" data-title="Wishlist"
                                                                         data-product-id="{{ $pro->id }}">
-                                                                        <button class="product-btn wishlist-btn">
-                                                                            <i
-                                                                                class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+                                                                        <button class="product-btn wishlist-btn {{ in_array($pro->id, $wishlistItems) ? ' added' : '' }} ">
                                                                         </button>
                                                                     </div>
                                                                 @else
-                                                                    <div class="btn-wishlist 123" data-title="Wishlist"
+                                                                    <div class="btn-wishlist " data-title="Wishlist"
                                                                         data-product-id="{{ $pro->id }}">
                                                                         <button class="product-btn wishlist-btn">
                                                                             <i class=" fa fa-heart-o"></i>
@@ -377,7 +380,7 @@
                                                                     </div>
                                                                 @endif
                                                             @else
-                                                                <div class=" active-login" data-title="Wishlist">
+                                                                <div class="btn-wishlist active-login" data-title="Wishlist">
                                                                     <button class="product-btn wishlist-btn">
                                                                         <i class= 'fa fa-heart'></i>
                                                                     </button>
@@ -385,7 +388,7 @@
                                                             @endif
 
                                                             <span class="product-quickview" data-title="Quick View">
-                                                                <a href="index.html#"
+                                                                <a href="{{ route('product_detail', $pro->id) }}"
                                                                     class="quickview quickview-button">Quick
                                                                     View <i class="icon-search"></i></a>
                                                             </span>

@@ -238,7 +238,7 @@ class ProductsController extends Controller
 
     public function getGridView(Request $request)
     {
-        // dd($request->all()); 
+        // dd($request->all());
         $cat_id = $request->cat_id;
         $query = Product::query();
 
@@ -291,7 +291,7 @@ class ProductsController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
+                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
                     'pagination' => view('front_end.pagination', compact('products'))->render()
                 ]);
             }
@@ -353,7 +353,7 @@ class ProductsController extends Controller
                 ]);
             } else {
                 return response()->json([
-                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination'))->render(),
+                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
                     'pagination' => view('front_end.pagination', compact('products'))->render()
                 ]);
             }
