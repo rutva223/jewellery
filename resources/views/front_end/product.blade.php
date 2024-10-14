@@ -9,7 +9,7 @@
             </div>
             <div class="breadcrumbs">
                 <a href="{{ route('home') }}">Home</a><span class="delimiter"></span><a
-                    href="shop-grid-left.html">Shop</a><span class="delimiter"></span>{{ $cat_name }}
+                    href="{{ route('catwiseproduct') }}">Shop</a><span class="delimiter"></span>{{ $cat_name }}
             </div>
         </div>
     </div>
@@ -64,62 +64,32 @@
                             <div class="block-title">
                                 <h2>Feature Product</h2>
                             </div>
-                            <div class="block-content">
+                            <div class="product-thumb-hover">
                                 <ul class="products-list">
-                                    <li class="product-item">
-                                        <a href="shop-details.html" class="product-image">
-                                            <img src="{{ asset('front_end/media/product/1.jpg') }}">
-                                        </a>
-                                        <div class="product-content">
-                                            <h2 class="product-title">
-                                                <a href="shop-details.html">
-                                                    Medium Flat Hoops
-                                                </a>
-                                            </h2>
-                                            <div class="rating">
-                                                <div class="star star-5"></div>
+                                    @foreach ($products->take(3) as $p)
+                                        <li class="product-item">
+                                            <a href="{{ route('product_detail', $p->id) }}" class="product-image">
+                                                @if (is_array($p->images) && count($p->images) > 0)
+                                                    <img src="{{ $p->images[0] }}" width="600" height="600"
+                                                            alt="Product Image" class="hover-image back">
+                                                @else
+                                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600"
+                                                        height="600" alt="Default Image">
+                                                @endif
+                                            </a>
+                                            <div class="product-content">
+                                                <h2 class="product-title">
+                                                    <a href="{{ route('product_detail', $p->id) }}">
+                                                        {{ $p->product_name }}
+                                                    </a>
+                                                </h2>
+                                                <span class="price">
+                                                    <del aria-hidden="true"><span>₹{{ $p->product_price }}</span></del>
+                                                    <ins><span>₹{{ $p->sell_price }}</span></ins>
+                                                </span>
                                             </div>
-                                            <span class="price">
-                                                <del aria-hidden="true"><span>$150.00</span></del>
-                                                <ins><span>$100.00</span></ins>
-                                            </span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <a href="shop-details.html" class="product-image">
-                                            <img src="{{ asset('front_end/media/product/2.jpg') }}">
-                                        </a>
-                                        <div class="product-content">
-                                            <h2 class="product-title">
-                                                <a href="shop-details.html">
-                                                    Bold Pearl Hoop Earrings
-                                                </a>
-                                            </h2>
-                                            <div class="rating">
-                                                <div class="star star-0"></div>
-                                            </div>
-                                            <span class="price">$120.00</span>
-                                        </div>
-                                    </li>
-                                    <li class="product-item">
-                                        <a href="shop-details.html" class="product-image">
-                                            <img src="{{ asset('front_end/media/product/3.jpg') }}">
-                                        </a>
-                                        <div class="product-content">
-                                            <h2 class="product-title">
-                                                <a href="shop-details.html">
-                                                    Twin Hoops
-                                                </a>
-                                            </h2>
-                                            <div class="rating">
-                                                <div class="star star-4"></div>
-                                            </div>
-                                            <span class="price">
-                                                <del aria-hidden="true"><span>$200.00</span></del>
-                                                <ins><span>$180.00</span></ins>
-                                            </span>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    @endforeach
                                 </ul>
                             </div>
                         </div>

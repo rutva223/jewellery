@@ -127,7 +127,12 @@
                     }
                 },
                 error: function() {
+
                     alert('An error occurred. Please try again.');
+
+                    // $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
+                    // alert('An error occurred. Please try again.');
+
                 }
             });
         } else {

@@ -302,6 +302,8 @@
     </div>
 @endsection
 
+@push('after-scripts')
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -351,3 +353,6 @@
         }
     });
 </script>
+
+@endpush
+
