@@ -107,7 +107,7 @@
                                                     cart</a>
                                             </div>
                                         @else
-                                            <div class=" active-login" data-title="Add to cart">
+                                            <div class="btn-add-to-cart active-login" data-title="Add to cart">
                                                 <a rel="nofollow" tabindex="0" href="#">Add to
                                                     cart</a>
                                             </div>
@@ -292,6 +292,8 @@
     </div>
 @endsection
 
+@push('after-scripts')
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
@@ -341,3 +343,6 @@
         }
     });
 </script>
+
+@endpush
+

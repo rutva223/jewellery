@@ -123,7 +123,7 @@
                     <div class="row">
                         <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12 header-left">
                             <div class="site-logo">
-                                <a href="index.html">
+                                <a href="{{ route('home') }}">
                                     <img width="400" height="140"
                                         src="{{ asset('front_end/media/logo-white.png') }}"
                                         alt="Mojuri – Jewelry Store HTML Template" />
@@ -220,8 +220,7 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div
-                                            class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-center header-center">
+                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-center header-center">
                                             <div class="site-navigation">
                                                 <nav id="main-navigation">
                                                     <ul id="menu-main-menu" class="menu">
@@ -231,8 +230,7 @@
                                                             <ul class="sub-menu">
                                                                 <li>
                                                                     <a href="shop-details.html"><span
-                                                                            class="menu-item-text">My
-                                                                            Profile</span></a>
+                                                                            class="menu-item-text">My Profile</span></a>
                                                                 </li>
                                                                 <li>
                                                                     <form id="logout-form"
