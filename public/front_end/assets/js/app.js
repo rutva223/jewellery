@@ -270,20 +270,7 @@
       _0xb928x1(".dropdown-menu.cart-popup").on("click.bs.dropdown", function (_0xb928x1c) {
         _0xb928x1c.stopPropagation();
       });
-      _0xb928x1(".btn-add-to-cart a").on("click", function (_0xb928x1c) {
-        _0xb928x1c.preventDefault();
-        var _0xb928x22 = _0xb928x1(this);
-        _0xb928x22.addClass("loading");
-        setTimeout(function () {
-          _0xb928x22.removeClass("loading");
-          _0xb928x22.addClass("added");
-          _0xb928x22.closest("div").append('<a href="shop-cart.html" class="added-to-cart product-btn" title="View cart" tabindex="0">View cart</a>');
-          _0xb928x1("body").append('<div class="cart-product-added"><div class="added-message">Product was added to cart successfully!</div>');
-          setTimeout(function () {
-            _0xb928x1(".cart-product-added").remove();
-          }, 2e3);
-        }, 1e3);
-      });
+
       _0xb928x1(".btn-wishlist .product-btn").on("click", function (_0xb928x1c) {
         _0xb928x1c.preventDefault();
         var _0xb928x23 = _0xb928x1(this);

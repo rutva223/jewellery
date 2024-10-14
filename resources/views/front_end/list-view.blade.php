@@ -34,40 +34,43 @@
                             <del aria-hidden="true"><span>₹{{ $product->product_price }}</span></del>
                             <ins><span class="price">₹{{ $product->sell_price }}</span></ins>
                         </span>
-                        <div class="rating">
-                            <div class="star star-5"></div>
-                            <div class="review-count">
-                                (1<span> review</span>)
-                            </div>
-                        </div>
                         <div class="product-button">
-                            <div class="btn-add-to-cart" data-product-id="{{ $product->id }}" data-title="Add to cart">
-                                <a rel="nofollow" href="#" class="product-btn button">Add to cart</a>
-                            </div>
+
                             @if (Session::has('login_id'))
-                                @if (in_array($pro->id, $wishlistItems))
-                                    <div class="btn-wishlist" data-title="Wishlist"
-                                        data-product-id="{{ $pro->id }}">
-                                        <button class="product-btn wishlist-btn">
-                                            <i
-                                                class="{{ in_array($pro->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                        </button>
-                                    </div>
-                                @else
-                                    <div class="btn-wishlist 123" data-title="Wishlist"
-                                        data-product-id="{{ $pro->id }}">
-                                        <button class="product-btn wishlist-btn">
-                                            <i class=" fa fa-heart-o"></i>
-                                        </button>
-                                    </div>
-                                @endif
+                            <div class="btn-add-to-cart"
+                                data-product-id="{{ $product->id }}"
+                                data-title="Add to cart">
+                                <a rel="nofollow" href="#" class="product-btn button">Add to
+                                    cart</a>
+                            </div>
+                        @else
+                            <div class="btn-add-to-cart active-login" data-title="Add to cart">
+                                <a rel="nofollow" class="product-btn button" href="#">Add to
+                                    cart</a>
+                            </div>
+                        @endif
+                            @if (Session::has('login_id'))
+                            @if (in_array($product->id, $wishlistItems))
+                                <div class="btn-wishlist" data-title="Wishlist"
+                                    data-product-id="{{ $product->id }}">
+                                    <button class="product-btn  {{ in_array($product->id, $wishlistItems) ? ' added' : '' }} ">
+                                    </button>
+                                </div>
                             @else
-                                <div class=" active-login" data-title="Wishlist">
-                                    <button class="product-btn wishlist-btn">
-                                        <i class= 'fa fa-heart'></i>
+                                <div class="btn-wishlist " data-title="Wishlist"
+                                    data-product-id="{{ $product->id }}">
+                                    <button class="product-btn ">
+                                        <i class=" fa fa-heart-o"></i>
                                     </button>
                                 </div>
                             @endif
+                        @else
+                            <div class="btn-wishlist active-login" data-title="Wishlist">
+                                <button class="product-btn ">
+                                    <i class= 'fa fa-heart'></i>
+                                </button>
+                            </div>
+                        @endif
                             <div class="btn-compare" data-title="Compare">
                                 <button class="product-btn">Compare</button>
                             </div>

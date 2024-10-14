@@ -107,7 +107,7 @@
                                                     cart</a>
                                             </div>
                                         @else
-                                            <div class=" active-login" data-title="Add to cart">
+                                            <div class="btn-add-to-cart active-login" data-title="Add to cart">
                                                 <a rel="nofollow" tabindex="0" href="#">Add to
                                                     cart</a>
                                             </div>
@@ -231,37 +231,47 @@
                                                                 </a>
                                                             </div>
                                                             <div class="product-button">
-                                                                <div class="btn-add-to-cart" data-title="Add to cart"
-                                                                    data-product-id="{{ $product->id }}">
-                                                                    <a rel="nofollow" href="#"
-                                                                        class="product-btn button">Add to cart</a>
-                                                                </div>
-                                                                <div class="btn-wishlist" data-title="Wishlist">
-                                                                    @if (Session::has('login_id'))
-                                                                        @if (in_array($value->id, $wishlistItems))
-                                                                            <button class="product-btn wishlist-btn"
-                                                                                data-product-id="{{ $value->id }}">
-                                                                                <i
-                                                                                    class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
+
+                                                                @if (Session::has('login_id'))
+                                                                    <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
+                                                                        data-title="Add to cart">
+                                                                        <a rel="nofollow" href="#" class="product-btn button">Add to
+                                                                            cart</a>
+                                                                    </div>
+                                                                @else
+                                                                    <div class="btn-add-to-cart active-login" data-title="Add to cart">
+                                                                        <a rel="nofollow" class="product-btn button" href="#">Add to
+                                                                            cart</a>
+                                                                    </div>
+                                                                @endif
+                                                                @if (Session::has('login_id'))
+                                                                    @if (in_array($product->id, $wishlistItems))
+                                                                        <div class="btn-wishlist" data-title="Wishlist"
+                                                                            data-product-id="{{ $product->id }}">
+                                                                            <button
+                                                                                class="product-btn wishlist-btn {{ in_array($product->id, $wishlistItems) ? ' added' : '' }} ">
                                                                             </button>
-                                                                        @else
-                                                                            <button class="product-btn wishlist-btn"
-                                                                                data-product-id="{{ $value->id }}">
-                                                                                <i
-                                                                                    class="{{ in_array($value->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i>
-                                                                            </button>
-                                                                        @endif
+                                                                        </div>
                                                                     @else
-                                                                        <button class="product-btn">Add to
-                                                                            wishlist</button>
+                                                                        <div class="btn-wishlist " data-title="Wishlist"
+                                                                            data-product-id="{{ $product->id }}">
+                                                                            <button class="product-btn wishlist-btn">
+                                                                                <i class=" fa fa-heart-o"></i>
+                                                                            </button>
+                                                                        </div>
                                                                     @endif
-                                                                </div>
+                                                                @else
+                                                                    <div class="btn-wishlist active-login" data-title="Wishlist">
+                                                                        <button class="product-btn wishlist-btn">
+                                                                            <i class= 'fa fa-heart'></i>
+                                                                        </button>
+                                                                    </div>
+                                                                @endif
+
                                                                 <span class="product-quickview" data-title="Quick View">
-                                                                    <a href="{{ route('catwiseproduct', $product->id) }}"
-                                                                        class="quickview-button"
-                                                                        data-id="{{ $product->id }}">Quick View
-                                                                        <i class="icon-search"></i>
-                                                                    </a>
+                                                                    <a href="{{ route('product_detail', $product->id) }}"
+                                                                        class="quickview quickview-button">Quick
+                                                                        View <i class="icon-search"></i></a>
                                                                 </span>
                                                             </div>
                                                         </div>

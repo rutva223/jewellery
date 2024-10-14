@@ -337,7 +337,9 @@
                 // Assuming the response is a JSON object
                 if (response.success) {
                     // Show success message using Toastr
-                    toastr.success(response.message);
+                    $("body").append(
+                        '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
+                    );
                     // Optionally, redirect to another page after a delay
                     setTimeout(function() {
                         window.location.href = response.redirect; // redirect if provided
@@ -382,7 +384,9 @@ $(document).ready(function() {
             success: function(response) {
                 if (response.success) {
                     // Show success message using Toastr
-                    toastr.success(response.message);
+                    $("body").append(
+                        '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
+                    );
                     // Optionally, redirect to another page after a delay
                     setTimeout(function() {
                         window.location.href = response.redirect; // redirect if provided

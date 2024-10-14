@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Wishlist;
+use GuzzleHttp\Psr7\Request;
 use Illuminate\Support\Facades\Session;
 
 class LandingpageController extends Controller
@@ -86,5 +87,13 @@ class LandingpageController extends Controller
     {
         $body = 'checkout';
         return view('front_end.checkout', compact('body'));
+    }
+
+    public function placeOrder(Request $request)
+    {
+        // Validate and process the order here
+        // E.g., save order to database, send confirmation email, etc.
+
+        return response()->json(['success' => true, 'message' => 'Order placed successfully!']);
     }
 }

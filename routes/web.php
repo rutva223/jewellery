@@ -52,6 +52,7 @@ Route::get('cat-product/{slug?}', [LandingpageController::class, 'CatWiseProduct
 Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->name('user-login');
 Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 Route::get('/checkout', [LandingpageController::class, 'checkout'])->name('checkout');
+Route::post('/checkout/place-order', [LandingpageController::class, 'placeOrder'])->name('checkout.placeOrder');
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
     Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
