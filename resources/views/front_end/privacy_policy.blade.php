@@ -1,6 +1,15 @@
 
 @extends('front_end.app')
 @section('content')
+<style>
+    p{
+        font-size: medium;
+    }
+    h3{
+        color: #5A5A5A;
+    }
+</style>
+
 <div id="title" class="page-title">
     <div class="section-container">
         <div class="content-title-heading">
@@ -15,62 +24,36 @@
     </div>
 </div>
 
-<div id="content" class="site-content" role="main">
+<div id="content" class="site-content" role="main" style="padding: 0% 10%;">
     <div class="section-padding">
         <div class="section-container p-l-r">
             <div class="row">
-                <h2 style="text-align: center; color: #5A5A5A; font-size: 2em; margin-bottom: 20px;">Privacy Policy for Pavitra Jewellery</h2>
+                <div class="terms-section" style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <h3><b>Introduction</b></h3>
+                    <p>Welcome to Pavitra Jewellery. By accessing or using our website, you agree to be bound by these Terms and Conditions. Please read them carefully. If you do not agree with any part of these terms, you may not use our services.</p>
 
-                <div class="privacy-section" style="font-family: Arial, sans-serif; line-height: 1.6; color: #333;">
+                    <h3><b>Products and Services</b></h3>
+                    <p>Pavitra Jewellery offers a range of jewellry items for purchase. While we strive to display the colors and images of our products accurately, we cannot guarantee that your computer monitor's display will reflect the true color.</p>
 
-                    <h3 style="color: #4CAF50;">Introduction</h3>
-                    <p>Pavitra Jewellery is committed to protecting your personal information. This Privacy Policy outlines how we collect, use, and safeguard your data when you visit or make a purchase from our website.</p>
+                    <h3><b>Pricing and Payment</b></h3>
+                    <p>All prices listed on our website are in INR (Indian Rupees) and include all applicable taxes. Prices may change without notice, but such changes will not affect orders that have already been accepted. Payment must be made in full before your order is processed.</p>
 
-                    <h3 style="color: #4CAF50;">Information We Collect</h3>
-                    <ul style="margin-left: 20px;">
-                        <li><b>Personal Identification Information:</b> Name, email address, phone number, and shipping address.</li>
-                        <li><b>Payment Information:</b> Credit card or debit card details for order processing.</li>
-                        <li><b>Browsing Information:</b> IP address, browser type, and interaction data (e.g., pages visited).</li>
-                    </ul>
+                    <h3><b>Order Acceptance and Cancellation</b></h3>
+                    <p>We reserve the right to refuse or cancel any order for any reason, including but not limited to product availability, errors in the description or price, or issues identified by our fraud prevention system. If your order is canceled after your payment has been processed, we will issue a full refund.</p>
 
-                    <h3 style="color: #4CAF50;">How We Use Your Information</h3>
-                    <p>We use your personal data to:</p>
-                    <ul style="margin-left: 20px;">
-                        <li>Process your orders and provide customer support.</li>
-                        <li>Send you order updates and marketing communications (if opted-in).</li>
-                        <li>Improve our website and services by analyzing user behavior.</li>
-                    </ul>
+                    <h3><b>Shipping and Delivery</b></h3>
+                    <p>We aim to dispatch all orders within the specified timeframe. However, delivery times are estimates and not guaranteed. Pavitra Jewellery is not responsible for delays due to customs clearance or other circumstances beyond our control.</p>
 
-                    <h3 style="color: #4CAF50;">Sharing Your Information</h3>
-                    <p>We do not sell or rent your personal data. However, we may share your data with third parties to help us process payments or ship products. These partners are bound by confidentiality agreements.</p>
+                    <h3><b>Return and Refund Policy</b></h3>
+                    <p>If you are not satisfied with your purchase, you may return the item within 14 days of receipt for a full refund, provided the item is in its original condition and packaging. Custom-made items and engraved products are not eligible for return. Refunds will be processed within 7-10 business days of receiving the returned item.</p>
 
-                    <h3 style="color: #4CAF50;">Cookies</h3>
-                    <p>Pavitra Jewellery uses cookies to enhance your browsing experience. Cookies help us remember your preferences and understand your usage patterns. You can control or disable cookies in your browser settings.</p>
-
-                    <h3 style="color: #4CAF50;">Data Security</h3>
-                    <p>We implement appropriate security measures to protect your personal information from unauthorized access, alteration, or destruction. However, no method of transmission over the internet is completely secure.</p>
-
-                    <h3 style="color: #4CAF50;">Your Rights</h3>
-                    <p>You have the right to:</p>
-                    <ul style="margin-left: 20px;">
-                        <li>Access the personal data we hold about you.</li>
-                        <li>Request corrections to inaccurate information.</li>
-                        <li>Opt-out of marketing communications at any time.</li>
-                    </ul>
-
-                    <h3 style="color: #4CAF50;">Changes to this Policy</h3>
-                    <p>Pavitra Jewellery reserves the right to update or modify this Privacy Policy at any time. Changes will be posted on this page, and your continued use of the website signifies acceptance of the new policy.</p>
-
-                    <h3 style="color: #4CAF50;">Contact Us</h3>
-                    <p>If you have any questions about this Privacy Policy or your personal information, please contact us at:</p>
-                    <ul style="margin-left: 20px;">
-                        <li><b>Email:</b> [Your Email Address]</li>
-                        <li><b>Phone:</b> [Your Phone Number]</li>
-                    </ul>
+                    <h3><b>Intellectual Property</b></h3>
+                    <p>All content on our website, including images, text, graphics, logos, and designs, is the property of Pavitra Jewellery and is protected by copyright and trademark laws. You may not reproduce, distribute, or otherwise use any content without our prior written consent.</p>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 
 @endsection

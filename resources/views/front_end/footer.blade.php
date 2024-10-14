@@ -13,9 +13,6 @@
                                             <span>Head Office:</span> 26 Wyle Cop, Shrewsbury, Shropshire, SY1 1XD
                                         </li>
                                         <li>
-                                            <span>Tel:</span> 01743 234500
-                                        </li>
-                                        <li>
                                             <span>Email:</span> <a
                                                 href="mailto:pavitrajewellery100@gmail.com">pavitrajewellery100@gmail.com</a>
                                         </li>
@@ -27,7 +24,7 @@
                                 <ul class="social-link">
                                     <li><a href="index.html#"><i class="fa fa-twitter"></i></a></li>
                                     <li><a href="index.html#"><i class="fa fa-instagram"></i></a></li>
-                                    <li><a href="index.html#"><i class="fa fa-dribbble"></i></a></li>
+                                    <li><a href="index.html#"><i class="fa fa-facebook"></i></a></li>
                                     <li><a href="index.html#"><i class="fa fa-behance"></i></a></li>
                                 </ul>
                             </div>
@@ -319,95 +316,95 @@
 
 <script>
     $(document).ready(function() {
-    $('#login_ajax').on('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+        $('#login_ajax').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
 
-        // Clear previous status messages
-        $('.error-login').text('');
+            // Clear previous status messages
+            $('.error-login').text('');
 
-        // Collect form data
-        var formData = $(this).serialize();
+            // Collect form data
+            var formData = $(this).serialize();
 
-        // AJAX request
-        $.ajax({
-            url: $(this).attr('action'), // Get action URL from the form
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Assuming the response is a JSON object
-                if (response.success) {
-                    // Show success message using Toastr
-                    toastr.success(response.message);
-                    // Optionally, redirect to another page after a delay
-                    setTimeout(function() {
-                        window.location.href = response.redirect; // redirect if provided
-                    }, 2000);
-                } else {
-                    // Show validation errors
-                    $('.error-login').text(response.message).css('color', 'red');
+            // AJAX request
+            $.ajax({
+                url: $(this).attr('action'), // Get action URL from the form
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Assuming the response is a JSON object
+                    if (response.success) {
+                        // Show success message using Toastr
+                        toastr.success(response.message);
+                        // Optionally, redirect to another page after a delay
+                        setTimeout(function() {
+                            window.location.href = response.redirect; // redirect if provided
+                        }, 2000);
+                    } else {
+                        // Show validation errors
+                        $('.error-login').text(response.message).css('color', 'red');
+                    }
+                },
+                error: function(xhr) {
+                    // Handle validation errors
+                    if (xhr.status === 422) { // Unprocessable Entity
+                        var errors = xhr.responseJSON.errors;
+                        var errorMsg = '';
+                        $.each(errors, function(key, value) {
+                            errorMsg += value[0] + '<br>'; // Concatenate error messages
+                        });
+                        $('.error-login').html(errorMsg).css('color', 'red');
+                    } else {
+                        // Show a general error message
+                        $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
+                    }
                 }
-            },
-            error: function(xhr) {
-                // Handle validation errors
-                if (xhr.status === 422) { // Unprocessable Entity
-                    var errors = xhr.responseJSON.errors;
-                    var errorMsg = '';
-                    $.each(errors, function(key, value) {
-                        errorMsg += value[0] + '<br>'; // Concatenate error messages
-                    });
-                    $('.error-login').html(errorMsg).css('color', 'red');
-                } else {
-                    // Show a general error message
-                    $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
-                }
-            }
+            });
         });
     });
-});
-$(document).ready(function() {
-    $('#register_ajax').on('submit', function(e) {
-        e.preventDefault(); // Prevent default form submission
+    $(document).ready(function() {
+        $('#register_ajax').on('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
 
-        // Clear previous status messages
-        $('.error-register').text('');
+            // Clear previous status messages
+            $('.error-register').text('');
 
-        // Collect form data
-        var formData = $(this).serialize();
+            // Collect form data
+            var formData = $(this).serialize();
 
-        // AJAX request
-        $.ajax({
-            url: $(this).attr('action'), // Get action URL from the form
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response.success) {
-                    // Show success message using Toastr
-                    toastr.success(response.message);
-                    // Optionally, redirect to another page after a delay
-                    setTimeout(function() {
-                        window.location.href = response.redirect; // redirect if provided
-                    }, 2000);
-                } else {
-                    // Show validation errors
-                    $('.error-register').text(response.message).css('color', 'red');
+            // AJAX request
+            $.ajax({
+                url: $(this).attr('action'), // Get action URL from the form
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    if (response.success) {
+                        // Show success message using Toastr
+                        toastr.success(response.message);
+                        // Optionally, redirect to another page after a delay
+                        setTimeout(function() {
+                            window.location.href = response.redirect; // redirect if provided
+                        }, 2000);
+                    } else {
+                        // Show validation errors
+                        $('.error-register').text(response.message).css('color', 'red');
+                    }
+                },
+                error: function(xhr) {
+                    // Handle validation errors
+                    if (xhr.status === 422) { // Unprocessable Entity
+                        var errors = xhr.responseJSON.errors;
+                        var errorMsg = '';
+                        $.each(errors, function(key, value) {
+                            errorMsg += value[0] + '<br>'; // Concatenate error messages
+                        });
+                        $('.error-register').html(errorMsg).css('color', 'red');
+                    } else {
+                        // Show a general error message
+                        $('.error-register').text('An error occurred. Please try again.').css('color', 'red');
+                    }
                 }
-            },
-            error: function(xhr) {
-                // Handle validation errors
-                if (xhr.status === 422) { // Unprocessable Entity
-                    var errors = xhr.responseJSON.errors;
-                    var errorMsg = '';
-                    $.each(errors, function(key, value) {
-                        errorMsg += value[0] + '<br>'; // Concatenate error messages
-                    });
-                    $('.error-register').html(errorMsg).css('color', 'red');
-                } else {
-                    // Show a general error message
-                    $('.error-register').text('An error occurred. Please try again.').css('color', 'red');
-                }
-            }
+            });
         });
     });
-});
 
 </script>
