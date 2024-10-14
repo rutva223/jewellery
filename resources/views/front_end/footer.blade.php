@@ -325,41 +325,6 @@
             // Collect form data
             var formData = $(this).serialize();
 
-
-        // AJAX request
-        $.ajax({
-            url: $(this).attr('action'), // Get action URL from the form
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                // Assuming the response is a JSON object
-                if (response.success) {
-                    // Show success message using Toastr
-                    $("body").append(
-                        '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
-                    );
-                    // Optionally, redirect to another page after a delay
-                    setTimeout(function() {
-                        window.location.href = response.redirect; // redirect if provided
-                    }, 2000);
-                } else {
-                    // Show validation errors
-                    $('.error-login').text(response.message).css('color', 'red');
-                }
-            },
-            error: function(xhr) {
-                // Handle validation errors
-                if (xhr.status === 422) { // Unprocessable Entity
-                    var errors = xhr.responseJSON.errors;
-                    var errorMsg = '';
-                    $.each(errors, function(key, value) {
-                        errorMsg += value[0] + '<br>'; // Concatenate error messages
-                    });
-                    $('.error-login').html(errorMsg).css('color', 'red');
-                } else {
-                    // Show a general error message
-                    $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
-
             // AJAX request
             $.ajax({
                 url: $(this).attr('action'), // Get action URL from the form
@@ -368,8 +333,10 @@
                 success: function(response) {
                     // Assuming the response is a JSON object
                     if (response.success) {
-                        // Show success message using Toastr
-                        toastr.success(response.message);
+                        // Show success message
+                        $("body").append(
+                            '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
+                        );
                         // Optionally, redirect to another page after a delay
                         setTimeout(function() {
                             window.location.href = response.redirect; // redirect if provided
@@ -392,12 +359,10 @@
                         // Show a general error message
                         $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
                     }
-
                 }
             });
         });
-    });
-    $(document).ready(function() {
+
         $('#register_ajax').on('submit', function(e) {
             e.preventDefault(); // Prevent default form submission
 
@@ -407,40 +372,6 @@
             // Collect form data
             var formData = $(this).serialize();
 
-
-        // AJAX request
-        $.ajax({
-            url: $(this).attr('action'), // Get action URL from the form
-            type: 'POST',
-            data: formData,
-            success: function(response) {
-                if (response.success) {
-                    // Show success message using Toastr
-                    $("body").append(
-                        '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
-                    );
-                    // Optionally, redirect to another page after a delay
-                    setTimeout(function() {
-                        window.location.href = response.redirect; // redirect if provided
-                    }, 2000);
-                } else {
-                    // Show validation errors
-                    $('.error-register').text(response.message).css('color', 'red');
-                }
-            },
-            error: function(xhr) {
-                // Handle validation errors
-                if (xhr.status === 422) { // Unprocessable Entity
-                    var errors = xhr.responseJSON.errors;
-                    var errorMsg = '';
-                    $.each(errors, function(key, value) {
-                        errorMsg += value[0] + '<br>'; // Concatenate error messages
-                    });
-                    $('.error-register').html(errorMsg).css('color', 'red');
-                } else {
-                    // Show a general error message
-                    $('.error-register').text('An error occurred. Please try again.').css('color', 'red');
-
             // AJAX request
             $.ajax({
                 url: $(this).attr('action'), // Get action URL from the form
@@ -448,8 +379,10 @@
                 data: formData,
                 success: function(response) {
                     if (response.success) {
-                        // Show success message using Toastr
-                        toastr.success(response.message);
+                        // Show success message
+                        $("body").append(
+                            '<div class="cart-product-added"><div class="added-message">'+response.message+'</div></div>'
+                        );
                         // Optionally, redirect to another page after a delay
                         setTimeout(function() {
                             window.location.href = response.redirect; // redirect if provided
@@ -472,10 +405,9 @@
                         // Show a general error message
                         $('.error-register').text('An error occurred. Please try again.').css('color', 'red');
                     }
-
                 }
             });
         });
     });
-
 </script>
+
