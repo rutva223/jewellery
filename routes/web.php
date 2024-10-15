@@ -92,4 +92,5 @@ Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::post('/add-to-cart', [CommonController::class, 'addToCart']);
 Route::post('/cart/delete', [CommonController::class, 'deletetocart'])->name('delete.to.cart');
+Route::any('/view-cartlist', [CommonController::class, 'ViewCartlist'])->name('view-cartlist');
 

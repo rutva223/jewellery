@@ -176,6 +176,14 @@ class CommonController extends Controller
         if(!empty($cart)){
             $cart->delete();
         }
+        $CartCount = Cart::where()->count(); 
+        return response()->json(['CartCount' => $CartCount]);
 
+    }
+    public function ViewCartlist(Request $request){
+        $cart = Cart::with('product')->get();
+        $body = 'CartList';
+
+        return view('front_end.cart', compact('cart','body'));
     }
 }
