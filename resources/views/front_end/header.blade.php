@@ -327,7 +327,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="buttons">
-                                                    <a href="shop-cart.html"
+                                                    <a href="{{route('view-cartlist')}}"
                                                         class="button btn view-cart btn-primary">View cart</a>
                                                     <a href="shop-checkout.html"
                                                         class="button btn checkout btn-default">Check out</a>
@@ -344,3 +344,32 @@
         </div>
     </div>
 </header>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+	$(document).ready(function() {
+        $('.cart-remove').on('click', function(e) {
+            e.preventDefault(); 
+            var productId = $(this).data('product-id');
+            $.ajax({
+            url: '{{ route('delete.to.cart') }}', 
+            type: 'POST',   
+            data: {
+                product_id: productId,
+                _token: $('meta[name="csrf-token"]').attr('content') 
+            },
+            success: function(response) {
+                console.log(response);
+                
+            
+            },
+            error: function(xhr, status, error) {
+                // Handle error
+                console.log(xhr.responseText);
+            }
+        });
+
+        });
+
+    });
+</script>
