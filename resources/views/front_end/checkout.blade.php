@@ -35,42 +35,7 @@
                                                 <span class="input-wrapper"><input type="text" class="input-text"
                                                         name="billing_last_name" value=""></span>
                                             </p>
-                                            <p class="form-row form-row-wide">
-                                                <label>Company name <span class="optional">(optional)</span></label>
-                                                <span class="input-wrapper"><input type="text" class="input-text"
-                                                        name="billing_company" value=""></span>
-                                            </p>
-                                            <p class="form-row form-row-wide validate-required">
-                                                <label>Country / Region <span class="required"
-                                                        title="required">*</span></label>
-                                                <span class="input-wrapper">
-                                                    <select name="billing_country"
-                                                        class="country-select custom-select select2-hidden-accessible"
-                                                        tabindex="-1" aria-hidden="true">
-                                                        <option value="">Select a country / region…</option>
-                                                        <option value="AF">Afghanistan</option>
-                                                        <option value="AX">Åland Islands</option>
-                                                        <option value="AL">Albania</option>
-                                                        <option value="DZ">Algeria</option>
-                                                        <option value="AS">American Samoa</option>
-                                                        <option value="AD">Andorra</option>
-                                                    </select><span
-                                                        class="select2 select2-container select2-container--default"
-                                                        dir="ltr" style="width: 189.333px;"><span
-                                                            class="selection"><span
-                                                                class="select2-selection select2-selection--single"
-                                                                role="combobox" aria-autocomplete="list"
-                                                                aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                                aria-labelledby="select2-billing_country-b3-container"><span
-                                                                    class="select2-selection__rendered"
-                                                                    id="select2-billing_country-b3-container"
-                                                                    title="Select a country / region…">Select a country /
-                                                                    region…</span><span class="select2-selection__arrow"
-                                                                    role="presentation"><b
-                                                                        role="presentation"></b></span></span></span><span
-                                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                </span>
-                                            </p>
+
                                             <p class="form-row address-field validate-required form-row-wide">
                                                 <label>Street address <span class="required"
                                                         title="required">*</span></label>
@@ -96,37 +61,7 @@
                                                         value="">
                                                 </span>
                                             </p>
-                                            <p
-                                                class="form-row address-field validate-required validate-state form-row-wide">
-                                                <label>State / County <span class="required"
-                                                        title="required">*</span></label>
-                                                <span class="input-wrapper">
-                                                    <select name="billing_state"
-                                                        class="state-select custom-select select2-hidden-accessible"
-                                                        tabindex="-1" aria-hidden="true">
-                                                        <option value="">Select a state / county…</option>
-                                                        <option value="VN">Vinnytsia Oblast</option>
-                                                        <option value="VL">Volyn Oblast</option>
-                                                        <option value="DP">Dnipropetrovsk Oblast</option>
-                                                        <option value="DT">Donetsk Oblast</option>
-                                                        <option value="ZT">Zhytomyr Oblast</option>
-                                                    </select><span
-                                                        class="select2 select2-container select2-container--default"
-                                                        dir="ltr" style="width: 175.333px;"><span
-                                                            class="selection"><span
-                                                                class="select2-selection select2-selection--single"
-                                                                role="combobox" aria-autocomplete="list"
-                                                                aria-haspopup="true" aria-expanded="false" tabindex="0"
-                                                                aria-labelledby="select2-billing_state-j5-container"><span
-                                                                    class="select2-selection__rendered"
-                                                                    id="select2-billing_state-j5-container"
-                                                                    title="Select a state / county…">Select a state /
-                                                                    county…</span><span class="select2-selection__arrow"
-                                                                    role="presentation"><b
-                                                                        role="presentation"></b></span></span></span><span
-                                                            class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                                </span>
-                                            </p>
+
                                             <p
                                                 class="form-row address-field validate-required validate-postcode form-row-wide">
                                                 <label>Postcode / ZIP <span class="required"
@@ -198,42 +133,7 @@
                                                     value="">
                                             </span>
                                         </p>
-                                        <p class="form-row form-row-wide">
-                                            <label>Company name <span class="optional">(optional)</span></label>
-                                            <span class="input-wrapper">
-                                                <input type="text" class="input-text" name="shipping_company"
-                                                    value="">
-                                            </span>
-                                        </p>
-                                        <p class="form-row form-row-wide address-field validate-required">
-                                            <label for="shipping_country" class="">Country / Region <span
-                                                    class="required" title="required">*</span></label>
-                                            <span class="input-wrapper">
-                                                <select name="billing_state"
-                                                    class="state-select custom-select select2-hidden-accessible"
-                                                    tabindex="-1" aria-hidden="true">
-                                                    <option value="">Select a country / region…</option>
-                                                    <option value="VN">Vinnytsia Oblast</option>
-                                                    <option value="VL">Volyn Oblast</option>
-                                                    <option value="DP">Dnipropetrovsk Oblast</option>
-                                                    <option value="DT">Donetsk Oblast</option>
-                                                    <option value="ZT">Zhytomyr Oblast</option>
-                                                </select><span class="select2 select2-container select2-container--default"
-                                                    dir="ltr" style="width: 189.333px;"><span
-                                                        class="selection"><span
-                                                            class="select2-selection select2-selection--single"
-                                                            role="combobox" aria-autocomplete="list" aria-haspopup="true"
-                                                            aria-expanded="false" tabindex="0"
-                                                            aria-labelledby="select2-billing_state-1n-container"><span
-                                                                class="select2-selection__rendered"
-                                                                id="select2-billing_state-1n-container"
-                                                                title="Select a country / region…">Select a country /
-                                                                region…</span><span class="select2-selection__arrow"
-                                                                role="presentation"><b
-                                                                    role="presentation"></b></span></span></span><span
-                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                            </span>
-                                        </p>
+
                                         <p class="form-row address-field validate-required form-row-wide">
                                             <label>Street address <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper">
@@ -253,35 +153,6 @@
                                             <label>Town / City <span class="required" title="required">*</span></label>
                                             <span class="input-wrapper"><input type="text" class="input-text"
                                                     name="shipping_city" value=""></span>
-                                        </p>
-                                        <p class="form-row address-field validate-required validate-state form-row-wide">
-                                            <label for="shipping_state" class="">State / County <span
-                                                    class="required" title="required">*</span></label>
-                                            <span class="input-wrapper">
-                                                <select name="billing_state"
-                                                    class="state-select custom-select select2-hidden-accessible"
-                                                    tabindex="-1" aria-hidden="true">
-                                                    <option value="">Select a state / county…</option>
-                                                    <option value="VN">Vinnytsia Oblast</option>
-                                                    <option value="VL">Volyn Oblast</option>
-                                                    <option value="DP">Dnipropetrovsk Oblast</option>
-                                                    <option value="DT">Donetsk Oblast</option>
-                                                    <option value="ZT">Zhytomyr Oblast</option>
-                                                </select><span class="select2 select2-container select2-container--default"
-                                                    dir="ltr" style="width: 175.333px;"><span
-                                                        class="selection"><span
-                                                            class="select2-selection select2-selection--single"
-                                                            role="combobox" aria-autocomplete="list" aria-haspopup="true"
-                                                            aria-expanded="false" tabindex="0"
-                                                            aria-labelledby="select2-billing_state-tr-container"><span
-                                                                class="select2-selection__rendered"
-                                                                id="select2-billing_state-tr-container"
-                                                                title="Select a state / county…">Select a state /
-                                                                county…</span><span class="select2-selection__arrow"
-                                                                role="presentation"><b
-                                                                    role="presentation"></b></span></span></span><span
-                                                        class="dropdown-wrapper" aria-hidden="true"></span></span>
-                                            </span>
                                         </p>
                                         <p
                                             class="form-row address-field validate-required validate-postcode form-row-wide">

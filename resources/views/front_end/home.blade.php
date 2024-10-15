@@ -357,7 +357,7 @@
                                                             @else
                                                                 <div class="btn-add-to-cart active-login" data-title="Add to cart">
 
-                                                                    
+
                                                                     <a rel="nofollow" class="product-btn button"
                                                                         href="#">Add to
 
@@ -386,11 +386,10 @@
                                                                     </button>
                                                                 </div>
                                                             @endif
-
                                                             <span class="product-quickview" data-title="Quick View">
-                                                                <a href="{{ route('product_detail', $pro->id) }}"
-                                                                    class="quickview quickview-button">Quick
-                                                                    View <i class="icon-search"></i></a>
+                                                                <a href="{{ route('product_detail', $pro->id) }}">
+                                                                    <i class="icon-search"></i>
+                                                                </a>
                                                             </span>
                                                         </div>
                                                     </div>
