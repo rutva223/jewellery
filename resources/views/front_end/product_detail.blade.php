@@ -115,7 +115,7 @@
                                     </div>
                                     <div class="btn-quick-buy" data-title="Wishlist">
 
-                                        <a href="{{ route('checkout') }}" class="button alt product-btn" name="checkout_place_order" value="Place order">  <button class="product-btn">Buy It Now</button></a>
+                                        <a href="{{ route('checkout',$product->id) }}" class="button alt product-btn" name="checkout_place_order" value="Place order">  <button class="product-btn">Buy It Now</button></a>
 
                                     </div>
                                     @if (Session::has('login_id'))

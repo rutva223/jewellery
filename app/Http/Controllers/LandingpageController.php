@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Wishlist;
@@ -83,10 +84,19 @@ class LandingpageController extends Controller
         return view('front_end.product_detail', compact('product','body', 'wishlistItems'));
     }
 
-    public function checkout()
+    public function checkout($id)
     {
+        $user_id = Session::has('login_id');
         $body = 'checkout';
-        return view('front_end.checkout', compact('body'));
+        $products = Cart::where('user_id', $user_id)->get();
+
+        // Calculate subtotal
+        $subtotal = 0;
+        foreach ($products as $product) {
+            $subtotal += $product->price * $product->total; // Assuming price and quantity fields exist
+        }
+
+        return view('front_end.checkout', compact('body', 'products', 'subtotal'));
     }
 
     public function placeOrder(Request $request)
