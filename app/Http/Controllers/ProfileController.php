@@ -3,10 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
@@ -60,6 +62,15 @@ class ProfileController extends Controller
 
     public function show()
     {
-        dd('profile page');
+        $login_id = Session::get('login_id');
+
+        if (Session::has('a_type')) {
+            $user = User::where('is_deleted', 0)->where('id', $login_id)->first();
+            if ($user) {
+                $body = 'Profile';
+
+                return view('front_end.profile', compact('body'));
+            }
+        }
     }
 }

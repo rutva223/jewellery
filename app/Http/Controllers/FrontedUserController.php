@@ -7,6 +7,7 @@ use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
 
 class FrontedUserController extends Controller
@@ -58,18 +59,19 @@ class FrontedUserController extends Controller
                     'errors' => $validator->errors(),
                 ], 422);
             }
-                // Create new user
-                $new_user = new FrontedUser();
-                $new_user->email = $request->email;
-                $new_user->password = Hash::make($request->password);
-                $new_user->last_login = Carbon::now();
-                $new_user->save();
 
-                return response()->json([
-                    'success' => true,
-                    'message' => 'Registration successful!',
-                    'redirect' => route('home'), // Redirect to desired route
-                ]);
+            // Create new user
+            $new_user = new FrontedUser();
+            $new_user->email = $request->email;
+            $new_user->password = Hash::make($request->password);
+            $new_user->last_login = Carbon::now();
+            $new_user->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Registration successful!',
+                'redirect' => route('home'), // Redirect to desired route
+            ]);
 
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'Something went wrong! Please try again.');
@@ -83,7 +85,6 @@ class FrontedUserController extends Controller
 
     public function FrontedUserLogout(Request $request)
     {
-
         header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
         header("Cache-Control: post-check=0, pre-check=0", false);
         header("Pragma: no-cache");

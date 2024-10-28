@@ -25,8 +25,7 @@
                                 @foreach ($products as $p)
                                     <tr class="wishlist-item">
                                         <td class="wishlist-item-remove">
-                                            <a href="javascript:void(0);" class="remove-from-wishlist"
-                                                data-id="{{ $p->id }}">
+                                            <a href="javascript:void(0);" class="remove-from-wishlist" data-id="{{ $p->id }}">
                                                 <span></span>
                                             </a>
                                         </td>
@@ -65,19 +64,17 @@
                                         <td class="wishlist-item-actions">
                                             <div class="wishlist-item-add">
                                                 @if (Session::has('login_id'))
-
-                                                                <div class="btn-add-to-cart"
-                                                                    data-product-id="{{ $p->id }}"
-                                                                    data-title="Add to cart">
-                                                                    <a rel="nofollow" href="#" class="product-btn ">Add to
-                                                                        cart</a>
-                                                                </div>
-                                                            @else
-                                                                <div class=" active-login"  data-title="Add to cart">
-                                                                    <a rel="nofollow" href="#" class="product-btn ">Add to
-                                                                        cart</a>
-                                                                </div>
-                                                            @endif
+                                                    <div class="btn-add-to-cart" data-product-id="{{ $p->id }}"
+                                                        data-title="Add to cart">
+                                                        <a rel="nofollow" href="#" class="product-btn ">Add to
+                                                            cart</a>
+                                                    </div>
+                                                @else
+                                                    <div class=" active-login" data-title="Add to cart">
+                                                        <a rel="nofollow" href="#" class="product-btn ">Add to
+                                                            cart</a>
+                                                    </div>
+                                                @endif
                                             </div>
                                         </td>
                                     </tr>
@@ -97,6 +94,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 @push('after-scripts')
     <script>
         $(document).ready(function() {
@@ -106,53 +104,42 @@
                 var id = $(this).data('id');
                 var token = '{{ csrf_token() }}'; // CSRF token for security
 
-                        // User confirmed, proceed with AJAX request
-                        $.ajax({
-                            url: "{{ route('remove-wishlist') }}",
-                            type: 'POST',
-                            data: {
-                                "_token": token,
-                                "id": id,
-                            },
-                            success: function(response) {
-                                if (response.status === 'success') {
-                                    Swal.fire(
-                                        'Deleted!',
-                                        response.message,
-                                        'success'
-                                    );
+                // User confirmed, proceed with AJAX request
+                $.ajax({
+                    url: "{{ route('remove-wishlist') }}",
+                    type: 'POST',
+                    data: {
+                        "_token": token,
+                        "id": id,
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            Swal.fire('Deleted!', response.message, 'success');
 
-                                    // Optionally remove the row from the table
-                                    $('a[data-id="' + id + '"]').closest(
-                                        '.wishlist-item').remove();
+                            // Optionally remove the row from the table
+                            $('a[data-id="' + id + '"]').closest('.wishlist-item').remove();
 
-                                    updateWishlistCount();
-                                } else {
-                                    Swal.fire(
-                                        'Error!',
-                                        response.message,
-                                        'error'
-                                    );
-                                }
-                            },
-                            error: function(response) {
-                                Swal.fire(
-                                    'Error!',
-                                    'An error occurred while removing the item.',
-                                    'error'
-                                );
-                            }
-                        });
+                            updateWishlistCount();
+                        } else {
+                            Swal.fire('Error!', response.message, 'error');
+                        }
+                    },
+                    error: function(response) {
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred while removing the item.',
+                            'error'
+                        );
+                    }
+                });
             });
-
 
             function updateWishlistCount() {
                 $.ajax({
                     url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
                     type: 'GET',
                     success: function(data) {
-                        $('.count-wishlist').text(data
-                        .count); // Update the wishlist count in the header
+                        $('.count-wishlist').text(data.count); // Update the wishlist count in the header
                     },
                     error: function() {
                         alert('Failed to update wishlist count.');
