@@ -229,13 +229,12 @@
                                                                     class="icon-user"></i></a>
                                                             <ul class="sub-menu">
                                                                 <li>
-                                                                    <a href="shop-details.html"><span
-                                                                            class="menu-item-text">My Profile</span></a>
+                                                                    <a href="{{ route('profile') }}">
+                                                                        <span class="menu-item-text">My Profile</span>
+                                                                    </a>
                                                                 </li>
                                                                 <li>
-                                                                    <form id="logout-form"
-                                                                        action="{{ route('user-logout') }}"
-                                                                        method="POST" style="display: none;">
+                                                                    <form id="logout-form" action="{{ route('user-logout') }}" method="POST" style="display: none;">
                                                                         @csrf
                                                                     </form>
 

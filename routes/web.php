@@ -6,6 +6,7 @@ use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CommonController;
 use App\Http\Controllers\FrontedUserController;
 use App\Http\Controllers\LandingpageController;
+use App\Http\Controllers\OrderAdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RazorpayController;
 use App\Http\Controllers\SubscriberController;
@@ -35,7 +36,6 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
-Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::post('/user-logout', [FrontedUserController::class, 'FrontedUserLogout'])->name('user-logout');
@@ -58,6 +58,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
     Route::resource('productss', ProductsController::class);
     Route::resource('category', CategoryController::class);
+    Route::resource('orders', OrderAdminController::class);
 
     Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
     Route::post('ChangeProductStatus', [ProductsController::class, 'ChangeProductStatus'])->name('ChangeProductStatus');
@@ -65,6 +66,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('AllCategoryTableData', [CategoryController::class, 'AllCategoryTableData'])->name('AllCategoryTableData');
     Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
     Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
+
+    Route::post('AllCartTableData', [OrderAdminController::class, 'AllCartTableData'])->name('AllCartTableData');
 });
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');

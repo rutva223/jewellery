@@ -42,6 +42,13 @@
     </a>
 </li>
 
+<li class="{{ request()->is('orders/*') ? 'mm-active' : '' }}" id="intro_thired">
+    <a class="" href="{{ route('orders.index') }}" aria-expanded="false">
+        <i class="material-icons">category</i>
+        <span class="nav-text">Order</span>
+    </a>
+</li>
+
 <li class="{{ request()->is('changes-password') ? 'mm-active' : '' }}" id="">
     <a class="" href="{{ route('changes-password') }}" aria-expanded="false">
         <i class="material-icons">published_with_changes</i>
