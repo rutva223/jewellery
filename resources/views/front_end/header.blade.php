@@ -41,41 +41,6 @@
                                         </ul>
                                     </div>
                                     <div class="cart-list-wrap">
-                                        <ul class="cart-list ">
-                                            <li class="mini-cart-item">
-                                                <a href="index.html#" class="remove" title="Remove this item"><i
-                                                        class="icon_close"></i></a>
-                                                <a href="shop-details.html" class="product-image"><img width="600"
-                                                        height="600"
-                                                        src="{{ asset('front_end/media/product/3.jpg') }}"
-                                                        alt=""></a>
-                                                <a href="shop-details.html" class="product-name">Twin Hoops</a>
-                                                <div class="quantity">Qty: 1</div>
-                                                <div class="price">$150.00</div>
-                                            </li>
-                                            <li class="mini-cart-item">
-                                                <a href="index.html#" class="remove" title="Remove this item"><i
-                                                        class="icon_close"></i></a>
-                                                <a href="shop-details.html" class="product-image"><img width="600"
-                                                        height="600"
-                                                        src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                        alt=""></a>
-                                                <a href="shop-details.html" class="product-name">Medium Flat Hoops</a>
-                                                <div class="quantity">Qty: 1</div>
-                                                <div class="price">$100.00</div>
-                                            </li>
-                                        </ul>
-                                        <div class="total-cart">
-                                            <div class="title-total">Total: </div>
-                                            <div class="total-price"><span>$250.00</span></div>
-                                        </div>
-                                        <div class="free-ship">
-                                            <div class="title-ship">Buy <strong>$400</strong> more to enjoy <strong>FREE
-                                                    Shipping</strong></div>
-                                            <div class="total-percent">
-                                                <div class="percent" style="width:20%"></div>
-                                            </div>
-                                        </div>
                                         <div class="buttons">
                                             <a href="shop-cart.html" class="button btn view-cart btn-primary">View
                                                 cart</a>
@@ -220,7 +185,8 @@
                                             </div>
                                         </div>
                                     @else
-                                        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-center header-center">
+                                        <div
+                                            class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-12 text-center header-center">
                                             <div class="site-navigation">
                                                 <nav id="main-navigation">
                                                     <ul id="menu-main-menu" class="menu">
@@ -234,7 +200,9 @@
                                                                     </a>
                                                                 </li>
                                                                 <li>
-                                                                    <form id="logout-form" action="{{ route('user-logout') }}" method="POST" style="display: none;">
+                                                                    <form id="logout-form"
+                                                                        action="{{ route('user-logout') }}"
+                                                                        method="POST" style="display: none;">
                                                                         @csrf
                                                                     </form>
 
@@ -270,7 +238,7 @@
                                             <a class="dropdown-toggle cart-icon" href="#" role="button"
                                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                                 <div class="icons-cart"><i class="icon-large-paper-bag"></i><span
-                                                        class="cart-count">{{ $cart_count }}</span></div>
+                                                        class="cart-count">{{ $CartCount }}</span></div>
                                             </a>
                                         @else
                                             <a class="active-login cart-icon" href="#" role="button">
@@ -283,13 +251,16 @@
                                                 <ul class="cart-list">
                                                     <li class="empty">
                                                         <span>No products in the cart.</span>
-                                                        <a class="go-shop" href="{{ route('catwiseproduct') }}">GO TO SHOP<i
-                                                                aria-hidden="true" class="arrow_right"></i></a>
+                                                        <a class="go-shop"
+                                                            href="{{ route('catwiseproduct') }}">GO TO SHOP
+                                                            <i aria-hidden="true" class="arrow_right"></i>
+                                                        </a>
                                                     </li>
                                                 </ul>
                                             </div>
                                             <div class="cart-list-wrap">
-                                                <ul class="cart-list ">
+                                                <ul class="cart-list">
+                                                    @php $total = []; @endphp
                                                     @foreach ($carts as $cart)
                                                         @php
                                                             $image = json_decode($cart->image, true);
@@ -297,16 +268,19 @@
                                                             $total[] = $cart->total;
                                                         @endphp
                                                         <li class="mini-cart-item">
-
-                                                            <a href="#" class="remove cart-remove" title="Remove this item"  data-product-id="{{ $cart->product_id }}"><i class="icon_close"></i></a>
-                                                            <a href="shop-details.html" class="product-image"><img
-                                                                    width="600" height="600"
-                                                                    src="{{  $imageUrl}} "
-                                                                    alt=""></a>
-                                                            <a href="shop-details.html"
+                                                            <a href="#" class="remove cart-remove"
+                                                                title="Remove this item"
+                                                                data-id="{{ $cart->id }}">
+                                                                <i class="icon_close"></i>
+                                                            </a>
+                                                            <a href="javascript:;" class="product-image">
+                                                                <img width="600" height="600"
+                                                                    src="{{ $imageUrl }}" alt="">
+                                                            </a>
+                                                            <a href="{{ route('product_detail', $cart->product_id) }}"
                                                                 class="product-name">{{ $cart->product_name }}</a>
                                                             <div class="quantity">Qty: {{ $cart->quantity }}</div>
-                                                            <div class="price">{{ $cart->total }}</div>
+                                                            <div class="price">₹{{ $cart->total }}</div>
                                                         </li>
                                                     @endforeach
                                                     @php
@@ -315,18 +289,11 @@
                                                 </ul>
                                                 <div class="total-cart">
                                                     <div class="title-total">Total: </div>
-                                                    <div class="total-price"><span>${{ $sum_of_total }}</span></div>
-                                                </div>
-                                                <div class="free-ship">
-                                                    <div class="title-ship">Buy <strong>$400</strong> more to enjoy
-                                                        <strong>FREE Shipping</strong>
-                                                    </div>
-                                                    <div class="total-percent">
-                                                        <div class="percent" style="width:20%"></div>
+                                                    <div class="total-price"><span>₹{{ $sum_of_total }}</span>
                                                     </div>
                                                 </div>
                                                 <div class="buttons">
-                                                    <a href="{{route('view-cartlist')}}"
+                                                    <a href="{{ route('view-cartlist') }}"
                                                         class="button btn view-cart btn-primary">View cart</a>
                                                     <a href="shop-checkout.html"
                                                         class="button btn checkout btn-default">Check out</a>
@@ -346,29 +313,27 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-	$(document).ready(function() {
+    $(document).ready(function() {
         $('.cart-remove').on('click', function(e) {
             e.preventDefault();
-            var productId = $(this).data('product-id');
+            var id = $(this).data('id');
             $.ajax({
-            url: '{{ route('delete.to.cart') }}',
-            type: 'POST',
-            data: {
-                product_id: productId,
-                _token: $('meta[name="csrf-token"]').attr('content')
-            },
-            success: function(response) {
-                console.log(response);
-
-
-            },
-            error: function(xhr, status, error) {
-                // Handle error
-                console.log(xhr.responseText);
-            }
+                url: '{{ route('delete.to.cart') }}',
+                type: 'POST',
+                data: {
+                    id: id,
+                    _token: $('meta[name="csrf-token"]').attr('content')
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        Swal.fire('Deleted!', response.message, 'success');
+                    }
+                },
+                error: function(xhr, status, error) {
+                    // Handle error
+                    console.log(xhr.responseText);
+                }
+            });
         });
-
-        });
-
     });
 </script>

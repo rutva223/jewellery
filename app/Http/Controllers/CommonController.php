@@ -137,45 +137,83 @@ class CommonController extends Controller
         }
     }
 
-    public function addToCart(Request $request){
+    public function addToCart(Request $request)
+    {
+        // Validate the product ID
         $request->validate([
             'product_id' => 'required|exists:products,id',
         ]);
-        $product = Product::find($request->product_id);
-        $cart = Cart::where('product_id',$product->id)->first();
-        $quantity = !empty($request->quantity) ? $request->quantity : 1;
-        if(!empty($cart)){
-            $quantity_plus = $cart->quantity + $quantity;
-            $cart->user_id = 1;
-            $cart->quantity = $quantity_plus;
+
+        // Find the product
+        $product = Product::findOrFail($request->product_id);
+
+        // Set user ID from session
+        $userId = Session::get('login_id');
+        if (!$userId) {
+            return response()->json(['status' => 'error', 'message' => 'User not logged in'], 401);
+        }
+
+        // Check if the product is already in the cart
+        $cart = Cart::where('user_id', $userId)
+                    ->where('product_id', $product->id)
+                    ->first();
+
+        // Determine the quantity, defaulting to 1 if not provided
+        $quantity = $request->input('quantity', 1);
+
+        if ($cart) {
+            // Update existing cart item
+            $cart->quantity += $quantity;
             $cart->price = $product->sell_price;
-            $cart->total = $product->sell_price * $quantity_plus;
+            $cart->total = $cart->quantity * $product->sell_price;
             $cart->image = json_encode($product->images);
             $cart->product_name = $product->product_name;
             $cart->save();
-
-        }else{
-            Cart::create([
-                'user_id' => 1,
-                'product_id' => $request->product_id,
+        } else {
+            // Add new item to cart
+            $cart = Cart::create([
+                'user_id' => $userId,
+                'product_id' => $product->id,
                 'quantity' => $quantity,
                 'price' => $product->sell_price,
-                'total' => $product->sell_price * $quantity,
-                'image' =>  json_encode($product->images),
-                'product_name' =>  $product->product_name,
-
+                'total' => $quantity * $product->sell_price,
+                'image' => json_encode($product->images),
+                'product_name' => $product->product_name,
             ]);
         }
-        return response()->json(['success' => 'Product added to cart!']);
+
+        // Fetch updated cart data
+        $carts = Cart::where('user_id', $userId)->get();
+        $totalAmount = $carts->sum('total');
+
+        // Return JSON response with updated cart data
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Product added to cart!',
+            'total_amount' => $totalAmount,
+            'carts' => $carts
+        ]);
     }
 
     public function deletetocart(Request $request){
-        $cart = Cart::where('product_id',$request->product_id)->first();
-        if(!empty($cart)){
+        // $cart = Cart::where('product_id',$request->product_id)->first();
+        // if(!empty($cart)){
+        //     $cart->delete();
+        // }
+        // $CartCount = Cart::where()->count();
+        // return response()->json(['CartCount' => $CartCount]);
+
+        $userId = Session::get('login_id'); // Get the logged-in user ID
+
+        // Check if the item belongs to the user and then delete
+        $cart = Cart::where('id', $request->id)->where('user_id', $userId)->first();
+
+        if ($cart) {
             $cart->delete();
+            return response()->json(['status' => 'success', 'message' => 'Item removed from Cart']);
+        } else {
+            return response()->json(['status' => 'error', 'message' => 'Item not found or does not belong to the user'], 404);
         }
-        $CartCount = Cart::where()->count(); 
-        return response()->json(['CartCount' => $CartCount]);
 
     }
     public function ViewCartlist(Request $request){
@@ -183,5 +221,12 @@ class CommonController extends Controller
         $body = 'CartList';
 
         return view('front_end.cart', compact('cart','body'));
+    }
+
+    public function CartCount()
+    {
+        $userId = Session::get('login_id');
+        $CartCount = Cart::where('user_id', $userId)->count();
+        return response()->json(['count' => $CartCount]);
     }
 }

@@ -6382,7 +6382,7 @@ body i[class~=slick-arrow][class~=fa-angle-right] {
 }
 
 [class~=site-navigation] ul>li[class~=level-0] [class~=sub-menu] {
-    min-width: 225px;
+    min-width: 180px;
 }
 
 [class~=site-header] [class~=header-desktop],
@@ -11291,9 +11291,9 @@ body i[class~=slick-arrow][class~=fa-angle-right] {
     color: #fff;
 }
 
-body:not([class~=home]) [class~=site-navigation] ul>li[class~=level-0]>[class~=sub-menu] {
+/* body:not([class~=home]) [class~=site-navigation] ul>li[class~=level-0]>[class~=sub-menu] {
     margin-top: .3125in;
-}
+} */
 
 [class~=search-overlay] [class~=search-from] [class~=search-box] [class~=content-menu_search] ul li a:hover {
     text-decoration: underline;

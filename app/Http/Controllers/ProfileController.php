@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Order;
+use App\Models\ShippingAddress;
 use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -68,8 +70,9 @@ class ProfileController extends Controller
             $user = User::where('is_deleted', 0)->where('id', $login_id)->first();
             if ($user) {
                 $body = 'Profile';
-
-                return view('front_end.profile', compact('body'));
+                $orders = Order::where('user_id', $login_id)->get();
+                $ship_address = ShippingAddress::where('user_id', $login_id)->first();
+                return view('front_end.profile', compact('body', 'user', 'orders', 'ship_address'));
             }
         }
     }

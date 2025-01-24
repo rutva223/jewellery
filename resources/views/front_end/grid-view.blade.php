@@ -118,34 +118,54 @@
 @push('after-script')
     <script>
         $(document).ready(function() {
-            $('.wishlist-btn').on('click', function() {
-                let productId = $(this).data('product-id');
-                let heartIcon = $(this).find('i');
+            $('.wishlist-btn').on('click', function(e) {
+                e.preventDefault();
 
+                var id = $(this).data('product-id');
+                var token = '{{ csrf_token() }}'; // CSRF token for security
+
+                // User confirmed, proceed with AJAX request
                 $.ajax({
-                    url: '{{ route('add-wishlist') }}',
-                    method: 'POST',
+                    url: "{{ route('remove-wishlist') }}",
+                    type: 'POST',
                     data: {
-                        _token: '{{ csrf_token() }}',
-                        product_id: productId
+                        "_token": token,
+                        "id": id,
                     },
                     success: function(response) {
                         if (response.status === 'success') {
-                            // Toggle heart icon on success
-                            if (heartIcon.hasClass('empty-heart')) {
-                                heartIcon.removeClass('empty-heart').addClass('filled-heart');
-                            } else {
-                                heartIcon.removeClass('filled-heart').addClass('empty-heart');
-                            }
+                            Swal.fire('Deleted!', response.message, 'success');
+
+                            // Optionally remove the row from the table
+                            $('a[data-id="' + id + '"]').closest('.wishlist-item').remove();
+
+                            updateWishlistCount();
                         } else {
-                            alert(response.message);
+                            Swal.fire('Error!', response.message, 'error');
                         }
                     },
-                    error: function() {
-                        alert('An error occurred. Please try again.');
+                    error: function(response) {
+                        Swal.fire(
+                            'Error!',
+                            'An error occurred while removing the item.',
+                            'error'
+                        );
                     }
                 });
             });
+
+            function updateWishlistCount() {
+                $.ajax({
+                    url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
+                    type: 'GET',
+                    success: function(data) {
+                        $('.count-wishlist').text(data.count); // Update the wishlist count in the header
+                    },
+                    error: function() {
+                        alert('Failed to update wishlist count.');
+                    }
+                });
+            }
         });
     </script>
 @endpush

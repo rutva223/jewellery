@@ -25,32 +25,28 @@
                                 @foreach ($products as $p)
                                     <tr class="wishlist-item">
                                         <td class="wishlist-item-remove">
-                                            <a href="javascript:void(0);" class="remove-from-wishlist" data-id="{{ $p->id }}">
+                                            <a href="javascript:void(0);" class="remove-from-wishlist"
+                                                data-id="{{ $p->id }}">
                                                 <span></span>
                                             </a>
                                         </td>
                                         <td class="wishlist-item-image">
-                                            <a href="{{ route('product_detail', $p->id) }}">
-                                                @if (is_array($p->images) && count($p->images) > 0)
-                                                    <img src="{{ $p->images[0] }}" width="600" height="600"
-                                                        alt="Product Image" class="post-image">
-                                                    @if (isset($p->images[1]))
-                                                        <img src="{{ $p->images[1] }}" width="600" height="600"
-                                                            alt="Product Image" class="hover-image back">
+                                            <div class="product-thumb-hover">
+                                                <a href="{{ route('product_detail', $p->product_id) }}">
+                                                    @if (isset($p->product->images[0]))
+                                                        <img src="{{ $p->product->images[0] }}" width="600"
+                                                            height="600" alt="Product Image" class="post-image">
                                                     @else
-                                                        <img src="{{ $p->images[0] }}" width="600" height="600"
-                                                            alt="Product Image" class="hover-image back">
+                                                        <img src="{{ asset('front_end/media/product/1.jpg') }}"
+                                                            width="600" height="600" alt="Default Image">
                                                     @endif
-                                                @else
-                                                    <img src="{{ asset('front_end/media/product/1.jpg') }}" width="600"
-                                                        height="600" alt="Default Image">
-                                                @endif
-                                            </a>
+                                                </a>
+                                            </div>
                                         </td>
                                         <td class="wishlist-item-info">
                                             <div class="wishlist-item-name">
                                                 <a
-                                                    href="{{ route('product_detail', $p->id) }}">{{ !empty($p->product) ? $p->product->product_name : '' }}</a>
+                                                    href="{{ route('product_detail', $p->product_id) }}">{{ !empty($p->product) ? $p->product->product_name : '' }}</a>
                                             </div>
                                             <div class="wishlist-item-price">
                                                 <del
@@ -64,14 +60,14 @@
                                         <td class="wishlist-item-actions">
                                             <div class="wishlist-item-add">
                                                 @if (Session::has('login_id'))
-                                                    <div class="btn-add-to-cart" data-product-id="{{ $p->id }}"
+                                                    <div class="btn-add-to-cart" data-product-id="{{ $p->product_id }}"
                                                         data-title="Add to cart">
-                                                        <a rel="nofollow" href="#" class="product-btn ">Add to
+                                                        <a rel="nofollow" href="#" class="product-btn">Add to
                                                             cart</a>
                                                     </div>
                                                 @else
-                                                    <div class=" active-login" data-title="Add to cart">
-                                                        <a rel="nofollow" href="#" class="product-btn ">Add to
+                                                    <div class="btn-add-to-cart active-login" data-title="Add to cart">
+                                                        <a rel="nofollow" href="#" class="product-btn">Add to
                                                             cart</a>
                                                     </div>
                                                 @endif
@@ -93,59 +89,75 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 @push('after-scripts')
-    <script>
-        $(document).ready(function() {
-            $('.remove-from-wishlist').on('click', function(e) {
-                e.preventDefault();
+<script>
+    $(document).ready(function() {
+        $('.remove-from-wishlist').on('click', function(e) {
+            e.preventDefault();
 
-                var id = $(this).data('id');
-                var token = '{{ csrf_token() }}'; // CSRF token for security
+            var id = $(this).data('id');
+            var token = '{{ csrf_token() }}'; // CSRF token for security
 
-                // User confirmed, proceed with AJAX request
-                $.ajax({
-                    url: "{{ route('remove-wishlist') }}",
-                    type: 'POST',
-                    data: {
-                        "_token": token,
-                        "id": id,
-                    },
-                    success: function(response) {
-                        if (response.status === 'success') {
-                            Swal.fire('Deleted!', response.message, 'success');
+            // Show confirmation alert before removing the item
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "Do you want to remove this item from your wishlist?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, remove it!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // User confirmed, proceed with AJAX request
+                    $.ajax({
+                        url: "{{ route('remove-wishlist') }}",
+                        type: 'POST',
+                        data: {
+                            "_token": token,
+                            "id": id,
+                        },
+                        success: function(response) {
+                            if (response.status === 'success') {
+                                // Optionally remove the row from the table
+                                $('a[data-id="' + id + '"]').closest('.wishlist-item').remove();
 
-                            // Optionally remove the row from the table
-                            $('a[data-id="' + id + '"]').closest('.wishlist-item').remove();
+                                updateWishlistCount();
 
-                            updateWishlistCount();
-                        } else {
-                            Swal.fire('Error!', response.message, 'error');
+                                // Show success alert after a brief delay
+                                setTimeout(function() {
+                                    Swal.fire('Deleted!', response.message, 'success');
+                                }, 500);
+                            } else {
+                                Swal.fire('Error!', response.message, 'error');
+                            }
+                        },
+                        error: function(response) {
+                            Swal.fire(
+                                'Error!',
+                                'An error occurred while removing the item.',
+                                'error'
+                            );
                         }
-                    },
-                    error: function(response) {
-                        Swal.fire(
-                            'Error!',
-                            'An error occurred while removing the item.',
-                            'error'
-                        );
-                    }
-                });
+                    });
+                }
             });
-
-            function updateWishlistCount() {
-                $.ajax({
-                    url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
-                    type: 'GET',
-                    success: function(data) {
-                        $('.count-wishlist').text(data.count); // Update the wishlist count in the header
-                    },
-                    error: function() {
-                        alert('Failed to update wishlist count.');
-                    }
-                });
-            }
         });
-    </script>
+
+        function updateWishlistCount() {
+            $.ajax({
+                url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
+                type: 'GET',
+                success: function(data) {
+                    $('.count-wishlist').text(data.count); // Update the wishlist count in the header
+                },
+                error: function() {
+                    alert('Failed to update wishlist count.');
+                }
+            });
+        }
+    });
+</script>
+
 @endpush

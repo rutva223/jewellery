@@ -36,23 +36,26 @@ Route::get('/cacheclear', function () {
     return response()->json(["message" => "Cache clear", "status" => true]);
 });
 
+Route::any('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::get('/profile', [ProfileController::class, 'show'])->name('profile');
 Route::post('/user-logout', [FrontedUserController::class, 'FrontedUserLogout'])->name('user-logout');
+Route::post('/update-profile', [FrontedUserController::class, 'UpdateProfile'])->name('update-profile');
 
 Route::post('/add-wishlist', [WishlistController::class, 'addToWishlist'])->name('add-wishlist');
 Route::any('/view-wishlist', [WishlistController::class, 'ViewWishlist'])->name('view-wishlist');
-Route::post('/delete-wishlist', [WishlistController::class, 'remove'])->name('remove-wishlist');
+Route::post('/delete-wishlist', [WishlistController::class, 'WishListRemove'])->name('remove-wishlist');
 Route::get('/wishlist-count', [WishlistController::class, 'CountWishlist'])->name('count-wishlist');
 
 Route::get('/terms_condition', [LandingpageController::class, 'TermsCondition'])->name('terms_condition');
 Route::get('/privacy_policy', [LandingpageController::class, 'PrivacyPolicy'])->name('privacy_policy');
-Route::get('/product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
+Route::get('product_detail/{id}', [LandingpageController::class, 'product_detail'])->name('product_detail');
 Route::get('cat-product/{slug?}', [LandingpageController::class, 'CatWiseProduct'])->name('catwiseproduct');
 Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->name('user-login');
 Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 Route::get('/checkout/{id}', [LandingpageController::class, 'checkout'])->name('checkout');
 Route::post('/checkout/place-order', [LandingpageController::class, 'placeOrder'])->name('checkout.placeOrder');
+
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
     Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
@@ -76,8 +79,6 @@ Route::get('changes-password', [AdminDashboardController::class, 'ChangesPasswor
 
 Route::get('initiate-password-reset', [CommonController::class, 'passwordEmailForm'])->name('initiate-password-reset');
 
-
-
 Route::post('updatepassword', [AdminDashboardController::class, 'UpdatePassword'])->name('updatepassword');
 Route::post('/verify-current-password', [AdminDashboardController::class, 'verifyCurrentPassword'])->name('verifyCurrentPassword');
 
@@ -92,9 +93,9 @@ require __DIR__ . '/auth.php';
 
 Route::get('product',[RazorpayController::class,'index']);
 Route::post('razorpay-payment', [RazorpayController::class, 'store'])->name('razorpay.payment.store');
-Route::get('/', [LandingpageController::class, 'index'])->name('home');
 
 Route::post('/add-to-cart', [CommonController::class, 'addToCart'])->name('addToCart');
+Route::get('/add-cart-count', [CommonController::class, 'CartCount'])->name('count-cart');
 Route::post('/cart/delete', [CommonController::class, 'deletetocart'])->name('delete.to.cart');
 Route::any('/view-cartlist', [CommonController::class, 'ViewCartlist'])->name('view-cartlist');
 
