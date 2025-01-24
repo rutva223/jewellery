@@ -8,8 +8,8 @@
                 </h1>
             </div>
             <div class="breadcrumbs">
-                <a href="{{ route('home') }}">Home</a><span class="delimiter"></span><a
-                    href="{{ route('catwiseproduct') }}">Shop</a><span class="delimiter"></span>{{ $cat_name }}
+                <a href="{{ route('home') }}">Home</a>
+                <span class="delimiter"></span>{{ $cat_name }}
             </div>
         </div>
     </div>

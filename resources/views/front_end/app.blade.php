@@ -4,13 +4,14 @@
     $all_categories = AllCategories();
     $user_id = Session::has('login_id');
     $wishlistCount = App\Models\Wishlist::where('user_id', $user_id)->count();
+    $CartCount = App\Models\Cart::where('user_id', $user_id)->count();
 @endphp
 
 @include('front_end.head_link')
 
 <body class="{{ $body }}">
     <div id="page" class="hfeed page-wrapper">
-        @include('front_end.header', compact('all_categories', 'wishlistCount'))
+        @include('front_end.header', compact('all_categories', 'wishlistCount', 'CartCount'))
         <div id="site-main" class="site-main">
             <div id="main-content" class="main-content">
                 <div id="primary" class="content-area">
@@ -37,8 +38,28 @@
                     _token: $('meta[name="csrf-token"]').attr('content')
                 },
                 success: function(response) {
-                    console.log(response);
-                    // Show success message and append "View cart" button only for the specific product
+                    updateCartCount();
+
+                    // Update cart list
+                    var cartListHtml = '';
+                    response.carts.forEach(function(cart) {
+                        var imageUrl = JSON.parse(cart.image)[0]; // Adjust image parsing as needed
+                        cartListHtml += `
+                            <li class="mini-cart-item">
+                                <a href="#" class="remove cart-remove" title="Remove this item" data-product-id="${cart.product_id}"><i class="icon_close"></i></a>
+                                <a href="shop-details.html" class="product-image"><img width="600" height="600" src="${imageUrl}" alt=""></a>
+                                <a href="shop-details.html" class="product-name">${cart.product_name}</a>
+                                <div class="quantity">Qty: ${cart.quantity}</div>
+                                <div class="price">₹${cart.total}</div>
+                            </li>
+                        `;
+                    });
+                    $('.cart-list').html(cartListHtml);
+
+                    // Update total price
+                    $('.total-price span').text('₹' + response.total_amount);
+
+                    // Show success message and view cart button
                     button.removeClass("loading").addClass("added");
                     button.closest("div").append(
                         '<a href="{{ route('home') }}" class="added-to-cart product-btn" title="View cart" tabindex="0">View cart</a>'
@@ -51,8 +72,20 @@
                     }, 2000);
                 },
                 error: function(xhr, status, error) {
-                    // Handle error
-                    console.log(xhr.responseText);
+                    console.log(xhr.responseText); // Log error for debugging
+                }
+            });
+        }
+
+        function updateCartCount() {
+            $.ajax({
+                url: '{{ route('count-cart') }}', // Create a route to return the updated wishlist count
+                type: 'GET',
+                success: function(data) {
+                    $('.cart-count').text(data.count); // Update the wishlist count in the header
+                },
+                error: function() {
+                    alert('Failed to update wishlist count.');
                 }
             });
         }
@@ -75,14 +108,9 @@
                 // Event handler for the login button
                 $(".active-login").off("click").on("click", function(e) {
                     e.preventDefault();
-                    // Here you need to implement the actual login logic
-                    // For demonstration, let's say the login is successful immediately
 
-                    // Simulate successful login
                     isLoggedIn = true; // Set logged-in state to true
                     $(".form-login-register").removeClass("active"); // Hide the login modal
-
-                    // After successful login, add the product to the cart
                 });
             }
         });
@@ -123,16 +151,16 @@
                                 '<div class="cart-product-added"><div class="added-message">Product was added to Wishlist successfully!</div></div>'
                             );
                         } else {
-                            alert('Failed to add to wishlist. Please try again.');
+                            // alert('Failed to add to wishlist. Please try again.');
+                            $("body").append(
+                                '<div class="cart-product-added"><div class="added-message">Product already in your wishlist!</div></div>'
+                            );
                         }
                     },
                     error: function() {
-
-                        alert('An error occurred. Please try again.');
-
-                        // $('.error-login').text('An error occurred. Please try again.').css('color', 'red');
-                        // alert('An error occurred. Please try again.');
-
+                        $("body").append(
+                            '<div class="cart-product-added"><div class="added-message">Something went wrong!</div></div>'
+                        );
                     }
                 });
             } else {

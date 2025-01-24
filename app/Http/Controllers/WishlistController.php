@@ -26,7 +26,7 @@ class WishlistController extends Controller
                           ->exists();
 
         if ($exists) {
-            return response()->json(['status' => 'error', 'message' => 'Item already in wishlist']);
+            return response()->json(['success' => false, 'status' => 'error', 'message' => 'Item already in wishlist']);
         }
 
         // Add item to the wishlist
@@ -58,21 +58,29 @@ class WishlistController extends Controller
         return view('front_end.wishlist', compact('products', 'body'));
     }
 
-    public function remove(Request $request)
+    public function WishListRemove(Request $request)
     {
-
-        $userId = Session::get('login_id'); // Get the logged-in user ID
+        // Get the logged-in user ID
+        $userId = Session::get('login_id');
 
         // Check if the item belongs to the user and then delete
         $wishlistItem = Wishlist::where('id', $request->id)->where('user_id', $userId)->first();
 
         if ($wishlistItem) {
-            $wishlistItem->delete();  // Remove item from the wishlist
-            return response()->json(['status' => 'success', 'message' => 'Item removed from wishlist']);
-        } else {
-            return response()->json(['status' => 'error', 'message' => 'Item not found or does not belong to the user'], 404);
+            $wishlistItem->delete(); // Remove item from the wishlist
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Item removed from wishlist!'
+            ]);
         }
+
+        // Item not found or does not belong to the user
+        return response()->json([
+            'status' => 'error',
+            'message' => 'Item not found or does not belong to the user'
+        ], 404);
     }
+
 
     public function CountWishlist()
     {

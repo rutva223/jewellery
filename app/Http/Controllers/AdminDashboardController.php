@@ -50,7 +50,7 @@ class AdminDashboardController extends Controller
         $login_id = Session::get('login_id');
 
         if (Session::has('a_type')) {
-            $user = User::where('is_deleted', 0)->where('id', $login_id)->first();
+            $user = User::where('id', $login_id)->first();
             if ($user) {
                 if (!Hash::check($request->current_password, $user->password)) {
                     return redirect()->back()->with('error', 'The old password does not match.');

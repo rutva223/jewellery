@@ -25,7 +25,7 @@
                             @foreach ($cart as $p)
                                 <tr class="wishlist-item">
                                     <td class="wishlist-item-remove">
-                                        <a href="javascript:void(0);" class="remove-from-wishlist" data-id="{{ $p->id }}">
+                                        <a href="javascript:void(0);" class="remove-from-cart" data-id="{{ $p->id }}">
                                             <span></span>
                                         </a>
                                     </td>
@@ -48,19 +48,10 @@
                                             <a href="{{ route('product_detail', $p->id) }}">{{ $p->product->product_name }}</a>
                                         </div>
                                         <div class="wishlist-item-price">
-                                            <del aria-hidden="true"><span>₹{{ $p->product->product_price }}</span></del>
-                                            <ins><span>₹{{ $p->product->sell_price }}</span></ins>
+                                            <ins><span>₹{{ $p->total }}</span></ins>
                                         </div>
-                                        <div class="wishlist-item-time">{{ $p->created_at ? $p->created_at->format('F j, Y') : \Carbon\Carbon::today()->format('F j, Y') }}</div>
-                                    </td>
-                                    <td class="wishlist-item-actions">
-                                        <div class="wishlist-item-stock">
-                                            In stock
-                                        </div>
-                                        <div class="wishlist-item-add">
-                                            <div class="btn-add-to-cart" data-title="Add to cart">
-                                                <a rel="nofollow" href="#" class="product-btn">Add to cart</a>
-                                            </div>
+                                        <div class="wishlist-item-time">Qty: {{ $p->quantity }} </div>
+                                        <div class="wishlist-item-time">{{ $p->created_at ? $p->created_at->format('F j, Y') : \Carbon\Carbon::today()->format('F j, Y') }}
                                         </div>
                                     </td>
                                 </tr>
@@ -82,14 +73,14 @@
 @push('after-scripts')
 <script>
     $(document).ready(function(){
-        $('.remove-from-wishlist').on('click', function(e) {
+        $('.remove-from-cart').on('click', function(e) {
             e.preventDefault();
 
             var id = $(this).data('id');
             var token = '{{ csrf_token() }}'; // CSRF token for security
 
             $.ajax({
-                url: "{{ route('remove-wishlist') }}",
+                url: "{{ route('delete.to.cart') }}",
                 type: 'POST',
                 data: {
                     "_token": token,
@@ -97,13 +88,14 @@
                 },
                 success: function(response) {
                     if (response.status === 'success') {
-                        alert(response.message);
                         // Optionally remove the row from the table
                         $('a[data-id="'+id+'"]').closest('.wishlist-item').remove();
 
                         updateWishlistCount();
                     } else {
-                        alert(response.message);
+                        $("body").append(
+                            '<div class="cart-product-added"><div class="added-message">Product was added to Cart successfully!</div></div>'
+                        );
                     }
                 },
                 error: function(response) {
@@ -114,13 +106,13 @@
 
         function updateWishlistCount() {
             $.ajax({
-                url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
+                url: '{{ route('count-cart') }}', // Create a route to return the updated wishlist count
                 type: 'GET',
                 success: function(data) {
-                    $('.count-wishlist').text(data.count);  // Update the wishlist count in the header
+                    $('.cart-count').text(data.count);  // Update the wishlist count in the header
                 },
                 error: function() {
-                    alert('Failed to update wishlist count.');
+                    alert('Failed to update cart count.');
                 }
             });
         }

@@ -98,4 +98,25 @@ class FrontedUserController extends Controller
         $request->session()->regenerateToken();
         return redirect()->route('home')->with('logout', true);
     }
+
+    public function UpdateProfile(Request $request)
+    {
+        try {
+            $login_id = Session::get('login_id');
+            $user = User::where('is_deleted', 0)->where('id', $login_id)->first();
+            $user->first_name = $request->first_name;
+            $user->last_name = $request->last_name;
+            $user->email = $request->email;
+            $user->save();
+
+            if($request->password) {
+                $user->password = $request->password;
+                $user->save();
+            }
+
+            return redirect()->back()->with('success', 'Data update Successfully!');
+        } catch (\Throwable $th) {
+            return redirect()->back()->with('error', 'something went wrong!');
+        }
+    }
 }
