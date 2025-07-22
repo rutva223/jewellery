@@ -1,5 +1,5 @@
 <?php
 return [
-    'website_url' => 'http://localhost/jewellery/',
+    'website_url' => env('APP_URL', 'http://localhost:8000') . '/',
     'per_api_limit' => '6',
 ];

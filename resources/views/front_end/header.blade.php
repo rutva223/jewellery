@@ -91,7 +91,7 @@
                                 <a href="{{ route('home') }}">
                                     <img width="400" height="140"
                                         src="{{ asset('front_end/media/logo-white.png') }}"
-                                        alt="Mojuri – Jewelry Store HTML Template" />
+                                        alt="Mojuri – Jewelry Store HTML Template" style="max-height: 51pt" />
                                 </a>
                             </div>
                         </div>
