@@ -62,7 +62,7 @@
                     // Show success message and view cart button
                     button.removeClass("loading").addClass("added");
                     button.closest("div").append(
-                        '<a href="{{ route('home') }}" class="added-to-cart product-btn" title="View cart" tabindex="0">View cart</a>'
+                        '<a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn" title="View cart" tabindex="0">View cart</a>'
                     );
                     $("body").append(
                         '<div class="cart-product-added"><div class="added-message">Product was added to cart successfully!</div></div>'

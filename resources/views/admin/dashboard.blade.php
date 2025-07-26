@@ -39,7 +39,7 @@
 </div>
 
 <div class="row clearfix">
-    <div class="col-lg-4 col-md-4">
+    <div class="col-lg-3 col-md-6">
         <div class="card counter">
             <div class="card-body d-flex align-items-center">
                 <div class="card-box-icon" style="background: rgba(244 244 244)">
@@ -54,16 +54,46 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4 col-md-4">
+    <div class="col-lg-3 col-md-6">
         <div class="card counter">
             <div class="card-body d-flex align-items-center">
                 <div class="card-box-icon" style="background: rgba(244 244 244)">
-                    <i class="material-icons" aria-hidden="true">category</i>
+                    <i class="material-icons" aria-hidden="true">inventory_2</i>
                 </div>
                 <div class="chart-num">
                     <a href="{{ route('productss.index') }}">
                         <h3 class="mb-0">{{ $products ?? 0 }}</h3>
                         <p class="mb-0">Total Product</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card counter">
+            <div class="card-body d-flex align-items-center">
+                <div class="card-box-icon" style="background: rgba(244 244 244)">
+                    <i class="material-icons" aria-hidden="true">shopping_cart</i>
+                </div>
+                <div class="chart-num">
+                    <a href="{{ route('orders.index') }}">
+                        <h3 class="mb-0">{{ $orders ?? 0 }}</h3>
+                        <p class="mb-0">Total Orders</p>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3 col-md-6">
+        <div class="card counter">
+            <div class="card-body d-flex align-items-center">
+                <div class="card-box-icon" style="background: rgba(255 193 7 / 20%)">
+                    <i class="material-icons" aria-hidden="true" style="color: #ffc107;">pending_actions</i>
+                </div>
+                <div class="chart-num">
+                    <a href="{{ route('orders.index') }}">
+                        <h3 class="mb-0">{{ $pendingOrders ?? 0 }}</h3>
+                        <p class="mb-0">Pending Orders</p>
                     </a>
                 </div>
             </div>

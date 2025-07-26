@@ -28,15 +28,27 @@
                         <div class="product-button">
 
                             @if (Session::has('login_id'))
-                                <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
-                                    data-title="Add to cart">
-                                    <a rel="nofollow" href="#" class="product-btn button">Add to
-                                        cart</a>
-                                </div>
+                                @if (in_array($product->id, $cartItems))
+                                    {{-- <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
+                                        data-title="Add to cart">
+                                        <a rel="nofollow" href="#" class="product-btn button">Add to
+                                            cart</a>
+                                    </div> --}}
+                                    <div class="" data-product-id="{{ $product->id }}"
+                                        data-title="Add to cart">
+                                        <a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn"
+                                            value="Place order" > </a>
+                                    </div>
+                                @else
+                                    <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
+                                        data-title="Add to cart">
+                                        <a rel="nofollow" href="#" class="product-btn button">Add to
+                                            cart</a>
+                                    </div>
+                                @endif
                             @else
                                 <div class="btn-add-to-cart active-login" data-title="Add to cart">
-                                    <a rel="nofollow" class="product-btn button" href="#">Add to
-                                        cart</a>
+                                    <a rel="nofollow" class="product-btn button" href="#">Add to cart</a>
                                 </div>
                             @endif
                             @if (Session::has('login_id'))
@@ -159,7 +171,8 @@
                     url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
                     type: 'GET',
                     success: function(data) {
-                        $('.count-wishlist').text(data.count); // Update the wishlist count in the header
+                        $('.count-wishlist').text(data
+                            .count); // Update the wishlist count in the header
                     },
                     error: function() {
                         alert('Failed to update wishlist count.');

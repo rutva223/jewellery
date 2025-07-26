@@ -217,7 +217,14 @@ class CommonController extends Controller
 
     }
     public function ViewCartlist(Request $request){
-        $cart = Cart::with('product')->get();
+        $userId = Session::get('login_id');
+        $cart = Cart::with('product')->where('user_id', $userId)->get();
+        
+        // Decode images for each cart item
+        foreach ($cart as $item) {
+            $item->images = json_decode($item->image, true) ?: [];
+        }
+        
         $body = 'CartList';
 
         return view('front_end.cart', compact('cart','body'));
@@ -226,7 +233,35 @@ class CommonController extends Controller
     public function CartCount()
     {
         $userId = Session::get('login_id');
+        
         $CartCount = Cart::where('user_id', $userId)->count();
         return response()->json(['count' => $CartCount]);
+    }
+
+    public function updateCartQuantity(Request $request)
+    {
+        $userId = Session::get('login_id');
+        
+        if (!$userId) {
+            return response()->json(['status' => 'error', 'message' => 'User not logged in']);
+        }
+
+        $cart = Cart::where('id', $request->id)
+                    ->where('user_id', $userId)
+                    ->first();
+
+        if ($cart) {
+            $cart->quantity = $request->quantity;
+            $cart->total = $cart->price * $request->quantity;
+            $cart->save();
+
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Quantity updated successfully',
+                'total' => $cart->total
+            ]);
+        }
+
+        return response()->json(['status' => 'error', 'message' => 'Cart item not found']);
     }
 }

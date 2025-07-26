@@ -7,6 +7,7 @@ use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
 use App\Models\User;
+use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
@@ -24,8 +25,10 @@ class AdminDashboardController extends Controller
 
             $categories = Category::where('status', 'Active')->where('is_deleted',0)->count();
             $products = Product::where('status', 'Active')->where('is_deleted',0)->count();
+            $orders = Order::count();
+            $pendingOrders = Order::where('shipping_status', 'pending')->count();
 
-            return view('admin.dashboard', compact('categories', 'products'));
+            return view('admin.dashboard', compact('categories', 'products', 'orders', 'pendingOrders'));
         } else {
             return redirect()->route('login');
         }

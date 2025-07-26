@@ -101,11 +101,19 @@
                                         </div>
 
                                         @if (Session::has('login_id'))
-                                            <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
-                                                data-title="Add to cart">
-                                                <a rel="nofollow" tabindex="0" href="#">Add to
-                                                    cart</a>
-                                            </div>
+                                            @if (in_array($product->id, $cartItems))
+                                                    <div class="btn-quick-buy" style="width:75%;margin:0%">
+                                                        <a href="{{ route('view-cartlist') }}"
+                                                             name="checkout_place_order"
+                                                            value="Place order" style="margin:0%"> <button class="product-btn" style="margin:0%">View cart</button></a>
+                                                    </div>
+                                            @else
+                                                <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
+                                                    data-title="Add to cart">
+                                                    <a rel="nofollow" tabindex="0" href="#">Add to
+                                                        cart</a>
+                                                </div>
+                                            @endif
                                         @else
                                             <div class="btn-add-to-cart active-login" data-title="Add to cart">
                                                 <a rel="nofollow" tabindex="0" href="#">Add to
@@ -115,7 +123,9 @@
                                     </div>
                                     <div class="btn-quick-buy" data-title="Wishlist">
 
-                                        <a href="{{ route('checkout',$product->id) }}" class="button alt product-btn" name="checkout_place_order" value="Place order">  <button class="product-btn">Buy It Now</button></a>
+                                        <a href="{{ route('checkout', $product->id) }}" class="button alt product-btn"
+                                            name="checkout_place_order" value="Place order"> <button
+                                                class="product-btn">Buy It Now</button></a>
 
                                     </div>
                                     @if (Session::has('login_id'))
@@ -127,19 +137,19 @@
                                                 </button>
                                             </div>
                                         @else
-                                        <div class="btn-wishlist" data-title="Wishlist">
+                                            <div class="btn-wishlist" data-title="Wishlist">
 
-                                            <button class="product-btn wishlist-btn"
-                                                data-product-id="{{ $product->id }}">Add to wishlist
-                                                {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
-                                            </button>
-                                        </div>
+                                                <button class="product-btn wishlist-btn"
+                                                    data-product-id="{{ $product->id }}">Add to wishlist
+                                                    {{-- <i class="{{ in_array($product->id, $wishlistItems) ? 'fa fa-heart' : 'fa fa-heart-o' }}"></i> --}}
+                                                </button>
+                                            </div>
                                         @endif
                                     @else
-                                    <div class=" active-login btn-wishlist" data-title="Wishlist">
+                                        <div class=" active-login btn-wishlist" data-title="Wishlist">
 
-                                        <button class="product-btn">Add to wishlist</button>
-                                    </div>
+                                            <button class="product-btn">Add to wishlist</button>
+                                        </div>
                                     @endif
 
                                 </div>
@@ -233,14 +243,31 @@
                                                             <div class="product-button">
 
                                                                 @if (Session::has('login_id'))
-                                                                    <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
-                                                                        data-title="Add to cart">
-                                                                        <a rel="nofollow" href="#" class="product-btn button">Add to
-                                                                            cart</a>
-                                                                    </div>
+                                                                    @if (in_array($product->id, $cartItems))
+                                                                        <div class="btn-add-to-cart"
+                                                                            data-product-id="{{ $product->id }}"
+                                                                            data-title="Add to cart">
+                                                                            <a href="{{ route('view-cartlist') }}"
+                                                                                class="added-to-cart product-btn"
+                                                                                title="View cart" tabindex="0">View
+                                                                                carts</a>
+
+                                                                        </div>
+                                                                    @else
+                                                                        <div class="btn-add-to-cart"
+                                                                            data-product-id="{{ $product->id }}"
+                                                                            data-title="Add to cart">
+
+                                                                            <a rel="nofollow" href="#"
+                                                                                class="product-btn button">Add to
+                                                                                cart</a>
+                                                                        </div>
+                                                                    @endif
                                                                 @else
-                                                                    <div class="btn-add-to-cart active-login" data-title="Add to cart">
-                                                                        <a rel="nofollow" class="product-btn button" href="#">Add to
+                                                                    <div class="btn-add-to-cart active-login"
+                                                                        data-title="Add to cart">
+                                                                        <a rel="nofollow" class="product-btn button"
+                                                                            href="#">Add to
                                                                             cart</a>
                                                                     </div>
                                                                 @endif
@@ -261,7 +288,8 @@
                                                                         </div>
                                                                     @endif
                                                                 @else
-                                                                    <div class="btn-wishlist active-login" data-title="Wishlist">
+                                                                    <div class="btn-wishlist active-login"
+                                                                        data-title="Wishlist">
                                                                         <button class="product-btn wishlist-btn">
                                                                             <i class= 'fa fa-heart'></i>
                                                                         </button>
@@ -303,56 +331,53 @@
 @endsection
 
 @push('after-scripts')
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('.wishlist-btn').on('click', function() {
+                let productId = $(this).data('product-id');
+                let heartIcon = $(this).find('i');
 
-<script>
-    $(document).ready(function() {
-        $('.wishlist-btn').on('click', function() {
-            let productId = $(this).data('product-id');
-            let heartIcon = $(this).find('i');
-
-            $.ajax({
-                url: '{{ route('add-wishlist') }}',
-                method: 'POST',
-                data: {
-                    _token: '{{ csrf_token() }}', // CSRF token for security
-                    product_id: productId
-                },
-                success: function(response) {
-                    if (response.status === 'success') {
-                        // Toggle heart icon on success
-                        if (heartIcon.hasClass('empty-heart')) {
-                            heartIcon.removeClass('empty-heart').addClass('filled-heart');
+                $.ajax({
+                    url: '{{ route('add-wishlist') }}',
+                    method: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}', // CSRF token for security
+                        product_id: productId
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Toggle heart icon on success
+                            if (heartIcon.hasClass('empty-heart')) {
+                                heartIcon.removeClass('empty-heart').addClass('filled-heart');
+                            } else {
+                                heartIcon.removeClass('filled-heart').addClass('empty-heart');
+                            }
+                            updateWishlistCount();
                         } else {
-                            heartIcon.removeClass('filled-heart').addClass('empty-heart');
+                            alert(response.message);
                         }
-                        updateWishlistCount();
-                    } else {
-                        alert(response.message);
+                    },
+                    error: function() {
+                        alert('An error occurred. Please try again.');
                     }
-                },
-                error: function() {
-                    alert('An error occurred. Please try again.');
-                }
+                });
             });
+
+            function updateWishlistCount() {
+                $.ajax({
+                    url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
+                    type: 'GET',
+                    success: function(data) {
+                        $('.count-wishlist').text(data
+                            .count); // Update the wishlist count in the header
+                    },
+                    error: function() {
+                        alert('Failed to update wishlist count.');
+                    }
+                });
+            }
         });
-
-        function updateWishlistCount() {
-            $.ajax({
-                url: '{{ route('count-wishlist') }}', // Create a route to return the updated wishlist count
-                type: 'GET',
-                success: function(data) {
-                    $('.count-wishlist').text(data
-                    .count); // Update the wishlist count in the header
-                },
-                error: function() {
-                    alert('Failed to update wishlist count.');
-                }
-            });
-        }
-    });
-</script>
-
+    </script>
 @endpush
-

@@ -186,7 +186,7 @@
 
         $.ajax({
             type: 'POST',
-            url: "{{ route('AllCategoryTableData') }}",
+            url: "{{ route('AllOrderTableData') }}",
             data: {
                 input_value: input_value,
                 page: page,

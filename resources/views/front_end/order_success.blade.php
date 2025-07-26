@@ -36,7 +36,7 @@
                             </tr>
                             <tr>
                                 <td style="padding: 10px;"><strong>Total Amount:</strong></td>
-                                <td style="padding: 10px;">${{ number_format($order->total_amount, 2) }}</td>
+                                <td style="padding: 10px;">₹{{ number_format($order->total_amount, 2) }}</td>
                             </tr>
                             <tr>
                                 <td style="padding: 10px;"><strong>Payment Method:</strong></td>
@@ -45,7 +45,7 @@
                             <tr>
                                 <td style="padding: 10px;"><strong>Payment Status:</strong></td>
                                 <td style="padding: 10px;">
-                                    @if($order->payment_status == 'completed')
+                                    @if($order->payment_status == 'paid')
                                         <span style="color: #4CAF50;">Paid</span>
                                     @elseif($order->payment_status == 'cod')
                                         <span style="color: #ff9800;">Cash on Delivery</span>
@@ -82,17 +82,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($order->items as $item)
+                                @foreach($order->orderItems as $item)
                                 <tr style="border-bottom: 1px solid #eee;">
                                     <td style="padding: 10px;">{{ $item->product_name }}</td>
                                     <td style="padding: 10px;">{{ $item->quantity }}</td>
-                                    <td style="padding: 10px;">${{ number_format($item->price, 2) }}</td>
-                                    <td style="padding: 10px;">${{ number_format($item->total, 2) }}</td>
+                                    <td style="padding: 10px;">₹{{ number_format($item->price, 2) }}</td>
+                                    <td style="padding: 10px;">₹{{ number_format($item->total, 2) }}</td>
                                 </tr>
                                 @endforeach
                                 <tr>
                                     <td colspan="3" style="padding: 10px; text-align: right;"><strong>Total:</strong></td>
-                                    <td style="padding: 10px;"><strong>${{ number_format($order->total_amount, 2) }}</strong></td>
+                                    <td style="padding: 10px;"><strong>₹{{ number_format($order->total_amount, 2) }}</strong></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -100,7 +100,7 @@
 
                     <div class="actions" style="margin-top: 40px;">
                         <a href="{{ route('home') }}" class="button" style="margin-right: 10px;">Continue Shopping</a>
-                        <a href="{{ route('myorders') }}" class="button alt">View My Orders</a>
+                        <a href="{{ route('profile') }}" class="button alt">View My Orders</a>
                     </div>
                 </div>
             </div>

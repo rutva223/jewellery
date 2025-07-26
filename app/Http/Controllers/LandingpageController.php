@@ -62,9 +62,11 @@ class LandingpageController extends Controller
 
         $user_id = Session::has('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray(); 
+        $cartItems = Cart::where('user_id', $user_id)
                     ->pluck('product_id')->toArray();
 
-        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems', 'max_price'));
+        return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems', 'max_price','cartItems'));
     }
 
     private function getAvailableColors($query)
@@ -117,14 +119,17 @@ class LandingpageController extends Controller
 
     public function product_detail($id)
     {
+        
         $body = 'shop';
         $product = Product::find($id);
 
         $user_id = Session::has('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
                     ->pluck('product_id')->toArray();
+        $cartItems = Cart::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
 
-        return view('front_end.product_detail', compact('product','body', 'wishlistItems'));
+        return view('front_end.product_detail', compact('product','body', 'wishlistItems','cartItems'));
     }
 
     public function checkout($id = null)
@@ -137,7 +142,7 @@ class LandingpageController extends Controller
         }
         
         // If specific product ID is provided (Buy It Now), add it to cart first
-        if ($id) {
+        if ($id && $id !== 'cart') {
             $product = Product::find($id);
             if ($product) {
                 // Check if product already in cart
@@ -150,11 +155,11 @@ class LandingpageController extends Controller
                     Cart::create([
                         'user_id' => $user_id,
                         'product_id' => $product->id,
-                        'product_name' => $product->name,
+                        'product_name' => $product->product_name,
                         'price' => $product->sell_price,
                         'quantity' => 1,
-                        'total' => 1,
-                        'image' => is_array($product->images) && count($product->images) > 0 ? $product->images[0] : null,
+                        'total' => $product->sell_price,
+                        'image' => json_encode($product->images),
                     ]);
                 }
             }
@@ -172,19 +177,22 @@ class LandingpageController extends Controller
         // Calculate subtotal
         $subtotal = 0;
         foreach ($products as $product) {
-            // Add product images to cart item
-            if ($product->product) {
-                $product->images = $product->product->images;
-                $product->name = $product->product_name;
-            }
+            // Decode images from cart
+            $product->images = json_decode($product->image, true) ?: [];
+            // product_name is already available in cart, no need to reassign
             $subtotal += $product->price * $product->quantity;
         }
 
         // Get available shipping methods based on order amount
-        $shippingMethods = ShippingMethod::active()
-            ->byOrderAmount($subtotal)
-            ->orderBy('sort_order')
-            ->get();
+        try {
+            $shippingMethods = ShippingMethod::active()
+                ->byOrderAmount($subtotal)
+                ->orderBy('sort_order')
+                ->get();
+        } catch (\Exception $e) {
+            // If shipping methods table doesn't exist or there's an error, use empty collection
+            $shippingMethods = collect([]);
+        }
 
         return view('front_end.checkout', compact('body', 'products', 'subtotal', 'shippingMethods'));
     }
@@ -327,5 +335,27 @@ class LandingpageController extends Controller
                 'message' => 'Error placing order: ' . $e->getMessage()
             ], 500);
         }
+    }
+
+    public function orderSuccess($order_id)
+    {
+        $user_id = Session::get('login_id');
+        
+        if (!$user_id) {
+            return redirect()->route('home')->with('error', 'Please login to view order details.');
+        }
+        
+        $order = Order::with(['orderItems', 'shippingAddress'])
+            ->where('id', $order_id)
+            ->where('user_id', $user_id)
+            ->first();
+            
+        if (!$order) {
+            return redirect()->route('home')->with('error', 'Order not found.');
+        }
+        
+        $body = "order-success";
+        
+        return view('front_end.order_success', compact('body', 'order'));
     }
 }

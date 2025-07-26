@@ -55,12 +55,15 @@ Route::Post('user-login', [FrontedUserController::class, 'FrontedUserLogin'])->n
 Route::Post('user-register', [FrontedUserController::class, 'FrontedUserRegister'])->name('user-register');
 Route::get('/checkout/{id}', [LandingpageController::class, 'checkout'])->name('checkout');
 Route::post('/checkout/place-order', [LandingpageController::class, 'placeOrder'])->name('checkout.placeOrder');
+Route::get('/order/success/{order_id}', [LandingpageController::class, 'orderSuccess'])->name('order.success');
+Route::post('/save-checkout-data', [LandingpageController::class, 'saveCheckoutData'])->name('save.checkout.data');
 
 Route::group(['prefix' => 'admin'], function () {
     Route::get('/login', [AdminDashboardController::class, 'login'])->name('admin.login');
     Route::get('dashboard', [AdminDashboardController::class, 'loginDashboard'])->name('dashboard');
     Route::resource('productss', ProductsController::class);
     Route::resource('category', CategoryController::class);
+
     Route::resource('orders', OrderAdminController::class);
 
     Route::post('AllProductTableData', [ProductsController::class, 'AllProductTableData'])->name('AllProductTableData');
@@ -70,7 +73,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('ChangeCategoryStatus', [CategoryController::class, 'ChangeCategoryStatus'])->name('ChangeCategoryStatus');
     Route::post('checkCategoryName', [CategoryController::class, 'checkCategoryName'])->name('checkCategoryName');
 
-    Route::post('AllCartTableData', [OrderAdminController::class, 'AllCartTableData'])->name('AllCartTableData');
+    Route::post('AllOrderTableData', [OrderAdminController::class, 'AllOrderTableData'])->name('AllOrderTableData');
+    Route::post('orders/update-status', [OrderAdminController::class, 'updateStatus'])->name('orders.updateStatus');
 });
 
 Route::post('SendOTP', [CommonController::class, 'SendOTP'])->name('SendOTP');
@@ -93,9 +97,12 @@ require __DIR__ . '/auth.php';
 
 Route::get('product',[RazorpayController::class,'index']);
 Route::post('razorpay-payment', [RazorpayController::class, 'store'])->name('razorpay.payment.store');
+Route::post('/razorpay/create-order', [RazorpayController::class, 'createOrder'])->name('razorpay.create.order');
+Route::post('/razorpay/verify-payment', [RazorpayController::class, 'verifyPayment'])->name('razorpay.verify.payment');
 
 Route::post('/add-to-cart', [CommonController::class, 'addToCart'])->name('addToCart');
 Route::get('/add-cart-count', [CommonController::class, 'CartCount'])->name('count-cart');
 Route::post('/cart/delete', [CommonController::class, 'deletetocart'])->name('delete.to.cart');
 Route::any('/view-cartlist', [CommonController::class, 'ViewCartlist'])->name('view-cartlist');
+Route::post('/cart/update-quantity', [CommonController::class, 'updateCartQuantity'])->name('update.cart.quantity');
 

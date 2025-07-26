@@ -123,28 +123,24 @@
 
                                                             @if (is_array($images) && count($images) > 0)
                                                                 <img src="{{ $images[0] }}" width="600"
-                                                                    height="600">
-                                                                @if (isset($images[1]))
-                                                                    <img src="{{ $images[1] }}" width="600"
-                                                                        height="600">
-                                                                @else
-                                                                    <img src="{{ $images[0] }}" width="600"
-                                                                        height="600">
-                                                                @endif
+                                                                    height="600" alt="Product Image">
                                                             @else
                                                                 <img src="{{ asset('front_end/media/product/1.jpg') }}"
-                                                                    width="600" height="600">
+                                                                    width="600" height="600" alt="Default Image">
                                                             @endif
                                                         </div>
 
                                                         <div class="product-name">
                                                             {{ $product->name }}
-                                                            <strong class="product-quantity">QTY :
-                                                                {{ $product->quantity }}</strong>
+                                                            <div class="quantity-controls" style="margin-top: 10px;">
+                                                                <button type="button" class="qty-minus" data-id="{{ $product->id }}" style="width: 30px; height: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer;">-</button>
+                                                                <input type="text" class="qty-input" data-id="{{ $product->id }}" value="{{ $product->quantity }}" style="width: 50px; height: 30px; text-align: center; border: 1px solid #ddd; margin: 0 5px;" readonly>
+                                                                <button type="button" class="qty-plus" data-id="{{ $product->id }}" style="width: 30px; height: 30px; border: 1px solid #ddd; background: #fff; cursor: pointer;">+</button>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="product-total">
-                                                        <span>${{ number_format($product->price * $product->quantity, 2) }}</span>
+                                                        <span class="item-total" data-id="{{ $product->id }}" data-price="{{ $product->price }}">₹{{ number_format($product->price * $product->quantity, 2) }}</span>
                                                     </div>
                                                 </div>
                                             @endforeach
@@ -152,10 +148,10 @@
                                         <div class="cart-subtotal">
                                             <h2>Subtotal</h2>
                                             <div class="subtotal-price">
-                                                <span>${{ number_format($subtotal, 2) }}</span>
+                                                <span id="checkout-subtotal">₹{{ number_format($subtotal, 2) }}</span>
                                             </div>
                                         </div>
-                                        <div class="shipping-totals shipping">
+                                        {{-- <div class="shipping-totals shipping">
                                             <h2>Shipping</h2>
                                             <div data-title="Shipping">
                                                 <ul class="shipping-methods custom-radio">
@@ -172,12 +168,12 @@
                                                     </li>
                                                 </ul>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                         <div class="order-total">
                                             <h2>Total</h2>
                                             <div class="total-price">
                                                 <strong>
-                                                    <span>${{ number_format($subtotal, 2) }}</span>
+                                                    <span id="checkout-total">₹{{ number_format($subtotal, 2) }}</span>
                                                 </strong>
                                             </div>
                                         </div>
@@ -217,8 +213,16 @@
                                                     value="paypal">
                                                 <label>PayPal</label>
                                                 <div class="payment-box" style="display: none;">
-                                                    <p>Pay via PayPal; you can pay with your credit card if you don’t have a
+                                                    <p>Pay via PayPal; you can pay with your credit card if you don't have a
                                                         PayPal account.</p>
+                                                </div>
+                                            </li>
+                                            <li class="payment-method">
+                                                <input type="radio" class="input-radio" name="payment_method"
+                                                    value="razorpay">
+                                                <label>Razorpay</label>
+                                                <div class="payment-box" style="display: none;">
+                                                    <p>Pay securely using Razorpay. Accept Credit/Debit Cards, Net Banking, UPI, and Wallets.</p>
                                                 </div>
                                             </li>
                                         </ul>
@@ -240,25 +244,183 @@
     </div>
 @endsection
 @push('after-scripts')
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script>
     $(document).ready(function() {
-        $('input, textarea').on('blur', function() {
-            var data = $(this).closest('form').serialize(); // Serializes the form data
+        // Quantity controls
+        $('.qty-minus').on('click', function() {
+            var id = $(this).data('id');
+            var input = $('.qty-input[data-id="' + id + '"]');
+            var currentVal = parseInt(input.val());
+            
+            if (currentVal > 1) {
+                input.val(currentVal - 1);
+                updateQuantity(id, currentVal - 1);
+            }
+        });
+
+        $('.qty-plus').on('click', function() {
+            var id = $(this).data('id');
+            var input = $('.qty-input[data-id="' + id + '"]');
+            var currentVal = parseInt(input.val());
+            
+            input.val(currentVal + 1);
+            updateQuantity(id, currentVal + 1);
+        });
+
+        function updateQuantity(cartId, quantity) {
             $.ajax({
-                url: 'save_checkout.php', // Change this to your server-side script
+                url: '{{ route("update.cart.quantity") }}',
                 type: 'POST',
-                data: data,
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "id": cartId,
+                    "quantity": quantity
+                },
                 success: function(response) {
-                    console.log('Data saved:', response); // Handle the response from the server
+                    if (response.status === 'success') {
+                        // Update item total
+                        var price = $('.item-total[data-id="' + cartId + '"]').data('price');
+                        var newTotal = (price * quantity).toFixed(2);
+                        $('.item-total[data-id="' + cartId + '"]').text('₹' + newTotal);
+                        
+                        // Update totals
+                        updateTotals();
+                    } else {
+                        alert('Error updating quantity');
+                    }
+                },
+                error: function() {
+                    alert('Error updating quantity');
+                }
+            });
+        }
+
+        function updateTotals() {
+            var subtotal = 0;
+            $('.item-total').each(function() {
+                var total = parseFloat($(this).text().replace('₹', ''));
+                subtotal += total;
+            });
+            
+            $('#checkout-subtotal').text('₹' + subtotal.toFixed(2));
+            $('#checkout-total').text('₹' + subtotal.toFixed(2));
+        }
+
+        // Original form save functionality
+        $('input, textarea').on('blur', function() {
+             var $form = $(this).closest('form');
+             var data = $form.serialize();
+            $.ajax({
+                url: "{{route('save.checkout.data') }}",
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "data": data,
+                },
+                success: function(response) {
+                    console.log('Data saved:', response);
                 },
                 error: function(xhr, status, error) {
                     console.error('Error saving data:', error);
                 }
             });
         });
-    });
-    </script>
 
+        // Handle payment method selection
+        $('input[name="payment_method"]').on('change', function() {
+            $('.payment-box').hide();
+            $(this).closest('li').find('.payment-box').show();
+        });
+
+        // Handle form submission
+        $('form.checkout').on('submit', function(e) {
+            e.preventDefault();
+            var selectedPayment = $('input[name="payment_method"]:checked').val();
+            var form = $(this);
+            
+            if (selectedPayment === 'razorpay') {
+                // Collect form data
+                var formData = form.serialize();
+                
+                // Get total amount in paise (multiply by 100)
+                var totalAmount = parseFloat($('#checkout-total').text().replace('₹', '').replace(',', '')) * 100;
+                
+                // Create order via AJAX
+                $.ajax({
+                    url: '{{ route("razorpay.create.order") }}',
+                    type: 'POST',
+                    data: {
+                        "_token": "{{ csrf_token() }}",
+                        "amount": totalAmount,
+                        "form_data": formData
+                    },
+                    success: function(response) {
+                        if (response.status === 'success') {
+                            // Configure Razorpay options
+                            var options = {
+                                "key": response.razorpay_key,
+                                "amount": response.amount,
+                                "currency": "INR",
+                                "name": "Jewellery Store",
+                                "description": "Order Payment",
+                                "order_id": response.order_id,
+                                "handler": function (razorpayResponse) {
+                                    // Handle successful payment
+                                    verifyPayment(razorpayResponse, formData);
+                                },
+                                "prefill": {
+                                    "name": $('input[name="billing_first_name"]').val() + ' ' + $('input[name="billing_last_name"]').val(),
+                                    "email": $('input[name="billing_email"]').val(),
+                                    "contact": $('input[name="billing_phone"]').val()
+                                },
+                                "theme": {
+                                    "color": "#3399cc"
+                                }
+                            };
+                            
+                            var rzp = new Razorpay(options);
+                            rzp.open();
+                        } else {
+                            alert('Error creating order. Please try again.');
+                        }
+                    },
+                    error: function() {
+                        alert('Error processing payment. Please try again.');
+                    }
+                });
+            } else {
+                // Handle other payment methods
+                alert('Please implement ' + selectedPayment + ' payment processing');
+            }
+        });
+
+        // Verify payment
+        function verifyPayment(razorpayResponse, formData) {
+            $.ajax({
+                url: '{{ route("razorpay.verify.payment") }}',
+                type: 'POST',
+                data: {
+                    "_token": "{{ csrf_token() }}",
+                    "razorpay_payment_id": razorpayResponse.razorpay_payment_id,
+                    "razorpay_order_id": razorpayResponse.razorpay_order_id,
+                    "razorpay_signature": razorpayResponse.razorpay_signature,
+                    "form_data": formData
+                },
+                success: function(response) {
+                    if (response.status === 'success') {
+                        window.location.href = response.redirect_url;
+                    } else {
+                        alert('Payment verification failed. Please contact support.');
+                    }
+                },
+                error: function() {
+                    alert('Error verifying payment. Please contact support.');
+                }
+            });
+        }
+    });
+</script>
 @endpush
 
 

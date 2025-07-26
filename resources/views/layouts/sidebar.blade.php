@@ -21,31 +21,31 @@
     }
 </style>
 
-<li class="{{ request()->is('dashboard') ? 'mm-active' : '' }}" id="intro_thired">
+<li class="{{ request()->is('admin/dashboard') ? 'mm-active' : '' }}" id="intro_thired">
     <a class="" href="{{ route('dashboard') }}" aria-expanded="false">
         <i class="material-icons">dashboard</i>
         <span class="nav-text ">Dashboard</span>
     </a>
 </li>
 
-<li class="{{ request()->is('category/*') ? 'mm-active' : '' }}" id="intro_thired">
+<li class="{{ request()->is('admin/category*') ? 'mm-active' : '' }}" id="intro_thired">
     <a class="" href="{{ route('category.index') }}" aria-expanded="false">
         <i class="material-icons">category</i>
         <span class="nav-text">Category</span>
     </a>
 </li>
 
-<li class="{{ request()->is('productss/*') ? 'mm-active' : '' }}" id="intro_thired">
+<li class="{{ request()->is('admin/productss*') ? 'mm-active' : '' }}" id="intro_thired">
     <a class="" href="{{ route('productss.index') }}" aria-expanded="false">
-        <i class="material-icons">category</i>
+        <i class="material-icons">inventory_2</i>
         <span class="nav-text">Product</span>
     </a>
 </li>
 
-<li class="{{ request()->is('orders/*') ? 'mm-active' : '' }}" id="intro_thired">
+<li class="{{ request()->is('admin/orders*') ? 'mm-active' : '' }}" id="intro_thired">
     <a class="" href="{{ route('orders.index') }}" aria-expanded="false">
-        <i class="material-icons">category</i>
-        <span class="nav-text">Order</span>
+        <i class="material-icons">shopping_cart</i>
+        <span class="nav-text">Orders</span>
     </a>
 </li>
 

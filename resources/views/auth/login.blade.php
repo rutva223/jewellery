@@ -67,7 +67,7 @@
         <div class="col-md-12">
             <div class="auth-box align-items-center">
                 <div class="top text-center mb-4">
-                    {{-- <img src="{{ asset('assets/images/black_theme.png') }}" alt="MintCoin-Logo" class="logo-class"> --}}
+                    {{-- <img src="{{ asset('front_end/media/logo-white.png') }}" alt="MintCoin-Logo" class="logo-class"> --}}
                     <h1 style="color: white">iGambling.network</h1>
                 </div>
                 @if (session('error_msg'))
