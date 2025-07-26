@@ -22,6 +22,66 @@
         @include('front_end.footer')
 </body>
 
+<style>
+    .added-to-cart-btn a,
+    .btn-view-cart a.added-to-cart {
+        background-color: #4CAF50 !important;
+        color: white !important;
+        transition: all 0.3s ease;
+    }
+    
+    .added-to-cart-btn a:hover,
+    .btn-view-cart a.added-to-cart:hover {
+        background-color: #45a049 !important;
+    }
+    
+    .cart-product-added {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 9999;
+        background: rgba(76, 175, 80, 0.95);
+        padding: 20px 40px;
+        border-radius: 8px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+        animation: fadeInUp 0.3s ease;
+    }
+    
+    .cart-product-added .added-message {
+        color: white;
+        font-size: 16px;
+        font-weight: 500;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+    
+    .cart-product-added .fa-check-circle {
+        font-size: 20px;
+    }
+    
+    @keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translate(-50%, -40%);
+        }
+        to {
+            opacity: 1;
+            transform: translate(-50%, -50%);
+        }
+    }
+    
+    .btn-add-to-cart a.added {
+        animation: pulse 0.5s ease;
+    }
+    
+    @keyframes pulse {
+        0% { transform: scale(1); }
+        50% { transform: scale(1.1); }
+        100% { transform: scale(1); }
+    }
+</style>
 
 <script>
     $(document).ready(function() {
@@ -61,11 +121,16 @@
 
                     // Show success message and view cart button
                     button.removeClass("loading").addClass("added");
-                    button.closest("div").append(
-                        '<a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn" title="View cart" tabindex="0">View cart</a>'
-                    );
+                    button.html('<i class="fa fa-check"></i> Added to cart');
+                    button.closest(".btn-add-to-cart").removeClass("btn-add-to-cart").addClass("added-to-cart-btn");
+                    
+                    // Replace the add to cart button with view cart button after a short delay
+                    setTimeout(function() {
+                        button.parent().html('<a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn" title="View cart" tabindex="0"><i class="fa fa-shopping-cart"></i> View cart</a>');
+                    }, 1000);
+                    
                     $("body").append(
-                        '<div class="cart-product-added"><div class="added-message">Product was added to cart successfully!</div></div>'
+                        '<div class="cart-product-added"><div class="added-message"><i class="fa fa-check-circle"></i> Product was added to cart successfully!</div></div>'
                     );
                     setTimeout(function() {
                         $(".cart-product-added").remove();
@@ -94,7 +159,11 @@
         $(document).on("click", ".btn-add-to-cart", function(e) {
             e.preventDefault();
             var productId = $(this).data('product-id');
-            var quantity = $('.qty').val(); // Get the quantity
+            
+            // Get quantity - check if there's a quantity input nearby (product detail page)
+            var quantityInput = $(this).closest('.add-to-cart-wrap').find('.qty');
+            var quantity = quantityInput.length > 0 ? quantityInput.val() : 1; // Default to 1 if no quantity input
+            
             var button = $(this).find("a"); // Get the specific button clicked
 
             // Check if user is logged in (based on the value from Blade)
