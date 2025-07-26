@@ -101,11 +101,10 @@
                                         </div>
 
                                         @if (Session::has('login_id'))
-                                            @if (in_array($product->id, $cartItems))
-                                                    <div class="btn-quick-buy" style="width:75%;margin:0%">
-                                                        <a href="{{ route('view-cartlist') }}"
-                                                             name="checkout_place_order"
-                                                            value="Place order" style="margin:0%"> <button class="product-btn" style="margin:0%">View cart</button></a>
+                                            @if (in_array($value->id, $cartItems))
+                                                    <div class="btn-view-cart" style="width:75%;margin:0%">
+                                                        <a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn"
+                                                            title="View cart"><i class="fa fa-shopping-cart"></i> View cart</a>
                                                     </div>
                                             @else
                                                 <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"
@@ -129,7 +128,7 @@
 
                                     </div>
                                     @if (Session::has('login_id'))
-                                        @if (in_array($product->id, $wishlistItems))
+                                        @if (in_array($value->id, $wishlistItems))
                                             <div class="btn-wishlist" data-title="Wishlist">
                                                 <button class="product-btn wishlist-btn"
                                                     data-product-id="{{ $product->id }}">Add to wishlist
@@ -243,19 +242,17 @@
                                                             <div class="product-button">
 
                                                                 @if (Session::has('login_id'))
-                                                                    @if (in_array($product->id, $cartItems))
-                                                                        <div class="btn-add-to-cart"
-                                                                            data-product-id="{{ $product->id }}"
-                                                                            data-title="Add to cart">
+                                                                    @if (in_array($value->id, $cartItems))
+                                                                        <div class="btn-view-cart"
+                                                                            data-product-id="{{ $value->id }}"
+                                                                            data-title="View cart">
                                                                             <a href="{{ route('view-cartlist') }}"
                                                                                 class="added-to-cart product-btn"
-                                                                                title="View cart" tabindex="0">View
-                                                                                carts</a>
-
+                                                                                title="View cart" tabindex="0"><i class="fa fa-shopping-cart"></i> View cart</a>
                                                                         </div>
                                                                     @else
                                                                         <div class="btn-add-to-cart"
-                                                                            data-product-id="{{ $product->id }}"
+                                                                            data-product-id="{{ $value->id }}"
                                                                             data-title="Add to cart">
 
                                                                             <a rel="nofollow" href="#"
@@ -272,7 +269,7 @@
                                                                     </div>
                                                                 @endif
                                                                 @if (Session::has('login_id'))
-                                                                    @if (in_array($product->id, $wishlistItems))
+                                                                    @if (in_array($value->id, $wishlistItems))
                                                                         <div class="btn-wishlist" data-title="Wishlist"
                                                                             data-product-id="{{ $product->id }}">
                                                                             <button

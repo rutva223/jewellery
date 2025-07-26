@@ -34,10 +34,10 @@
                                         <a rel="nofollow" href="#" class="product-btn button">Add to
                                             cart</a>
                                     </div> --}}
-                                    <div class="" data-product-id="{{ $product->id }}"
-                                        data-title="Add to cart">
+                                    <div class="btn-view-cart" data-product-id="{{ $product->id }}"
+                                        data-title="View cart">
                                         <a href="{{ route('view-cartlist') }}" class="added-to-cart product-btn"
-                                            value="Place order" > </a>
+                                            title="View cart"><i class="fa fa-shopping-cart"></i> View cart</a>
                                     </div>
                                 @else
                                     <div class="btn-add-to-cart" data-product-id="{{ $product->id }}"

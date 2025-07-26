@@ -1,0 +1,28 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(chmod:*)",
+      "Bash(php artisan make:migration:*)",
+      "Bash(php artisan make:model:*)",
+      "Bash(php artisan make:controller:*)",
+      "Bash(ls:*)",
+      "Bash(mkdir:*)",
+      "Bash(php artisan:*)",
+      "Bash(sudo apt:*)",
+      "Bash(dbeaver:*)",
+      "Bash(dpkg:*)",
+      "Bash(sudo dpkg-reconfigure:*)",
+      "Bash(sudo ln:*)",
+      "Bash(sudo systemctl restart:*)",
+      "Bash(sudo update-alternatives:*)",
+      "Bash(sudo a2dismod:*)",
+      "Bash(sudo:*)",
+      "Bash(apt-get:*)",
+      "Bash(apt-get install:*)",
+      "Bash(php:*)",
+      "Bash(grep:*)",
+      "Bash(find:*)"
+    ],
+    "deny": []
+  }
+}

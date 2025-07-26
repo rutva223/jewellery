@@ -24,7 +24,7 @@ class LandingpageController extends Controller
 
         $categories = Category::where('is_deleted',0)->get();
 
-        $user_id = Session::has('login_id');
+        $user_id = Session::get('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
                     ->pluck('product_id')->toArray();
 
@@ -60,7 +60,7 @@ class LandingpageController extends Controller
         $cat_name = !empty($category) ? $category->name : 'All Products';
         $cat_id = !empty($category) ? $category->id : null;
 
-        $user_id = Session::has('login_id');
+        $user_id = Session::get('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
                     ->pluck('product_id')->toArray(); 
         $cartItems = Cart::where('user_id', $user_id)
@@ -123,7 +123,7 @@ class LandingpageController extends Controller
         $body = 'shop';
         $product = Product::find($id);
 
-        $user_id = Session::has('login_id');
+        $user_id = Session::get('login_id');
         $wishlistItems = Wishlist::where('user_id', $user_id)
                     ->pluck('product_id')->toArray();
         $cartItems = Cart::where('user_id', $user_id)
