@@ -30,7 +30,7 @@ class Category extends Model
 
     public function products()
     {
-        return $this->hasMany(Product::class, 'cat_id');
+        return $this->hasMany(Product::class, 'cat_id')->where('is_deleted', 0);
     }
 
 }

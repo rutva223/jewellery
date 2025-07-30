@@ -61,10 +61,8 @@ class LandingpageController extends Controller
         $cat_id = !empty($category) ? $category->id : null;
 
         $user_id = Session::get('login_id');
-        $wishlistItems = Wishlist::where('user_id', $user_id)
-                    ->pluck('product_id')->toArray(); 
-        $cartItems = Cart::where('user_id', $user_id)
-                    ->pluck('product_id')->toArray();
+        $wishlistItems = Wishlist::where('user_id', $user_id)->pluck('product_id')->toArray();
+        $cartItems = Cart::where('user_id', $user_id)->pluck('product_id')->toArray();
 
         return view('front_end.product',compact('products','body','cat_name', 'text_for_pagination','cat_id', 'wishlistItems', 'max_price','cartItems'));
     }

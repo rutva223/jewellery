@@ -159,7 +159,7 @@
                         <br />
                         <div class="row">
                             <div class="card-body ">
-                                <textarea name="description" id="summernote" placeholder="Enter Blog Description"></textarea>
+                                <textarea name="description" id="summernote" placeholder="Enter Product Description"></textarea>
                             </div>
                         </div>
                         <br />

@@ -347,21 +347,12 @@
                                                         </div>
                                                         <div class="product-button">
                                                             @if (Session::has('login_id'))
-                                                                <div class="btn-add-to-cart"
-                                                                    data-product-id="{{ $pro->id }}"
-                                                                    data-title="Add to cart">
-                                                                    <a rel="nofollow" href="#"
-                                                                        class="product-btn button">Add to
-                                                                        cart</a>
+                                                                <div class="btn-add-to-cart" data-product-id="{{ $pro->id }}" data-title="Add to cart">
+                                                                    <a rel="nofollow" href="#" class="product-btn button">Add to cart</a>
                                                                 </div>
                                                             @else
                                                                 <div class="btn-add-to-cart active-login" data-title="Add to cart">
-
-
-                                                                    <a rel="nofollow" class="product-btn button"
-                                                                        href="#">Add to
-
-                                                                        cart</a>
+                                                                    <a rel="nofollow" class="product-btn button" href="#">Add to cart</a>
                                                                 </div>
                                                             @endif
                                                             @if (Session::has('login_id'))

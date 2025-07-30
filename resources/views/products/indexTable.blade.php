@@ -60,7 +60,7 @@
                                     <i class="fa fa-edit"></i>
                                 </a>
                                 <a href="javascript:;" class="btn btn-primary btn-xs sharp me-1" title="Delete User"
-                                    onclick="delete_record('{{ $data->id }}','blog')">
+                                    onclick="delete_record('{{ $data->id }}','Product')">
                                     <i class="fa fa-trash"></i>
                                 </a>
                             </td>
