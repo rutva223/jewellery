@@ -15,6 +15,7 @@ use Razorpay\Api\Api;
 
 class RazorpayController extends Controller
 {
+
     public function store(Request $request) {
         $input = $request->all();
         $api = new Api (env('RAZORPAY_KEY'), env('RAZORPAY_SECRET'));
@@ -194,4 +195,5 @@ class RazorpayController extends Controller
             ], 400);
         }
     }
+    
 }

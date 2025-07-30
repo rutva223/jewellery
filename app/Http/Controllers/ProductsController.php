@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\Wishlist;
@@ -282,16 +283,17 @@ class ProductsController extends Controller
         $page = $request->page ?: 1;
         $products = $query->paginate($perPage, ['*'], 'page', $page);
         $text_for_pagination = "Showing " . $products->firstItem() . " to " . $products->lastItem() . " of " . $products->total() . " results";
-
+        $cartItems = Cart::where('user_id', $user_id)
+                    ->pluck('product_id')->toArray();
         if ($request->ajax()) {
             if ($request->view_type == 'layout-grid') {
                 return response()->json([
-                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
+                    'html' => view('front_end.grid-view', compact('products', 'text_for_pagination', 'wishlistItems','cartItems'))->render(),
                     'pagination' => view('front_end.pagination', compact('products'))->render()
                 ]);
             } else {
                 return response()->json([
-                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination', 'wishlistItems'))->render(),
+                    'html' => view('front_end.list-view', compact('products', 'text_for_pagination', 'wishlistItems','cartItems'))->render(),
                     'pagination' => view('front_end.pagination', compact('products'))->render()
                 ]);
             }
